@@ -24,8 +24,8 @@
 \newcommand{\addappendix}{   % Self-created command to insert appendix with predefined settings
     \newpage
     \appendix
-    \section*{Appendix}   % Name of appendix
-    \addcontentsline{toc}{section}{Appendix}  % Add appendix name to table of contents
+    \section*{Vedlegg}   % Name of appendix
+    \addcontentsline{toc}{section}{Vedlegg}  % Add appendix name to table of contents
     \renewcommand{\thesubsection}{\Alph{subsection}}    % Change numbering of section to upper-case letters.
 }
 
@@ -91,18 +91,7 @@
 
 % --- Language ---
 \usepackage{siunitx}    % Enable SI units
-\usepackage[british]{babel}     % Defining UK English as language. This will among other things ensure that dates are displayed as 24/03/1997 rather than 03/24/1997 in the bibliography.
-\addto\extrasbritish{   % Change naming of different functions, e.g. figure references.
-    \renewcommand*\contentsname{Table of Contents}  % Rename table of contents
-    \renewcommand{\listfigurename}{List of Figures} % Rename list of figures
-    \renewcommand{\listtablename}{List of Tables}   % Rename list of tables
-    \def\equationautorefname{Equation}              % Autoref-name for equations
-    \def\figureautorefname{Figure}                  % Autoref-name for figures
-    \def\tableautorefname{Table}                    % Autoref-name for tables
-    \def\sectionautorefname{Section}                % Autoref-name for sections
-    \def\subsectionautorefname{\sectionautorefname} % Autoref-name for subsections
-    \def\subsubsectionautorefname{\sectionautorefname} % Autoref-name for subsubsections
-}
+\usepackage[norsk]{babel}
 
 % --- Main matter ---
 % This is the main part of the paper.
