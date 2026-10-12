@@ -47,7 +47,7 @@
 \usepackage{minted} % Includes several programming languages and styles, visit --https://www.ntnu.no/wiki/display/imtsoftware/Code+in+LaTeX-- for more information and examples
 
 % --- Colors ---
-\usepackage[dvipsnames]{xcolor} % Using colors in LaTeX. This package is placed here as it needs to be imported previous to the flow chart packages to ensure no errors.
+\usepackage[dvipsnames,table]{xcolor} % Using colors in LaTeX. This package is placed here as it needs to be imported previous to the flow chart packages to ensure no errors.
 
 % --- Flow Charts ---
 % Keep in mind that you may customize these flow chart settings to fit your own preferences.
@@ -61,6 +61,15 @@
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
     minimum height=2em]
 \usepackage{pgfgantt}   % Gantt charts, used for the project plan
+
+% --- Tables ---
+\usepackage{array}      % Extended column types, e.g. m{width}
+\usepackage{multirow}   % Cells spanning several rows
+% Colors for the risk matrix
+\definecolor{risklow}{HTML}{92D050}
+\definecolor{riskmoderate}{HTML}{FFFF00}
+\definecolor{riskhigh}{HTML}{FFC000}
+\definecolor{riskextreme}{HTML}{C00000}
 
 % --- Front matter ---
 % Front matter is located before the table of contents, e.g. preface (Norsk: forord) and often has separate settings

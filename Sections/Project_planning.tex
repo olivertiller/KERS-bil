@@ -50,6 +50,80 @@ Aktivitetene bygger på hverandre: testing forutsetter et testbart design, og it
 \end{figure}
 
 \subsubsection{Risikovurdering og tiltak}
+Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skala fra 1 til 5, og klassifiseres etter risikomatrisen i tabell~\ref{tab:risikomatrise}. Tabell~\ref{tab:risiko-arbeid} viser risiko knyttet til praktisk arbeid, og tabell~\ref{tab:risiko-gjennomforing} viser risiko for gjennomføringen av prosjektet.
+
+% Celler i risikomatrisen: \riskcell{farge}{nivå}{poeng}
+\newcommand{\riskcell}[3]{\cellcolor{#1}\textbf{#2}\newline\textbf{#3}}
+\begin{table}[H]
+    \centering
+    \caption{Risikomatrise}
+    \label{tab:risikomatrise}
+    \small
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|>{\centering\arraybackslash}m{3.0cm}|*{5}{>{\centering\arraybackslash}m{1.6cm}|}}
+        \hline
+        \multicolumn{2}{|c|}{} & \multicolumn{5}{c|}{\textbf{Påvirkning}} \\
+        \cline{3-7}
+        \multicolumn{2}{|c|}{} & \textbf{Lav}\newline\textbf{1} & \textbf{Liten}\newline\textbf{2} & \textbf{Moderat}\newline\textbf{3} & \textbf{Høy}\newline\textbf{4} & \textbf{Alvorlig}\newline\textbf{5} \\
+        \hline
+        & \textbf{Svært sannsynlig}\newline\textbf{5} & \riskcell{riskmoderate}{Moderat}{5} & \riskcell{riskhigh}{Høy}{10} & \riskcell{riskextreme}{Ekstrem}{15} & \riskcell{riskextreme}{Ekstrem}{20} & \riskcell{riskextreme}{Ekstrem}{25} \\
+        \cline{2-7}
+        & \textbf{Sannsynlig}\newline\textbf{4} & \riskcell{riskmoderate}{Moderat}{4} & \riskcell{riskhigh}{Høy}{8} & \riskcell{riskhigh}{Høy}{12} & \riskcell{riskextreme}{Ekstrem}{16} & \riskcell{riskextreme}{Ekstrem}{20} \\
+        \cline{2-7}
+        & \textbf{Nøytral}\newline\textbf{3} & \riskcell{risklow}{Lav}{3} & \riskcell{riskmoderate}{Moderat}{6} & \riskcell{riskhigh}{Høy}{9} & \riskcell{riskhigh}{Høy}{12} & \riskcell{riskextreme}{Ekstrem}{15} \\
+        \cline{2-7}
+        & \textbf{Lite sannsynlig}\newline\textbf{2} & \riskcell{risklow}{Lav}{2} & \riskcell{riskmoderate}{Moderat}{4} & \riskcell{riskmoderate}{Moderat}{6} & \riskcell{riskhigh}{Høy}{8} & \riskcell{riskhigh}{Høy}{10} \\
+        \cline{2-7}
+        \multirow{-10}{*}{\rotatebox[origin=c]{90}{\textbf{Sannsynlighet}}} & \textbf{Sjelden}\newline\textbf{1} & \riskcell{risklow}{Lav}{1} & \riskcell{risklow}{Lav}{2} & \riskcell{risklow}{Lav}{3} & \riskcell{riskmoderate}{Moderat}{4} & \riskcell{riskmoderate}{Moderat}{5} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Vurdering av potensielle skadefaktorer}
+    \label{tab:risiko-arbeid}
+    \small
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        nr & \textbf{Potensielle hendelser} & \textbf{Sannsynlighet} & \textbf{Påvirkning} & \textbf{Risikopoeng} \\
+        \hline
+        \textbf{1.} & Laserkutter tar fyr & 2 & 4 & 8 \\
+        \hline
+        \textbf{2.} & Øyeskade på grunn av laserkutter & 1 & 5 & 5 \\
+        \hline
+        \textbf{3.} & Brannskade av 3D-printer & 1 & 2 & 2 \\
+        \hline
+        \textbf{4.} & Klemmer finger i bilmekanisme & 1 & 3 & 3 \\
+        \hline
+        \textbf{5.} & Skade av verktøy (Ubåten) & 2 & 3 & 6 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Potensielle hendelser under gjennomføring av prosjektet}
+    \label{tab:risiko-gjennomforing}
+    \small
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        nr & \textbf{Potensielle hendelser} & \textbf{Sannsynlighet} & \textbf{Påvirkning} & \textbf{Risikopoeng} \\
+        \hline
+        \textbf{1.} & 3D-print feiler & 4 & 2 & 8 \\
+        \hline
+        \textbf{2.} & Gruppemedlem blir syk & 2 & 3 & 6 \\
+        \hline
+        \textbf{3.} & Konsept fungerer ikke & 3 & 3 & 9 \\
+        \hline
+        \textbf{4.} & Deler som blir skadet/knekt & 4 & 3/5 & 12/20 \\
+        \hline
+        \textbf{5.} & Uenighet i gruppa som forsinker prosjektet & 2 & 4 & 8 \\
+        \hline
+    \end{tabular}
+\end{table}
+Påvirkningen for hendelse 4 i tabell~\ref{tab:risiko-gjennomforing} avhenger av hvilken del som blir skadet. 3D-printede deler er lette å bytte ut, mens for eksempel svinghjulet er vanskeligere å erstatte.
+
 \begin{itemize}
     \item Leveringstid og verkstedtilgang: avklar kritiske deler og bestill eller reserver tid tidlig.
     \item Skjeve aksler, friksjon og dårlig passform: kontroller kritiske mål og test delsystemer før full montering.
