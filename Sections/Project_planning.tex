@@ -3,16 +3,51 @@
 \subsubsection{Arbeidsform og dokumentasjon}
 Arbeidet gjennomføres i korte utviklingsrunder med sporbar sammenheng mellom krav, designvalg og tester. CAD-versjoner, bilder, produksjonsinnstillinger, testdata og beslutninger lagres fortløpende. Rapporten oppdateres etter hver hovedfase.
 
-\subsubsection{Hovedfaser og milepæler}
-Planen er en flytende, men . Ambisjonen er rapportlevering i første halvdel av oktober 2026; dette er ikke en bekreftet frist.
+\subsubsection{Fremdriftsplan}
+Prosjektet gjennomføres fra uke 39 til innlevering mandag 16. november 2026 (uke 47). Fremdriftsplanen er vist som Gantt-diagram i figur~\ref{fig:gantt}, og aktivitetene er:
 \begin{enumerate}
-    \item \textbf{Produktutvikling og konseptvalg.} Avklare oppgaverammer, utarbeide produktkrav og funksjonsanalyse, utvikle 3--5 b og velge konsept med en begrunnet vurderingsmetode. Milepæl: kravspesifikasjon og valgt konsept dokumentert.
-    \item \textbf{3D-design og produksjonsgrunnlag.} Modellere komponenter og sammenstilling, kontrollere dimensjoner, klaringer, toleranser og monterbarhet. Lage tegninger og deleliste. Milepæl: produksjonsklart underlag.
-    \item \textbf{Produksjon og prototyping.} Produsere eller anskaffe deler, montere bilen og kontrollere akseloppretting, fri rotasjon og drivverk. Registrere avvik og nødvendige tilpasninger. Milepæl: fungerende prototype klar for systematiske tester.
-    \item \textbf{Grunnleggende testing og forbedring.} Fastsette testprosedyre, gjennomføre en referanseserie og teste avgrensede designendringer. Milepæl: dokumentert funksjon, kjøredistanse, repeterbarhet og kravoppfyllelse.
-    \item \textbf{Rapport og overføring til våren.} Ferdigstille resultater, diskusjon og konklusjon, samle CAD- og testgrunnlag og prioritere videre arbeid. Milepæl: fysisk prototype og ferdig rapport.
+    \item \textbf{Utrede og forstå teorien bak KERS (uke 39).} Sette seg inn i hvordan kinetisk energi kan lagres og gjenvinnes, og etablere det teoretiske grunnlaget for konseptarbeidet.
+    \item \textbf{Prosjektstyring og risikovurdering (uke 40).} Planlegge gjennomføringen av prosjektet, fordele arbeid og vurdere risiko med tilhørende tiltak.
+    \item \textbf{Konseptutvikling og innledende design (uke 41--43).} Utarbeide produktkrav, utvikle og vurdere konsepter, velge konsept og utforme et første design som kan testes.
+    \item \textbf{Testing (uke 43--44).} Fastsette testprosedyre og teste det valgte konseptet. Testingen starter i siste uke av designfasen, slik at funn kan tas med i det videre designarbeidet.
+    \item \textbf{Iterering på konsept (uke 44).} Gjennomføre avgrensede forbedringer basert på testresultatene.
+    \item \textbf{Løpende rapportskriving (uke 39 til innlevering).} Rapporten skrives parallelt med de øvrige aktivitetene gjennom hele prosjektet.
+    \item \textbf{Sluttføring av rapport (uke 45 til innlevering).} Ferdigstille resultater, diskusjon og konklusjoner fra testingen frem mot innleveringen 16. november.
 \end{enumerate}
-Fasene kan overlappe, men produksjon bygger på kontrollert design og sammenlignende tester bygger på en fungerende referanseprototype. Det settes av tid til minst én korrigerende runde før sluttesting. Eventuelle formelle delleveranser avklares med veileder.
+Aktivitetene bygger på hverandre: testing forutsetter et testbart design, og iterasjonen bygger på resultatene fra testingen. Eventuelle formelle delleveranser avklares med veileder.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{ganttchart}[
+        x unit = 1.0cm,
+        y unit chart = 0.75cm,
+        vgrid,
+        hgrid,
+        title height = 1,
+        title label font = \footnotesize,
+        bar label font = \footnotesize,
+        bar label node/.append style = {align = right, text width = 4.6cm},
+        bar/.append style = {fill = NavyBlue!70, draw = NavyBlue},
+        bar height = 0.5,
+        milestone label font = \footnotesize\bfseries,
+        milestone/.append style = {fill = BrickRed, draw = BrickRed},
+        milestone label node/.append style = {align = right, text width = 4.6cm},
+    ]{1}{9}
+        \gantttitle{Uke 39}{1} \gantttitle{Uke 40}{1} \gantttitle{Uke 41}{1}
+        \gantttitle{Uke 42}{1} \gantttitle{Uke 43}{1} \gantttitle{Uke 44}{1}
+        \gantttitle{Uke 45}{1} \gantttitle{Uke 46}{1} \gantttitle{Uke 47}{1} \\
+        \ganttbar{Utrede og forstå teori bak KERS}{1}{1} \\
+        \ganttbar{Prosjektstyring og\\risikovurdering}{2}{2} \\
+        \ganttbar{Konseptutvikling og\\innledende design}{3}{5} \\
+        \ganttbar{Testing}{5}{6} \\
+        \ganttbar{Iterering på konsept}{6}{6} \\
+        \ganttbar[bar/.append style = {fill = NavyBlue!20}]{Løpende rapportskriving}{1}{8} \\
+        \ganttbar{Sluttføring av rapport med\\konklusjoner fra testing}{7}{8} \\
+        \ganttmilestone{Innlevering 16. november}{8}
+    \end{ganttchart}
+    \caption{Gantt-diagram for fremdriftsplanen. Løpende rapportskriving pågår gjennom hele prosjektet og er vist med lysere farge.}
+    \label{fig:gantt}
+\end{figure}
 
 \subsubsection{Risikovurdering og tiltak}
 \begin{itemize}
