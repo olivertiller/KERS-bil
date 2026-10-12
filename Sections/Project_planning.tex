@@ -50,7 +50,7 @@ Aktivitetene bygger på hverandre: testing forutsetter et testbart design, og it
 \end{figure}
 
 \subsubsection{Risikovurdering og tiltak}
-Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skala fra 1 til 5, og klassifiseres etter risikomatrisen i tabell~\ref{tab:risikomatrise}. Tabell~\ref{tab:risiko-arbeid} viser risiko knyttet til praktisk arbeid, og tabell~\ref{tab:risiko-gjennomforing} viser risiko for gjennomføringen av prosjektet.
+Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skala fra 1 til 5, og klassifiseres etter risikomatrisen i tabell~\ref{tab:risikomatrise}. Tabell~\ref{tab:risiko-arbeid} viser HMS-relatert risiko knyttet til det praktiske arbeidet, og tabell~\ref{tab:risiko-gjennomforing} viser risiko for faktorer som kan hindre gjennomføringen av prosjektet.
 
 % Celler i risikomatrisen: \riskcell{farge}{nivå}{poeng}
 \newcommand{\riskcell}[3]{\cellcolor{#1}\textbf{#2}\newline\textbf{#3}}
@@ -88,9 +88,9 @@ Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skal
         \hline
         nr & \textbf{Potensielle hendelser} & \textbf{Sannsynlighet} & \textbf{Påvirkning} & \textbf{Risikopoeng} \\
         \hline
-        \textbf{1.} & Laserkutter tar fyr & 2 & 4 & 8 \\
+        \textbf{1.} & Skader fra bruk av dreiebenk & 3 & 4 & 12 \\
         \hline
-        \textbf{2.} & Øyeskade på grunn av laserkutter & 1 & 5 & 5 \\
+        \textbf{2.} & Brannskade ved sveising & 2 & 5 & 10 \\
         \hline
         \textbf{3.} & Brannskade av 3D-printer & 1 & 2 & 2 \\
         \hline
@@ -100,6 +100,15 @@ Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skal
         \hline
     \end{tabular}
 \end{table}
+
+Tiltak for å redusere risiko for personskade:
+\begin{itemize}
+    \item Følg alle instrukser knyttet til bruk av sveiseapparat. Bla. ikke bruk plagg med lange ermer, bruk påbudt sikkerhetsutstyr til enhver tid.
+    \item Utvis sunn varsomhet og sett av god tid til oppgavene som skal utføres. 
+    \item Ha brannslukningsaparat tilgjengelig.
+    \item Roterende deler og produksjonsarbeid: kontroller innfesting før opptrekk, hold hender og løse gjenstander unna og følg verkstedets sikkerhetsrutiner.
+\end{itemize}
+
 
 \begin{table}[H]
     \centering
@@ -112,21 +121,22 @@ Risiko vurderes som produktet av sannsynlighet og påvirkning, begge på en skal
         \hline
         \textbf{1.} & 3D-print feiler & 4 & 2 & 8 \\
         \hline
-        \textbf{2.} & Gruppemedlem blir syk & 2 & 3 & 6 \\
+        \textbf{2.} & Gruppemedlem blir syk & 1 & 3 & 3 \\
         \hline
         \textbf{3.} & Konsept fungerer ikke & 3 & 3 & 9 \\
         \hline
-        \textbf{4.} & Deler som blir skadet/knekt & 4 & 3/5 & 12/20 \\
+        \textbf{4.} & Deler blir skadet & 4 & 3 & 12 \\
         \hline
-        \textbf{5.} & Uenighet i gruppa som forsinker prosjektet & 2 & 4 & 8 \\
+        \textbf{5.} & Utdelte komponenter har avvikende dimensjoner eller skjevheter som må rettes & 2 & 3 & 6\\
         \hline
     \end{tabular}
 \end{table}
 Påvirkningen for hendelse 4 i tabell~\ref{tab:risiko-gjennomforing} avhenger av hvilken del som blir skadet. 3D-printede deler er lette å bytte ut, mens for eksempel svinghjulet er vanskeligere å erstatte.
 
+Tiltak for å redusere påvirkning på prosjektets fremgang:
+
 \begin{itemize}
     \item Leveringstid og verkstedtilgang: avklar kritiske deler og bestill eller reserver tid tidlig.
     \item Skjeve aksler, friksjon og dårlig passform: kontroller kritiske mål og test delsystemer før full montering.
     \item Varierende opptrekk og underlag: standardiser testprosedyren og registrer avvik.
-    \item Roterende deler og produksjonsarbeid: kontroller innfesting før opptrekk, hold hender og løse gjenstander unna og følg verkstedets sikkerhetsrutiner.
 \end{itemize}
