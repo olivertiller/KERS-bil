@@ -9,7 +9,7 @@ Energien kan lagres elektrisk eller mekanisk. I et elektrisk system bremser en g
 I dette prosjektet tilføres energien ved opptrekk med tråd i stedet for ved oppbremsing. Bilen demonstrerer dermed lagrings- og tilbakeføringsdelen av et svinghjulsbasert KERS: energien lagres i svinghjulet og overføres via en utveksling til drivhjulene.
 
 \paragraph{Svinghjul som energilager}
-Et svinghjul med treghetsmoment $I$ om rotasjonsaksen som roterer med vinkelhastighet $\omega$, har rotasjonsenergien \parencite{olsen_2026}
+Et svinghjul med treghetsmoment $I$ om rotasjonsaksen som roterer med vinkelhastighet $\omega$, har rotasjonsenergien 
 \begin{equation}
     E_k = \frac{1}{2} I \omega^2 .
     \label{eq:rotasjonsenergi}
@@ -19,7 +19,7 @@ For en massiv sirkulær skive med masse $m$, radius $r$ og tykkelse $t$ er
     I = \frac{1}{2} m r^2, \qquad m = \rho \pi r^2 t ,
     \label{eq:treghetsmoment}
 \end{equation}
-der $\rho$ er materialets densitet \parencite{olsen_2026}. Innsatt gir dette $I = \frac{1}{2}\rho \pi t r^4$. Den lagrede energien øker altså med kvadratet av vinkelhastigheten og med fjerde potens av radien. Siden svinghjulet er gitt i dette prosjektet, er vinkelhastigheten etter opptrekk den viktigste parameteren for hvor mye energi som lagres.
+der $\rho$ er materialets densitet. Innsatt gir dette $I = \frac{1}{2}\rho \pi t r^4$. Den lagrede energien øker altså med kvadratet av vinkelhastigheten og med fjerde potens av radien. Siden svinghjulet er gitt i dette prosjektet, er vinkelhastigheten etter opptrekk den viktigste parameteren for hvor mye energi som lagres.
 
 \paragraph{Regneeksempel}
 Det utdelte svinghjulet er av stål med diameter \SI{60}{mm} og tykkelse \SI{6}{mm}, altså $r = \SI{0,030}{m}$ og $t = \SI{0,006}{m}$. Med $\rho = \SI{7850}{kg/m^3}$ og svinghjulet regnet som en massiv skive gir likning~\eqref{eq:treghetsmoment}
@@ -45,11 +45,12 @@ Rullemotstanden er $F_{rr} = C_{rr} m_b g$, der $m_b$ er bilens masse og $C_{rr}
     \label{eq:kjoredistanse}
 \end{equation}
 Likning~\eqref{eq:kjoredistanse} viser at lang kjøredistanse krever at mest mulig energi lagres, at tapene i lagre og utveksling holdes lave, og at bilen er lett og ruller lett. Utvekslingen avgjør hvor raskt energien tas ut: en høy utveksling gir lav hastighet og jevn energiavgivelse, mens en lav utveksling gir høyere fart, men større tap og fare for hjulspinn. Detaljert dynamisk modellering av dette avgrenses til våren 2027.
+
 \subsubsection{Systematisk produktutvikling og konseptvalg}
 % Beskriv valgt utviklingsmetode og bruk relevante fagkilder.
-\subsubsection{Svinghjul og energioverføring}
-Energiflyten beskrives kvalitativt fra opptrekk via svinghjul og transmisjon til drivhjul og bilens bevegelse. Teorien begrenses til det som er nødvendig for å forklare konsept- og designvalg dette semesteret.
+
 \subsubsection{Friksjon, rullemotstand og praktiske designhensyn}
 % Forklar betydningen av lager, akseloppretting, hjul, grep og stivhet med kilder.
+
 \subsubsection{Grunnleggende måling og repeterbarhet}
 % Beskriv gjennomsnitt, spredning og måleusikkerhet brukt i testene.
