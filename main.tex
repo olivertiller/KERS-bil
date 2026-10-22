@@ -15,6 +15,12 @@
 \frontmatter
 \hypersetup{pageanchor=true}
 
+% Forord og sammendrag
+\import{./Sections/}{Preface}
+\newpage
+\import{./Sections/}{Summary}
+\newpage
+
 % Inserting table of contents
 \tableofcontents
 
@@ -25,23 +31,28 @@
 % Defining main matter settings (Norsk: innstillinger for hoveddelen av teksten)
 \mainmatter
 
-% Rapportens hoveddeler
+% Rapportens hoveddeler, etter IMRaD
+% Introduksjon
 \import{./Sections/}{Introduction}
 \import{./Sections/}{Theory}
 
-\section{Metode}
-\label{sec:metode-hoved}
-% Fremgangsmåte og kriterier beskrives her; utviklet løsning og målinger presenteres i Resultater.
+% Metode: produktutvikling, konsepter, utvikling av valgt konsept og testmetode
+\import{./Sections/}{Product_development}
 \import{./Sections/}{Project_planning}
 \import{./Sections/}{Product_requirements}
 \import{./Sections/}{Concept_development}
 \import{./Sections/}{Detailed_design}
 \import{./Sections/}{Prototyping}
 \import{./Sections/}{Experimental_method}
+
+% Resultater
 \import{./Sections/}{Results}
+
+% Diskusjon og konklusjon
 \import{./Sections/}{Discussion}
-\import{./Sections/}{Conclusion}
 \import{./Sections/}{Future_work}
+\import{./Sections/}{Conclusion}
+\import{./Sections/}{AI_use}
 
 % Printing bibliography
 \newpage
