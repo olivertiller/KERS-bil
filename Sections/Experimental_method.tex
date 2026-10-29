@@ -1,5 +1,23 @@
 \section{Testmetode}
 \label{sec:metode}
+\subsection{Måleoppsett for turtall (ML)}
+\label{sec:ml-serien}
+Turtallet til svinghjulet måles for å finne tapene i lagrene og luftmotstanden på skiva, og for å sammenligne opptrekkene i TR-serien. Måleoppsettet utvikles i versjoner på samme måte som delene på bilen.
+
+I ML-1 sitter en US1881 Hall-sensor ved siden av svinghjulet, og to magneter sitter rett overfor hverandre i trommelflensen. Den ene vender sydpolen mot sensoren og den andre nordpolen. Sensoren slår seg på av sydpolen og av av nordpolen, slik at den gir én puls per omdreining, og hjulet er balansert. En Arduino registrerer tidspunktet for hver puls med et avbrudd og skriver tidene til en PC over seriell port. Tidene lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
+
+Hovedtesten er at alle omdreininger registreres uten tapte pulser, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 pulser i sekundet. Turtallet kontrolleres mot en uavhengig måling, for eksempel en optisk turtallsmåler eller sakte film. En mulig ML-2 har en sensor også på drivakselen. Da kan turtallet til svinghjulet og drivhjulene sammenlignes, og sluret ved nedsetting i DH-serien måles direkte.
+
+\begin{comment}
+\begin{versjonstabell}{ML-1}{tab:ml1}
+    \hovedtest
+    Alle omdreininger registreres, også ved høyeste turtall & \\
+    \tilleggstester
+    Turtallet stemmer med uavhengig måling & \\
+    Sensor og magneter sitter gjennom en testserie & \\
+\end{versjonstabell}
+\end{comment}
+
 \begin{comment}
 \subsection{Mål for testen}
 Testene skal dokumentere funksjon, kjøredistanse, repeterbarhet og retningsstabilitet.
@@ -11,7 +29,7 @@ Testene skal dokumentere funksjon, kjøredistanse, repeterbarhet og retningsstab
 Underlag, måleutstyr og måleoppløsning beskrives før gjennomføring.
 
 \subsection{Standardisert opptrekk og startprosedyre}
-Trådlengde, opptrekksmåte, startposisjon, retning og frigjøring holdes så like som mulig. Lik trådlengde alene sikrer ikke lik tilført energi; variasjon i opptrekk registreres som en mulig feilkilde.
+Bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang, i tråd med konkurransereglene. Trådlengde, opptrekksmåte, startposisjon, retning og frigjøring holdes så like som mulig. Lik trådlengde alene sikrer ikke lik tilført energi; variasjon i opptrekk registreres som en mulig feilkilde.
 
 \subsection{Testdesign}
 Planen er å gjennomføre 10--20 referansekjøringer og minst 10 kjøringer per sammenlignet konfigurasjon. Endre én faktor om gangen der dette er praktisk, og registrer prototypeversjon og testrekkefølge. Definer måling av kjøredistanse og sideavvik entydig før testene.

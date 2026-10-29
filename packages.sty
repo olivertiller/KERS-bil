@@ -135,3 +135,25 @@
 \renewcommand{\headrulewidth}{0.1ex}
 \renewcommand{\footrulewidth}{0.1ex}
 \fancyfoot[C]{\thepage}
+
+% --- Evaluering av prototypeversjoner ---
+% Bruk: \begin{versjonstabell}{DV-1}{tab:dv1} \hovedtest ... \tilleggstester ... \end{versjonstabell}
+% Resultat skrives som Vellykket, Delvis vellykket eller Mislykket
+\newenvironment{versjonstabell}[2]{%
+    \begin{table}[H]
+    \centering
+    \caption{Evaluering av #1}
+    \label{#2}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{0.62\textwidth}|>{\raggedright\arraybackslash}p{0.25\textwidth}|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Versjon: #1}} \\
+    \hline
+}{%
+    \hline
+    \end{tabular}
+    \end{table}
+}
+\newcommand{\hovedtest}{\textbf{Hovedtest} & \textbf{Resultat} \\ \hline}
+\newcommand{\tilleggstester}{\hline \textbf{Tilleggstester} & \textbf{Resultat} \\ \hline}

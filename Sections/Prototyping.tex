@@ -1,4 +1,114 @@
 \subsection{Prototyping og produksjon}
+\label{sec:prototyping}
+De fysiske delene utvikles i fire serier etter metoden i seksjon~\ref{sec:iterativ-prototyping}: lagersete (LS), feste av nav på aksel (NV), snortrommel (TR) og drivhjul med dekk (DH). Alle bygger på DV-3 fra seksjon~\ref{sec:dv-serien}.
+
+\subsubsection{Lagersete (LS)}
+\label{sec:ls-serien}
+De fire 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i sideplatene. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. \textcite{espedal_2024} fant at hull fra 3D-printer ble 0,5--\SI{0,8}{mm} mindre enn tegnet, så målene på tegningen kan ikke brukes direkte. Serien starter derfor med en prøvebit, LS-0, med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Prøvebiten har også glidehull for forakselen fra Ø6,1 til Ø6,5 mm. Den lages med samme produksjonsmetode og innstillinger som sideplatene. Hullene måles med skyvelære, og lageret og akselen prøves i hvert hull. Det hullet som gir best pasning, bestemmer målet i LS-1, som er setet i selve sideplaten.
+
+Hovedtesten er at lageret sitter fast og går lett (R13). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R10), og at akslene blir parallelle når begge sideplatene er montert.
+
+\begin{comment}
+\begin{table}[H]
+    \centering
+    \caption{Målt diameter på lagerseter i prøvebiten LS-0}
+    \label{tab:ls0-toleranse}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|l|}
+        \hline
+        \textbf{Tegnet [mm]} & \textbf{Målt [mm]} & \textbf{Avvik [mm]} & \textbf{Pasning med lager} \\
+        \hline
+        18,8 & & & \\
+        \hline
+        18,9 & & & \\
+        \hline
+        19,0 & & & \\
+        \hline
+        19,1 & & & \\
+        \hline
+        19,2 & & & \\
+        \hline
+        19,3 & & & \\
+        \hline
+        19,4 & & & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{versjonstabell}{LS-1}{tab:ls1}
+    \hovedtest
+    Lageret sitter fast og går lett (R13) & \\
+    \tilleggstester
+    Lageret kan tas ut og settes inn igjen (R10) & \\
+    Akslene er parallelle etter montering & \\
+\end{versjonstabell}
+\end{comment}
+
+\subsubsection{Feste av nav på aksel (NV)}
+\label{sec:nv-serien}
+Pinjongen, tannhjulet, trommelen og hjulene festes til Ø6-akslene. Delene kan ikke ha D-hull, fordi de må tres forbi de runde lagersetene på akselen. De har derfor runde Ø6,2-hull og festes med en M3-madenskrue mot en kort, frest flate på \SI{0,5}{mm}. Serien prøver tre festemåter:
+\begin{description}
+    \item[NV-0: Presspasning.] Hullet lages litt mindre enn akselen, uten skrue. Enklest å lage, men vanskelig å demontere.
+    \item[NV-1: M3 i plast.] Madenskruen gjenges direkte i plasten i navet.
+    \item[NV-2: M3 i gjengeinnsats.] Madenskruen går i en innsmeltet gjengeinnsats av messing.
+\end{description}
+
+Hovedtesten er at navet ikke slurer på akselen under opptrekk eller når svinghjulet stoppes brått (R9). Det kontrolleres med en tusjstrek over nav og aksel, som skal ligge på linje etter testen. Tilleggstester er at navet kan demonteres og monteres flere ganger uten at festet blir dårligere (R10), og at skruen ikke løsner i løpet av en testserie.
+
+\begin{comment}
+\begin{versjonstabell}{NV-1}{tab:nv1}
+    \hovedtest
+    Navet slurer ikke under opptrekk og brå stopp (R9) & \\
+    \tilleggstester
+    Kan demonteres og monteres flere ganger (R10) & \\
+    Skruen løsner ikke i løpet av en testserie & \\
+\end{versjonstabell}
+\end{comment}
+
+\subsubsection{Snortrommel (TR)}
+\label{sec:tr-serien}
+Svinghjulet spinnes opp med \SI{20}{cm} snor rundt en trommel på svinghjulsakselen. Ved \SI{4000}{o/min} har svinghjulet energien $E = \frac{1}{2} I \omega^2 \approx \SI{5,3}{J}$. Over \SI{20}{cm} snor tilsvarer det en snittkraft på $E/L \approx \SI{26}{N}$, uavhengig av trommelens diameter. Trommelradien $r_t$ bestemmer derimot hvor fort snora må trekkes, siden $v = \omega r_t$. En mindre trommel gir høyere turtall ved samme trekkhastighet, men kraften som trengs underveis øker. Hypotesen er at én trommeldiameter gir høyest turtall for et opptrekk for hånd.
+
+TR-1 til TR-3 er tromler med tre ulike diametre. Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R6) og repeterbarhet (R7). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, at den ikke sklir av trommelen, og at magnetene i trommelflensen sitter. Med Ø3 × 2 mm magneter må flensen være omtrent \SI{2,5}{mm} tykk.
+
+\begin{comment}
+\begin{versjonstabell}{TR-1}{tab:tr1}
+    \hovedtest
+    Turtall etter opptrekk, snitt og standardavvik (R6, R7) & \\
+    \tilleggstester
+    Snora løsner av seg selv & \\
+    Snora sklir ikke av trommelen & \\
+    Magnetene sitter i flensen & \\
+\end{versjonstabell}
+\end{comment}
+
+\subsubsection{Drivhjul og dekk (DH)}
+\label{sec:dh-serien}
+Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i DV-3. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. Halveres rullemotstandskoeffisienten fra 0,03 til 0,015, øker simulert distanse fra 38 til \SI{61}{m}, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{5}{\percent} lengre distanse. Et dekk bør derfor ha lav rullemotstand, og nok grep til at bilen går rett.
+
+Serien prøver tre dekk, alle med ytre diameter \SI{68}{mm}:
+\begin{description}
+    \item[DH-1: Bart hjul.] Hjulet i PLA uten dekk.
+    \item[DH-2: O-ring.] En O-ring i et spor i hjulet.
+    \item[DH-3: Strikk.] En strikk strukket over hjulet.
+\end{description}
+
+Hovedtesten er kjøredistanse med minst 10 kjøringer per dekk (R6, R7). Tilleggstester er sideavvik (R8), at dekket sitter på hjulet gjennom hele testserien, og hvor lenge hjulene slurer ved nedsetting. Resultatene brukes også til å kontrollere rullemotstanden som er antatt i simuleringen.
+
+\begin{comment}
+\begin{versjonstabell}{DH-1}{tab:dh1}
+    \hovedtest
+    Kjøredistanse, snitt og standardavvik av 10 kjøringer (R6, R7) & \\
+    \tilleggstester
+    Sideavvik (R8) & \\
+    Dekket sitter gjennom testserien & \\
+    Slur ved nedsetting & \\
+\end{versjonstabell}
+
+% Samlet evaluering som tabell~\ref{tab:dv-samlet}, én tabell per serie når testene er gjort
+\end{comment}
+
 \begin{comment}
 \subsubsection{Produksjonsmetoder og prosessvalg}
 \subsubsection{Fremstilling og montering}

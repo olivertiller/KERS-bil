@@ -2,3 +2,35 @@
 \label{sec:pu-prosess}
 % Beskriv valgt utviklingsmetode med fagkilder, og hvordan prosessen er tilpasset prosjektet.
 % Vis gjerne prosessen som en figur, med faser fra behov og krav via konsepter til prototype og testing.
+\subsection{Iterativ prototyping}
+\label{sec:iterativ-prototyping}
+Etter at konseptet er valgt, utvikles bilen gjennom iterativ prototyping. En prototype er en representasjon før produksjon av et aspekt ved et konsept eller et endelig design \parencite{camburn_2017}. Den trenger ikke være fysisk eller omfatte hele produktet. En CAD-modell, en simulering eller en prøvebit som bare tester én pasning regnes også som en prototype.
+
+Fremgangsmåten følger \textcite{espedal_2024}. Hver del utvikles i navngitte versjoner, der versjon 0 er utgangspunktet. Hver versjon har én hovedtest som avgjør om endringen er en forbedring, og noen tilleggstester. Testene vurderes som vellykket, delvis vellykket eller mislykket og kobles til kravene i seksjon~\ref{sec:produktkrav}. Den beste versjonen så langt er gjeldende beste versjon og grunnlaget for neste iterasjon. Der det er praktisk, endres bare én parameter om gangen, slik at virkningen av endringen kan skilles fra andre forhold. Til slutt sammenlignes alle versjonene av en del i en samlet tabell.
+
+Tabell~\ref{tab:iterasjonsserier} viser delene som utvikles på denne måten.
+
+\begin{table}[H]
+    \centering
+    \caption{Iterasjonsserier for bilen}
+    \label{tab:iterasjonsserier}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|p{3.2cm}|p{5.0cm}|l|}
+        \hline
+        \textbf{Prefiks} & \textbf{Del} & \textbf{Hovedtest} & \textbf{Krav} \\
+        \hline
+        DV & Drivverk (digitalt) & Geometrisk kontroll og simulert distanse & R1, R6 \\
+        \hline
+        LS & Lagersete & Pasning mellom lager og sete & R13 \\
+        \hline
+        NV & Feste av nav på aksel & Navet slurer ikke under opptrekk & R9, R10 \\
+        \hline
+        TR & Snortrommel & Turtall etter opptrekk & R6, R7 \\
+        \hline
+        DH & Drivhjul og dekk & Kjøredistanse & R6, R7, R8 \\
+        \hline
+        ML & Måleoppsett & Pålitelig registrering av turtall & -- \\
+        \hline
+    \end{tabular}
+\end{table}

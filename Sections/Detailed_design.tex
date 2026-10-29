@@ -13,3 +13,119 @@
 \subsubsection{Materialvalg, toleranser og klaringer}
 % Produksjonstegninger og deleliste legges i vedlegg. Henvis til dem her og vurder monterbarheten.
 \end{comment}
+
+\subsection{Iterasjoner av drivverket}
+\label{sec:dv-serien}
+Drivverket er utviklet digitalt i CAD og med simuleringsmodellen fra seksjon~\ref{sec:konseptevaluering}, før noe er produsert. Versjonene heter DV-0 til DV-3. Hovedtesten for hver versjon er en geometrisk kontroll: at svinghjulet går klar av akslene og underlaget, og at bilen holder seg innenfor de ytre målene (R1). Valgt minsteklaring mellom svinghjul og aksel er \SI{3}{mm}. Simulert kjøredistanse (R6) er tatt med som tilleggstest, med de samme antakelsene som i konseptevalueringen.
+
+% Prototypehistorikk som i Espedal (2024), figur 4.5: én CAD-skjermdump per versjon
+\begin{comment}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/DV/dv0.png}
+        \caption{DV-0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/DV/dv1.png}
+        \caption{DV-1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/DV/dv2.png}
+        \caption{DV-2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/DV/dv3.png}
+        \caption{DV-3}
+    \end{subfigure}
+    \caption{Prototypehistorikk for drivverket.}
+    \label{fig:dv-historikk}
+\end{figure}
+\end{comment}
+
+\subsubsection{DV-0: Utgangspunkt fra konsept 3}
+DV-0 er konsept 3 slik det er beskrevet i seksjon~\ref{sec:konseptutvikling}. Et pinjong med 17 tenner driver et tannhjul med 68 tenner, med modul 0,8 og akseavstand $a = 0{,}8 \cdot (17 + 68)/2 = \SI{34}{mm}$. Drivhjulene har diameter \SI{64}{mm}. Svinghjulsakselen er den utdelte Ø6-akselen og ligger \SI{36}{mm} over underlaget. Hjulakslene er Ø3 sveisetråd og ligger \SI{32}{mm} over underlaget, slik at akslene ikke ligger i samme høyde.
+% Begrunn hvorfor akslene ble lagt i samme høyde i DV-1
+
+\begin{versjonstabell}{DV-0}{tab:dv0}
+    \hovedtest
+    Klaring mellom svinghjul og hjulaksel, \SI{2,5}{mm} & Delvis vellykket \\
+    \tilleggstester
+    Bakkeklaring under svinghjulet, \SI{6}{mm} & Vellykket \\
+    Lengde ca. \SI{132}{mm}, innenfor \SI{140}{mm} (R1) & Vellykket \\
+    Simulert kjøredistanse, \SI{38,0}{m} (R6) & Vellykket \\
+    Ø3-aksel i 626-lager (indre diameter \SI{6}{mm}) & Delvis vellykket, krever hylse \\
+\end{versjonstabell}
+
+\subsubsection{DV-1: Akslene i samme høyde}
+I DV-1 ligger alle akslene \SI{34}{mm} over underlaget. Drivhjulene får da diameter \SI{68}{mm}. Utvekslingen er fortsatt 17\,:\,68, og hjulakslene er fortsatt Ø3. Større hjul ved samme utveksling gir høyere $r_h/i$, \SI{8,5}{mm} mot \SI{8,0}{mm}, og litt kortere simulert distanse.
+
+\begin{versjonstabell}{DV-1}{tab:dv1}
+    \hovedtest
+    Klaring mellom svinghjul og hjulaksel, \SI{2,5}{mm} & Delvis vellykket \\
+    \tilleggstester
+    Bakkeklaring under svinghjulet, \SI{4}{mm} & Vellykket \\
+    Lengde \SI{136}{mm}, innenfor \SI{140}{mm} (R1) & Vellykket \\
+    Simulert kjøredistanse, \SI{37,5}{m} (R6) & Vellykket \\
+    Ø3-aksel i 626-lager & Delvis vellykket, krever hylse \\
+\end{versjonstabell}
+
+\subsubsection{DV-2: Ø6 stålaksler}
+Ø3-akselen krever en hylse for å passe i 626-lageret. I DV-2 er alle akslene derfor Ø6 stål, slik at lagrene kan sitte rett på akselen. Med uendret akseavstand på \SI{34}{mm} blir klaringen mellom svinghjulet og hjulakselen bare $34 - 30 - 3 = \SI{1}{mm}$, som er under minsteklaringen. DV-2 forkastes.
+
+\begin{versjonstabell}{DV-2}{tab:dv2}
+    \hovedtest
+    Klaring mellom svinghjul og hjulaksel, \SI{1}{mm} & Mislykket \\
+    \tilleggstester
+    Lagre rett på akselen, uten hylse & Vellykket \\
+    Lengde \SI{136}{mm}, innenfor \SI{140}{mm} (R1) & Vellykket \\
+\end{versjonstabell}
+
+\subsubsection{DV-3: Økt akseavstand}
+For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3 = \SI{36}{mm}$. Med modul 0,8 og 17 tenner på pinjongen gir det 73 tenner på tannhjulet, siden $0{,}8 \cdot (17 + 73)/2 = \SI{36}{mm}$. Utvekslingen blir $i = 73/17 \approx 4{,}29$. Forholdet $r_h/i$, som bestemmer hvor fort bilen kjører ved et gitt turtall på svinghjulet, blir \SI{7,9}{mm}, nær \SI{8,0}{mm} i DV-0. Simulert distanse blir dermed omtrent den samme. Akslene ligger \SI{34}{mm}, \SI{70}{mm} og \SI{106}{mm} fra bakkant, og med Ø68-hjul blir bilen nøyaktig \SI{140}{mm} lang. Det er på grensen av R1 og må kontrolleres på den ferdige bilen. DV-3 er gjeldende beste versjon.
+
+\begin{versjonstabell}{DV-3}{tab:dv3}
+    \hovedtest
+    Klaring mellom svinghjul og aksel, \SI{3}{mm} & Vellykket \\
+    \tilleggstester
+    Bakkeklaring under svinghjulet, \SI{4}{mm} & Vellykket \\
+    Lengde \SI{140}{mm}, lik grensen i R1 & Delvis vellykket \\
+    Simulert kjøredistanse, \SI{38,1}{m} (R6) & Vellykket \\
+    Lagre rett på akselen, uten hylse & Vellykket \\
+\end{versjonstabell}
+
+\begin{table}[H]
+    \centering
+    \caption{Samlet evaluering av drivverket (DV)}
+    \label{tab:dv-samlet}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Parameter} & \textbf{DV-0} & \textbf{DV-1} & \textbf{DV-2} & \textbf{DV-3} \\
+        \hline
+        Utveksling & 17\,:\,68 & 17\,:\,68 & 17\,:\,68 & 17\,:\,73 \\
+        \hline
+        Akseavstand [mm] & 34 & 34 & 34 & 36 \\
+        \hline
+        Hjuldiameter [mm] & 64 & 68 & 68 & 68 \\
+        \hline
+        Hjulaksler & Ø3 sveisetråd & Ø3 sveisetråd & Ø6 stål & Ø6 stål \\
+        \hline
+        Klaring svinghjul--aksel [mm] & 2,5 & 2,5 & 1 & 3 \\
+        \hline
+        Bakkeklaring svinghjul [mm] & 6 & 4 & 4 & 4 \\
+        \hline
+        Lengde [mm] & 132 & 136 & 136 & 140 \\
+        \hline
+        Simulert distanse [m] & 38,0 & 37,5 & -- & 38,1 \\
+        \hline
+    \end{tabular}
+\end{table}
