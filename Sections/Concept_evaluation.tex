@@ -1,0 +1,51 @@
+\subsection{Konseptevaluering}
+\label{sec:konseptevaluering}
+Konseptene er først kontrollert mot de oppgitte rammene og funksjonskravet (R1--R5). Alle tre får plass innenfor $140 \times 85 \times 70$ mm, bruker det utdelte svinghjulet og opptrekk med snor, og kan kjøre selvstendig. Ingen konsepter er derfor forkastet i dette trinnet.
+
+Deretter er konseptene sammenlignet i en vektet vurderingsmatrise (tabell~\ref{tab:vurderingsmatrise}). Hvert konsept får 1--5 poeng per kriterium, der 1 er svært dårlig og 5 er svært godt. Poengene ganges med vekten og summeres. Kriteriene og vektene er hentet fra produktkravene i seksjon~\ref{sec:produktkrav}:
+\begin{description}
+    \item[Kjøredistanse (R6), 40\,\%.] Hovedmålet for bilen, og derfor høyest vekt.
+    \item[Driftssikkerhet (R7, R9), 25\,\%.] Bilen må gi like kjøringer fra gang til gang for at testserier skal kunne sammenlignes.
+    \item[Produserbarhet (R13), 20\,\%.] Antall deler og hvor vanskelige de er å lage med 3D-printer, dreiebenk og fres. Prosjektet gjennomføres av én person, så tiden til produksjon er begrenset.
+    \item[Justerbarhet (R10--R12), 15\,\%.] Mulighet for å endre utvekslingen etter testing.
+\end{description}
+
+\begin{table}[H]
+    \centering
+    \caption{Vektet vurderingsmatrise for de tre konseptene. Poeng 1--5, vektet sum i parentes.}
+    \label{tab:vurderingsmatrise}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Kriterium} & \textbf{Vekt} & \textbf{Konsept 1} & \textbf{Konsept 2} & \textbf{Konsept 3} \\
+         & & \textbf{Direkte} & \textbf{CVT} & \textbf{Tannhjul} \\
+        \hline
+        Kjøredistanse & 0,40 & 1 (0,40) & 4 (1,60) & 5 (2,00) \\
+        \hline
+        Driftssikkerhet & 0,25 & 4 (1,00) & 2 (0,50) & 4 (1,00) \\
+        \hline
+        Produserbarhet & 0,20 & 5 (1,00) & 2 (0,40) & 3 (0,60) \\
+        \hline
+        Justerbarhet & 0,15 & 1 (0,15) & 5 (0,75) & 3 (0,45) \\
+        \hline
+        \textbf{Sum} & \textbf{1,00} & \textbf{2,55} & \textbf{3,25} & \textbf{4,05} \\
+        \hline
+        \textbf{Rangering} & & 3 & 2 & 1 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Begrunnelse for poengene}
+Kjøredistansen er estimert med en numerisk modell av svinghjul, utveksling og bil, med startturtall \SI{4000}{o/min}. Modellen antar at bilen settes ned med svinghjulet i gang, og at drivhjulene slurer til farten til bil og svinghjul er lik. Virkningsgraden er satt til 0,95 for et tannhjulstrinn og 0,85--0,90 for O-ringen på kjeglene. Bilens masse er antatt \SI{0,25}{kg} og rullemotstandskoeffisienten 0,03. Tapene i svinghjulslagrene er antatt til utsnurringstesten foreligger, så de absolutte distansene er usikre. Rangeringen påvirkes lite av dette.
+
+Konsept 1 gir omtrent \SI{10}{m}. Med $i = 1$ er svinghjulets treghet, regnet om til bilen, liten sammenlignet med bilens masse, $I/r_h^2 \approx \SI{0,05}{kg}$ mot \SI{0,25}{kg}. Derfor går det meste av energien tapt som slur når bilen settes ned. Konseptet har færrest deler og få ting som kan svikte, og får høyest poeng for produserbarhet og godt for driftssikkerhet. Utvekslingen kan bare endres ved å bytte drivhjul, og det begrenses av at hjulene må være større enn svinghjulet.
+
+Konsept 2 gir 28--\SI{37}{m}, avhengig av utveksling og hvor mye O-ringen taper. Det er nær konsept 3, men reimen kan slure og flytte seg under kjøring, noe som gir dårligere repeterbarhet. Kjeglene må dreies med god overflate, og reimen trenger en føring. Til gjengjeld kan utvekslingen justeres trinnløst uten å bytte deler, og konseptet får derfor høyest poeng for justerbarhet.
+
+Konsept 3 gir omtrent \SI{38}{m} med $i = 4$, høyest av de tre. Tannhjulsinngrepet overfører momentet uten slur, og lagringen i kulelagre gir lite tap og jevn gange. Tannhjulene og lagersetene krever nøyaktig akseavstand, men delene kan 3D-printes eller kjøpes. Utvekslingen kan endres ved å bytte tannhjulspar med samme akseavstand.
+
+\subsubsection{Valg av konsept}
+Konsept 3 får høyest vektet sum og videreføres. Konsept 3 vinner også med like vekter på alle kriteriene, med 3,75 mot 3,25 for konsept 2 og 2,75 for konsept 1. Valget er dermed ikke avhengig av vektingen.
+
+Simuleringen gir lengst distanse ved $i \approx 5$, men kurven er flat, og $i = 4$--$6$ gir innenfor \SI{3}{\percent} av maksimum. Den endelige utvekslingen fastsettes i detaljkonstruksjonen (seksjon~\ref{sec:utvikling}) ut fra plass og akseavstand. Antakelsene om lagertap, virkningsgrad og slur ved nedsetting kontrolleres med utsnurringstesten og prøvekjøring av prototypen.
