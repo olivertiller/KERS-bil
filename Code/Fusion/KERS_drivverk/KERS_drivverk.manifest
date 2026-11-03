@@ -1,0 +1,10 @@
+{
+	"autodeskProduct": "Fusion",
+	"type": "script",
+	"author": "",
+	"description": {
+		"": "Setter inn drivverket til KERS-bilen i det åpne designet for kollisjonskontroll"
+	},
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}
