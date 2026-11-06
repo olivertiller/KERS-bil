@@ -2,7 +2,7 @@
 
   * Sjekker at ingen bevar-kropp overlapper en hindring (da avviser Fusion studien).
   * Regner volum og PLA-masse for bevar-kroppene og lokkene.
-  * Tegner sideriss, planriss og frontriss til Kers-bil/Generativ_ramme/gd_oppsett.png.
+  * Tegner sideriss, planriss og frontriss til Bygg/Generativ_ramme/gd_oppsett.png.
 
     python3 Code/Fusion/gd_forhandsvisning.py
 """
@@ -21,7 +21,7 @@ HER = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gd", HER / "KERS_GD_oppsett" / "KERS_GD_oppsett.py")
 gd = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gd)
-UT = HER.parent.parent / "Kers-bil" / "Generativ_ramme"
+UT = HER.parent.parent / "Bygg" / "Generativ_ramme"
 RHO_PLA = 1.24e-3  # g/mm^3
 
 

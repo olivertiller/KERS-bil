@@ -11,7 +11,7 @@ klar av pinjong (y 5 til 19,5) og trommel (y -3 og ned, men den sitter lavt). Ut
 
 Makita DDF483 uten last: trinn 1 = 500 o/min, trinn 2 = 1700 o/min (litt lavere under last).
 
-Skriver til Kers-bil/Drillhjul/, for hver diameter D:
+Skriver til Bygg/Drillhjul/, for hver diameter D:
   drillhjul_D<D>_PLA.3mf   nav, eiker, felg og sekskantstamme i ett. Printes med eikene ned, stammen opp.
   drillhjul_D<D>_dekk_TPU.3mf   dekk som strekkes på felgen
   drillhjul_forhandsvisning.png
@@ -27,7 +27,7 @@ import numpy as np
 from hjul import eikeskive
 from snortrommel import RHO_PLA, skriv_3mf, syl
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Drillhjul"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Drillhjul"
 RHO_TPU = 1.21e-3
 D_SVINGHJUL = 60.0
 DIAMETRE = [60.0, 100.0, 140.0]

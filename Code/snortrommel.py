@@ -39,7 +39,7 @@ from pathlib import Path
 import manifold3d as mf
 import numpy as np
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Snortrommel"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Snortrommel"
 SEG = 160  # segmenter i sirkler
 RHO_PLA = 1.24e-3  # g/mm^3
 

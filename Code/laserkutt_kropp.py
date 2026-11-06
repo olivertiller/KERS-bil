@@ -35,7 +35,7 @@ from matplotlib.patches import Circle as MplCircle
 from matplotlib.patches import Rectangle
 from matplotlib.textpath import TextPath
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Laserkutt"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Laserkutt"
 
 # ---------------------------------------------------------------- parametere
 P = dict(

@@ -4,7 +4,7 @@
 
 Geometrien hentes fra de samme parameterne som 3MF-filene (snortrommel.py og hjul.py), og snitt og
 riss lages fra modellen med manifold3d, så tegningen viser nøyaktig det som printes. Krever
-manifold3d og matplotlib. Skriver Images/Tegninger/TR-1.pdf og Images/Tegninger/DH-2.pdf.
+manifold3d og matplotlib. Skriver Rapport/Images/Tegninger/TR-1.pdf og Rapport/Images/Tegninger/DH-2.pdf.
 
 Arket er i mm (x mot høyre, y opp). Hvert riss har sin egen avbildning fra modellen til arket,
 valgt etter ISO 128 metode E (førstevinkel): riss sett fra høyre står til venstre, sett ovenfra
@@ -25,7 +25,7 @@ from matplotlib.path import Path as MPath
 import hjul as H
 import snortrommel as T
 
-UT = Path(__file__).resolve().parent.parent / "Images" / "Tegninger"
+UT = Path(__file__).resolve().parent.parent / "Rapport" / "Images" / "Tegninger"
 TYKK, TYNN = 0.5, 0.25  # linjebredder i mm
 PT = 72 / 25.4  # pt per mm
 H_MAL, H_TITTEL = 2.5, 5.0  # teksthøyder i mm

@@ -4,7 +4,7 @@
     python3 Code/hjul.py --firkant 4.3    # firkanthull (4,3 valgt etter firkanttesten)
     python3 Code/hjul.py --diametre 68    # bare Ø68
 
-Krever manifold3d (som snortrommel.py). Skriver til Kers-bil/Hjul/:
+Krever manifold3d (som snortrommel.py). Skriver til Bygg/Hjul/:
   hjul_felg_TPU.3mf   felg Ø65 for TPU-dekket (4 stk)
   dekk_TPU.3mf        dekk som strekkes over felgen, ferdig Ø68 (4 stk)
   hjul_bart_D68.3mf   hjul uten dekk, Ø68 (DH-1 i testserien)
@@ -33,7 +33,7 @@ import numpy as np
 
 from snortrommel import RHO_PLA, boks, skriv_3mf, syl
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Hjul"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Hjul"
 RHO_TPU = 1.21e-3  # g/mm^3
 DIAMETRE = [68.0, 66.0]  # ferdige diametre som lages; Ø66 er et tillegg, 2 mm mindre
 

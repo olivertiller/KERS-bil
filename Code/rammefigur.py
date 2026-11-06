@@ -2,7 +2,7 @@
 
     python3 Code/rammefigur.py
 
-Skriver to riss til Images/Ramme/: ramme_skraatt.png (skrått forfra) og ramme_side.png
+Skriver to riss til Rapport/Images/Ramme/: ramme_skraatt.png (skrått forfra) og ramme_side.png
 (fra siden). Hvitt rundt modellen klippes bort.
 Skriver også ut ytre mål, volum og masse i PLA, som er tallene i rapporten.
 """
@@ -19,8 +19,8 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from PIL import Image, ImageChops
 
 ROT = Path(__file__).resolve().parent.parent
-STL = ROT / "Kers-bil" / "Ramme v1.stl"
-UT = ROT / "Images" / "Ramme"
+STL = ROT / "Bygg" / "Ramme v1.stl"
+UT = ROT / "Rapport" / "Images" / "Ramme"
 RHO_PLA = 1.24e-3  # g/mm^3
 
 

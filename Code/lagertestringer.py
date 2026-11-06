@@ -6,7 +6,7 @@ og ytre Ø25. Ringene merkes med hakk i ytterkanten: 1 hakk = første diameter, 
     python3 Code/lagertestringer.py                       # Ø18,9–19,3
     python3 Code/lagertestringer.py --d 19.0 19.1 19.2    # egne diametre
 
-Lager Kers-bil/Generativ_ramme/lagertestringer.3mf (mm) og én STL per ring.
+Lager Bygg/Generativ_ramme/lagertestringer.3mf (mm) og én STL per ring.
 Print med boringsåpningen ned mot platen og kanten opp, slik lagerhusene ligger når rammen
 printes på siden. Bruk samme filament og profil som rammen.
 """
@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Generativ_ramme"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Generativ_ramme"
 R_YTRE, B_LAGER, LEPPE, D_LEPPE = 12.5, 6.0, 1.0, 17.0
 N = 360  # punkter rundt
 

@@ -6,7 +6,7 @@ Tegner isometriske konseptskisser av de tre drivverkskonseptene for KERS-bilen.
     Konsept 3: ett fast tannhjulstrinn fra svinghjul til drivaksel (i = 4)
 
 Bruk:
-    python3 konseptskisser.py            # lagrer PDF og PNG i Images/Konsepter/
+    python3 konseptskisser.py            # lagrer PDF og PNG i Rapport/Images/Konsepter/
 
 Koordinater i mm: x forover (bakkant = 0), y mot venstre side (midtlinje = 0), z opp (bakken = 0).
 Alle deler er skiver eller aksler langs y, så de tegnes i rekkefølge etter y (bakerst først)
@@ -24,7 +24,7 @@ import numpy as np
 from matplotlib.colors import to_rgb
 from matplotlib.patches import Polygon
 
-UT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Images", "Konsepter")
+UT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Rapport", "Images", "Konsepter")
 
 
 

@@ -2,7 +2,7 @@
 
     python3 Code/rapportfigurer.py
 
-Skriver PDF-er til Images/Maling/:
+Skriver PDF-er til Rapport/Images/Maling/:
   ml_flanker.pdf          tid mellom flankene i ML-1 (sensoren for nær) og ML-2
   utsnurring_referanse.pdf  referanseserien (tannhjulet koblet) med tilpasset tapsmodell
   tapsmoment.pdf          tapsmoment mot turtall, tannhjulet koblet og frakoblet
@@ -24,7 +24,7 @@ import kers_sim as ks
 
 ROT = Path(__file__).resolve().parent.parent
 DATA = ROT / "Code" / "utsnurring_diagnose" / "data"
-UT = ROT / "Images" / "Maling"
+UT = ROT / "Rapport" / "Images" / "Maling"
 ML1 = DATA / "diagnose_20261105_171409.csv"  # drill, trinn 1, sensoren for nær
 REF = DATA / "diagnose_20261106_022052.csv"  # tannhjulet koblet, fett i lagrene
 FRA = DATA / "diagnose_20261106_022930_frakoblet.csv"  # tannhjulet frakoblet

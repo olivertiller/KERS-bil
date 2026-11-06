@@ -27,7 +27,7 @@ import numpy as np
 
 from snortrommel import P as P_TROMMEL, klemnav_kutt, skriv_3mf, syl
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Pinjong"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Pinjong"
 
 P = dict(
     {k: P_TROMMEL[k] for k in ("boring", "d_nav", "l_nav", "slisse", "e_skrue", "m3_hull", "d_hode", "mutter", "x_sete")},

@@ -16,7 +16,7 @@ smalere enn akselen (Ø6), og skråkanter leder den inn. Kragen Ø7,8 ligger an 
 (som roterer med akselen) og aldri mot tetningen eller ytterringen. Den brede delen Ø12 ligger an mot
 navet. Printes stående med den brede enden ned og kragen opp, uten support.
 
-Skriver til Kers-bil/Avstandshylser/: hylse_L<lengde>.3mf og hylse_forhandsvisning.png
+Skriver til Bygg/Avstandshylser/: hylse_L<lengde>.3mf og hylse_forhandsvisning.png
 """
 
 import argparse
@@ -28,7 +28,7 @@ import numpy as np
 
 from snortrommel import skriv_3mf
 
-UT = Path(__file__).resolve().parent.parent / "Kers-bil" / "Avstandshylser"
+UT = Path(__file__).resolve().parent.parent / "Bygg" / "Avstandshylser"
 SEG = 96
 
 P = dict(
