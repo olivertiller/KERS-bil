@@ -2,12 +2,34 @@
 \label{sec:teori}
 \subsection{Kinetisk energigjenvinning (KERS)}
 \label{sec:kers}
-KERS (\emph{Kinetic Energy Recovery System}) er et system som tar vare på kinetisk energi som ellers ville gått tapt som varme ved oppbremsing. Energien lagres og kan brukes igjen senere, for eksempel ved akselerasjon. Systemet består av tre deler: en mekanisme som tar opp energi fra bevegelsen, et energilager og en mekanisme som fører energien tilbake til drivverket. Teknologien er kjent fra Formel 1, der KERS ble tillatt fra 2009-sesongen, med mål om at den etter hvert også skal kunne tas i bruk i vanlige kjøretøy \parencite{batalha_kers}.
+KERS (\emph{Kinetic Energy Recovery System}) er et system som tar vare på kinetisk energi som ellers ville gått tapt som varme ved oppbremsing. Energien lagres og kan brukes igjen senere, for eksempel ved akselerasjon. Systemet består av tre deler: en mekanisme som tar opp energi fra bevegelsen, et energilager og en mekanisme som fører energien tilbake til drivverket \parencite{batalha_kers}.
 
 \subsubsection{Typer energilagring}
-Energien kan lagres elektrisk eller mekanisk. I et elektrisk system bremser en generator kjøretøyet, og energien lagres i et batteri eller en superkondensator før en elektrisk motor gir den tilbake. I et mekanisk system lagres energien som rotasjonsenergi i et svinghjul som er koblet til drivverket gjennom aksler og gir. Motor og generator erstattes da av en transmisjon, og omforming mellom mekanisk og elektrisk energi unngås \parencite{batalha_kers}. Et mekanisk system er enkelt å bygge i liten skala, og er derfor et naturlig valg for en mekanisk lekebil.
+Energien kan lagres elektrisk eller mekanisk. I et elektrisk system bremser en generator kjøretøyet, og energien lagres i et batteri eller en superkondensator før en elektrisk motor gir den tilbake. I et mekanisk system lagres energien som rotasjonsenergi i et svinghjul som er koblet til drivverket gjennom aksler og gir. Motor og generator erstattes da av en transmisjon, og omforming mellom mekanisk og elektrisk energi unngås \parencite{batalha_kers}.
 
-I dette prosjektet tilføres energien ved opptrekk med tråd i stedet for ved oppbremsing. Bilen demonstrerer dermed lagrings- og tilbakeføringsdelen av et svinghjulsbasert KERS: energien lagres i svinghjulet og overføres via en utveksling til drivhjulene.
+\subsection{Anvendelser av KERS}
+\label{sec:kers-anvendelser}
+Prinsippet om å lagre energi i bevegelse og hente den ut igjen når det trengs, brukes i alt fra racerbiler til kraftnettet. Eksemplene under viser hvor teknologien brukes i dag, og hvilke avveininger som avgjør om energien lagres elektrisk eller i et svinghjul.
+
+\subsubsection{Formel 1}
+Formel 1 gjorde KERS kjent for et bredt publikum. Systemet ble tillatt fra 2009-sesongen, med mål om at teknologien etter hvert også skulle komme vanlige kjøretøy til gode \parencite{batalha_kers}. Reglene begrenset effekten til \SI{60}{kW} og den frigjorte energien til \SI{400}{kJ} per runde, noe som ga føreren et ekstra effekttilskudd i underkant av sju sekunder per runde \parencite{f1technical_kers}. Både elektriske systemer og svinghjulssystemer ble utviklet, men de fleste lagene valgte batterier, som var enklere å plassere i bilen. KERS var lite utbredt den første sesongen, ble ikke brukt i 2010 etter en avtale mellom lagene, og kom tilbake i 2011.
+
+Fra 2014 ble KERS erstattet av et større hybridsystem, der en motorgenerator på bakakselen (MGU-K) gjenvinner bremseenergi, og en motorgenerator på turboen (MGU-H) gjenvinner energi fra eksosen. Med reglene for 2026 er MGU-H fjernet, mens effekten til MGU-K er økt fra \SI{120}{kW} til \SI{350}{kW}. I teorien kommer da omtrent halvparten av effekten fra det elektriske systemet \parencite{therace_2026}. Utviklingen viser at gjenvinning av bremseenergi har gått fra å være et valgfritt tillegg til å bli en sentral del av drivlinjen.
+
+\subsubsection{Produksjonsbiler}
+I personbiler er elektrisk KERS i dag vanlig, selv om det sjelden kalles det. Alle hybrid- og elbiler bruker regenerativ bremsing, der elmotoren fungerer som generator og lader batteriet når bilen bremser. Få produksjonsbiler bruker selve KERS-navnet. Det mest kjente eksempelet er Ferrari LaFerrari fra 2013, Ferraris første hybridbil, der systemet \emph{HY-KERS} er utviklet med erfaring fra Formel 1. En elmotor på \SI{120}{kW} samarbeider med en V12-motor og kan også fungere som generator \parencite{marelli_hykers}.
+
+Svinghjulsbasert KERS har ikke nådd serieproduksjon i personbiler. Volvo testet i 2014 et mekanisk system fra Flybrid på bakakselen til en S60, med et svinghjul av karbonfiber som roterte med opptil \num{60000}~o/min. Systemet ga omtrent \SI{80}{hk} ekstra og kunne ifølge Volvo redusere drivstofforbruket med opptil \SI{25}{\percent} sammenlignet med en tilsvarende sekssylindret motor \parencite{autoexpress_volvo}. Mulige årsaker til at teknologien ikke ble tatt videre, er at svinghjulet krever plass og en kraftig innkapsling dersom det skulle gå i stykker, og at friksjon i lagrene tapper energien i løpet av minutter. Et batteri kan derimot holde på energien over lang tid, og batteriene er blitt både billigere og bedre. Det samme tapet gjennom friksjon i lagrene avgjør også hvor langt bilen i dette prosjektet kjører.
+
+\subsubsection{Svingmasse i kraftsystemet}
+En mindre opplagt anvendelse finnes i kraftverkene. I et vannkraftverk er turbinen koblet direkte til en synkrongenerator, og rotasjonshastigheten er bundet til nettfrekvensen på \SI{50}{Hz}. Alle disse roterende delene fungerer sammen som et stort svinghjul. Statnett omtaler den kinetiske energien som lagres i dem, som svingmasse eller inerti. Når forbruk og produksjon plutselig kommer i ubalanse, for eksempel når et kraftverk faller ut, hentes energi automatisk fra de roterende massene. Det bremser endringen i frekvens og gir reguleringen tid til å reagere \parencite{statnett_2023}. Energien gjenvinnes ikke fra en oppbremsing slik som i en bil, men prinsippet er det samme som i KERS: kinetisk energi lagres i en roterende masse, tas ut når det trengs, og bygges opp igjen når det er overskudd.
+
+Vind- og solkraft kobles til nettet gjennom kraftelektronikk og har ingen slik svingmasse \parencite{statnett_2023}. Når andelen fornybar kraft øker, bygges det derfor egne svinghjul for å stabilisere nettet. Statkraft driver et anlegg i Liverpool med to svinghjul på \SI{40}{tonn}, koblet til synkronkompensatorer \parencite{energydaily_2025}, og i Stephentown i USA regulerer 200 svinghjul frekvensen i nettet med til sammen \SI{20}{MW} \parencite{beacon_stephentown}.
+
+En viktig forskjell fra bilen er at maskinene i et kraftverk må holde nesten konstant turtall for at frekvensen skal holde seg innenfor et smalt område. Bare en liten del av den lagrede energien kan derfor tas ut. I bilen kan svinghjulet bremses helt ned, slik at all energien i prinsippet er tilgjengelig.
+
+\subsubsection{Betydning for prosjektet}
+Eksemplene viser at mekanisk energilagring i svinghjul gir høy effekt over kort tid, men at energien går tapt gjennom friksjon hvis den ikke brukes raskt. Et mekanisk system er likevel enkelt å bygge i liten skala, og er derfor et naturlig valg for en mekanisk lekebil. I dette prosjektet tilføres energien ved opptrekk med tråd i stedet for ved oppbremsing. Bilen demonstrerer dermed lagrings- og tilbakeføringsdelen av et svinghjulsbasert KERS: energien lagres i svinghjulet og overføres via en utveksling til drivhjulene.
 
 \subsection{Svinghjul som energilager}
 Et svinghjul med treghetsmoment $I$ om rotasjonsaksen som roterer med vinkelhastighet $\omega$, har rotasjonsenergien
@@ -15,24 +37,14 @@ Et svinghjul med treghetsmoment $I$ om rotasjonsaksen som roterer med vinkelhast
     E_k = \frac{1}{2} I \omega^2 .
     \label{eq:rotasjonsenergi}
 \end{equation}
-For en massiv sirkulær skive med masse $m$, radius $r$ og tykkelse $t$ er
+For en massiv sirkulær skive med masse $m$ og radius $r$ er
 \begin{equation}
-    I = \frac{1}{2} m r^2, \qquad m = \rho \pi r^2 t ,
+    I = \frac{1}{2} m r^2 .
     \label{eq:treghetsmoment}
 \end{equation}
-der $\rho$ er materialets densitet. Innsatt gir dette $I = \frac{1}{2}\rho \pi t r^4$. Den lagrede energien øker altså med kvadratet av vinkelhastigheten og med fjerde potens av radien. Siden svinghjulet er gitt i dette prosjektet, er vinkelhastigheten etter opptrekk den viktigste parameteren for hvor mye energi som lagres.
+Den lagrede energien øker altså med kvadratet av vinkelhastigheten. Den øker også sterkt med radien, fordi massen selv vokser med $r^2$ ved gitt tykkelse. Siden svinghjulet er gitt i dette prosjektet, er vinkelhastigheten etter opptrekk den viktigste parameteren for hvor mye energi som lagres.
 
-\subsubsection{Regneeksempel}
-Det utdelte svinghjulet er av stål med diameter \SI{60}{mm} og tykkelse \SI{6}{mm}, altså $r = \SI{0,030}{m}$ og $t = \SI{0,006}{m}$. Med $\rho = \SI{7850}{kg/m^3}$ og svinghjulet regnet som en massiv skive gir likning~\eqref{eq:treghetsmoment}
-\begin{align*}
-    m &= \rho \pi r^2 t = 7850 \cdot \pi \cdot 0{,}030^2 \cdot 0{,}006 \approx \SI{0,133}{kg} , \\
-    I &= \frac{1}{2} m r^2 = \frac{1}{2} \cdot 0{,}133 \cdot 0{,}030^2 \approx \SI{6,0e-5}{kg.m^2} .
-\end{align*}
-Ved et antatt turtall på \SI{3000}{o/min} er $\omega = 3000 \cdot 2\pi/60 \approx \SI{314}{rad/s}$, og likning~\eqref{eq:rotasjonsenergi} gir
-\begin{equation*}
-    E_k = \frac{1}{2} \cdot 6{,}0 \cdot 10^{-5} \cdot 314^2 \approx \SI{3,0}{J} .
-\end{equation*}
-Ved \SI{1000}{o/min} er energien bare omtrent \SI{0,33}{J}, mens den ved \SI{5000}{o/min} er omtrent \SI{8,2}{J}. Svinghjulsakselen (\SI{6}{mm} $\times$ \SI{65}{mm}) har et treghetsmoment på omtrent \SI{6,5e-8}{kg.m^2}, omtrent \SI{0,1}{\percent} av svinghjulets, og kan neglisjeres. Turtallet bilen faktisk oppnår etter opptrekk, må bestemmes ved testing.
+Det utdelte svinghjulet er en stålskive med diameter \SI{60}{mm} og tykkelse \SI{6}{mm}. Regnet som en massiv skive gir likning~\eqref{eq:treghetsmoment} $I \approx \SI{6,0e-5}{kg.m^2}$. Ved \SI{3000}{o/min} lagrer svinghjulet da omtrent \SI{3}{J}. Dobles turtallet, firedobles energien. Svinghjulsakselen har et treghetsmoment på omtrent \SI{0,1}{\percent} av svinghjulets og kan neglisjeres. Turtallet bilen faktisk oppnår etter opptrekk, må bestemmes ved testing.
 
 \subsection{Energioverføring til drivhjulene}
 Svinghjulet driver hjulene gjennom en utveksling $i = \omega_s / \omega_h$, der $\omega_s$ og $\omega_h$ er vinkelhastigheten til henholdsvis svinghjulet og drivhjulene. Med drivhjulsradius $r_h$ blir bilens hastighet \parencite{harkegaard_2004}
