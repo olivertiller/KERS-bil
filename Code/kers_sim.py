@@ -176,7 +176,11 @@ def tilpass_utsnurring(serier, I):
     data = [(t - t[0], rpm * 2 * math.pi / 60) for t, rpm in serier]
     skala = np.array([1e-3, 1e-6, 1e-8])  # størrelsesorden for målt tap; for små skalaer satt fast
     rest = lambda q: np.concatenate([_modell(q * skala, t, w[0], I) - w for t, w in data])
-    res = least_squares(rest, x0=[1.0, 1.0, 1.0], bounds=(0, np.inf))
+    # Startgjetning fra snittmomentet i målingene. En fast gjetning på ~1 mNm stopper modellskiva
+    # altfor tidlig når tapet er lite (SKF-lagrene, 0,2 mNm), og da blir løseren sittende fast.
+    t_snitt = np.mean([I * (w[0] - w[-1]) / t[-1] for t, w in data])
+    x0 = [0.7 * t_snitt / skala[0], 0.15 * t_snitt / 100 / skala[1], 0.15 * t_snitt / 100**2 / skala[2]]
+    res = least_squares(rest, x0=x0, bounds=(0, np.inf))
     p = res.x * skala
     return p, [_modell(p, t, w[0], I) for t, w in data]
 

@@ -7,6 +7,7 @@ Skriver PDF-er til Rapport/Images/Maling/:
   utsnurring_referanse.pdf  referanseserien (tannhjulet koblet) med tilpasset tapsmodell
   tapsmoment.pdf          tapsmoment mot turtall, tannhjulet koblet og frakoblet
   sim_maalte_tap.pdf      simulert distanse mot utveksling med antatte og målte tap
+  lagervarianter.pdf      tapsmoment mot turtall for tre lagervarianter, tannhjulet frakoblet
 Tallene som skrives ut, er de som står i rapporten.
 """
 
@@ -28,7 +29,11 @@ UT = ROT / "Rapport" / "Images" / "Maling"
 ML1 = DATA / "diagnose_20261105_171409.csv"  # drill, trinn 1, sensoren for nær
 REF = DATA / "diagnose_20261106_022052.csv"  # tannhjulet koblet, fett i lagrene
 FRA = DATA / "diagnose_20261106_022930_frakoblet.csv"  # tannhjulet frakoblet
+BAMBU = DATA / "diagnose_20261106_161745.csv"  # samme 626 2RS-lagre, tetningene ut, Bambu Lab-olje
+SKF = DATA / "diagnose_20261106_163914.csv"  # SKF Explorer 626, åpne lagre
 UTELAT_REF, UTELAT_FRA = (1, 5), (1,)
+LAGERVARIANTER = (("626 2RS med fett", FRA, UTELAT_FRA), ("626 2RS uten tetninger, olje", BAMBU, ()),
+                  ("SKF Explorer 626, åpent", SKF, ()))
 plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3})
 
 
@@ -134,6 +139,40 @@ def fig_sim(p):
     plt.close(fig)
 
 
+def fig_lager():
+    """Tapsmoment mot turtall for de tre lagervariantene på svinghjulsakselen, logaritmisk akse."""
+    fig, ax = plt.subplots(figsize=(6.5, 4))
+    for k, (navn, fil, utelat) in enumerate(LAGERVARIANTER):
+        for j, (n, (t, rpm)) in enumerate(trekk(fil, utelat)):
+            W, M = moment_mot_turtall(t - t[0], rpm, vindu=16, steg=8)
+            ax.plot(W, M, ".", ms=1.5, color=f"C{k}", alpha=0.5, label=navn if j == 0 else None)
+    ax.set_yscale("log")
+    ax.set(xlabel="Turtall [o/min]", ylabel="Tapsmoment $I\\,\\mathrm{d}\\omega/\\mathrm{d}t$ [mNm]",
+           title="Lagrene på svinghjulsakselen, tannhjulet frakoblet", ylim=(0.05, 10))
+    ax.legend(fontsize=7, markerscale=6, loc="center right")
+    fig.tight_layout()
+    fig.savefig(UT / "lagervarianter.pdf")
+    plt.close(fig)
+    for navn, fil, utelat in LAGERVARIANTER[1:]:
+        rader = tid_1000_300(fil, utelat)
+        dt = np.array([r[3] for r in rader])
+        print(f"{navn}: trekk, topp [o/min], til stopp [s], 1000->300 [s], moment [mNm]")
+        for r in rader:
+            print(f"  {r[0]}  {r[1]:5.0f}  {r[2]:6.2f}  {r[3]:5.2f}  {r[4]:4.2f}")
+        topp = np.array([r[1] for r in rader])
+        print(f"  snitt 1000->300 {dt.mean():.2f} ± {dt.std(ddof=1):.2f} s ({dt.std(ddof=1) / dt.mean() * 100:.1f} %), "
+              f"moment {ks.Bil().I * 700 * math.pi / 30 / dt.mean() * 1e3:.2f} mNm, topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
+    p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(SKF, ())], ks.Bil().I)
+    print(f"SKF: c0 = {p[0] * 1e3:.3f} mNm, c1 = {p[1]:.1e}, c2 = {p[2]:.1e} N m s^2")
+    b = ks.Bil(r_h=0.034, J_hjul=2.9e-5, c0=p[0], c1=p[1], c2=p[2])
+    ii = np.arange(1.5, 10.01, 0.25)
+    for rpm in (2700, 4000):
+        d = [ks.simuler(b, x, rpm)["distanse"] for x in ii]
+        k = int(np.argmax(d))
+        print(f"SKF, {rpm} o/min: i = 4,29 gir {ks.simuler(b, 73 / 17, rpm)['distanse']:.1f} m, "
+              f"beste i = {ii[k]:.2f} gir {d[k]:.1f} m")
+
+
 def main():
     UT.mkdir(parents=True, exist_ok=True)
     fig_flanker()
@@ -150,6 +189,7 @@ def main():
               f"topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
     fig_moment()
     fig_sim(p)
+    fig_lager()
     print("Skrevet til", UT)
 
 

@@ -3,7 +3,7 @@
 
 \subsection{Utsnurring av svinghjulet}
 \label{sec:res-utsnurring}
-Utsnurringen er målt med ML-2 og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Begge seriene er tatt 6.~november 2026, med fett i lagrene og trommel TR-1. Rådata ligger i mappen
+Utsnurringen er målt med ML-2 og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Alle seriene er tatt 6.~november 2026. Alle er tatt med trommel TR-1. De to første er tatt med fett i lagrene, og de to siste med andre lagre på svinghjulsakselen og avstandshylsene montert (seksjon~\ref{sec:res-lager}). Rådata ligger i mappen
 \nolinkurl{Code/utsnurring_diagnose/data/}, og tabellene og figurene lages med \nolinkurl{Code/rapportfigurer.py}.
 
 \subsubsection{Referanseserie med tannhjulet koblet}
@@ -78,8 +78,47 @@ Uten tannhjulet går svinghjulet lenger, men spredningen er \SI{25}{\percent} mo
     \label{fig:tapsmoment}
 \end{figure}
 
+\subsubsection{Lagervarianter på svinghjulsakselen}
+\label{sec:res-lager}
+For å finne hvor mye av tapet som ligger i selve lagrene, ble utsnurringen med tannhjulet frakoblet gjentatt med to andre lagervarianter på svinghjulsakselen (seksjon~\ref{sec:problemlosning}). I den første er tetningene tatt ut av de opprinnelige 626 2RS-lagrene, fettet vasket ut med isopropanol, og lagrene smurt med Bambu Lab sin smøreolje for 3D-printere. I den andre er lagrene byttet til SKF Explorer 626, som er åpne lagre uten tetning eller skjold. Begge seriene er tatt med avstandshylsene montert, mens serien med fett er tatt uten dem. Ingen opptrekk er utelatt. Tabell~\ref{tab:lagervarianter} sammenligner snittene, og figur~\ref{fig:lagervarianter} viser tapsmomentet mot turtall for alle tre variantene.
+
+\begin{table}[H]
+    \centering
+    \caption{Utsnurring med tannhjulet frakoblet for tre lagervarianter på svinghjulsakselen. Snitt med standardavvik.}
+    \label{tab:lagervarianter}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Lager} & \textbf{Opptrekk} & \textbf{Topp} & \textbf{Til stopp} & \textbf{1000 til 300} & \textbf{Snittmoment} \\
+         & & \textbf{[o/min]} & \textbf{[s]} & \textbf{o/min [s]} & \textbf{[mN\,m]} \\
+        \hline
+        626 2RS med fett & 5 & 2080 ± 272 & 5,6--9,4 & 2,93 ± 0,73 & 1,50 \\
+        626 2RS uten tetninger, olje & 8 & 2453 ± 199 & 2,2--3,9 & 1,07 ± 0,09 & 4,11 \\
+        SKF Explorer 626, åpent & 5 & 2749 ± 123 & 88--110 & 23,8 ± 4,7 & 0,19 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/Maling/lagervarianter.pdf}
+    \caption{Tapsmoment mot turtall for de tre lagervariantene, regnet fra stigningstallet over 16 flanker. Merk den logaritmiske aksen.}
+    \label{fig:lagervarianter}
+\end{figure}
+
+Uten tetninger og med olje ble tapet nesten tre ganger så stort som med fett, selv om lagrene gikk lettere når de ble snurret for hånd. Tapet sank jevnt fra \SI{4,98}{mN.m} i første opptrekk til \SI{3,84}{mN.m} i det siste. Med SKF-lagrene falt tapet til \SI{0,19}{mN.m}, omtrent en åttendedel av fettvarianten og en tjuendedel av oljevarianten, og svinghjulet snurret i halvannet til nesten to minutter etter hvert opptrekk. Tapet er nesten uavhengig av turtallet, og tilpasningen gir
+\begin{equation}
+    c_0 = \SI{0,14}{mN.m}, \qquad c_1 = \SI{8e-8}{N.m.s}, \qquad c_2 \approx 0.
+    \label{eq:tapsmodell-skf}
+\end{equation}
+Spredningen i tiden fra 1000 til \SI{300}{o/min} er \SI{19,7}{\percent}. Første opptrekk har høyest tap, \SI{0,24}{mN.m}, mens de andre ligger mellom 0,15 og \SI{0,21}{mN.m}. Spredningen er altså fortsatt stor med avstandshylsene på, men den absolutte forskjellen mellom opptrekkene er bare omtrent \SI{0,1}{mN.m}.
+
 \subsubsection{Simulering med målte tap}
 Figur~\ref{fig:sim-maalte-tap} viser simulert kjøredistanse med de antatte tapene og med tapsmodellen fra likning~\eqref{eq:tapsmodell-maalt}, både fra \SI{4000}{o/min} og fra \SI{2700}{o/min}, som er snittet for opptrekk med snor. Begge regner med Ø68-hjul og treghetsmomentet til fire hjul fra DH-2. Med antatte tap og \SI{4000}{o/min} kjører bilen \SI{35,4}{m} med $i = 4{,}29$. Med målte tap og \SI{2700}{o/min} kjører den \SI{3,1}{m} med samme utveksling, og beste utveksling flytter seg til $i \approx 3$ med \SI{3,3}{m}. Simuleringen fra \SI{4000}{o/min} med målte tap, \SI{5,1}{m}, bygger på et $c_2$-ledd som er ekstrapolert utenfor måleområdet.
+
+Med tapsmodellen for SKF-lagrene fra likning~\eqref{eq:tapsmodell-skf} kjører bilen \SI{17,5}{m} fra \SI{2700}{o/min} og \SI{38,1}{m} fra \SI{4000}{o/min} med $i = 4{,}29$. Beste utveksling er da $i \approx 6{,}5$, med 18,7 og \SI{40,5}{m}. Denne modellen inneholder bare svinghjullagrene. Tapet i tannhjulsinngrepet og i lagrene på drivakselen og forakselen er bare med gjennom den antatte virkningsgraden og rullemotstanden, så tallene er en øvre grense.
 
 \begin{figure}[H]
     \centering
