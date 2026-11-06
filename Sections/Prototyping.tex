@@ -1,6 +1,6 @@
 \subsection{Prototyping og produksjon}
 \label{sec:prototyping}
-De fysiske delene utvikles i fire serier etter metoden i seksjon~\ref{sec:iterativ-prototyping}: lagersete (LS), feste av nav på aksel (NV), snortrommel (TR) og drivhjul med dekk (DH). Alle bygger på DV-3 fra seksjon~\ref{sec:dv-serien}. Figur~\ref{fig:prototype} viser prototypen slik den er brukt i utsnurringstestene, med 3D-printet ramme, svinghjul, tannhjulspar og måleoppsett.
+De fysiske delene utvikles i fire serier etter metoden i seksjon~\ref{sec:iterativ-prototyping}: lagersete (LS), feste av nav på aksel (NV), snortrommel (TR) og drivhjul med dekk (DH). Alle bygger på DV-3 fra seksjon~\ref{sec:dv-serien}. Figur~\ref{fig:prototype} viser prototypen slik den er brukt i utsnurringstestene, med den generative rammen fra seksjon~\ref{sec:gd-ramme}, svinghjul, tannhjulspar og måleoppsett.
 
 \begin{figure}[H]
     \centering
@@ -22,9 +22,11 @@ De fysiske delene utvikles i fire serier etter metoden i seksjon~\ref{sec:iterat
 
 \subsubsection{Lagersete (LS)}
 \label{sec:ls-serien}
-De fire 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i sideplatene. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. \textcite{espedal_2024} fant at hull fra 3D-printer ble 0,5--\SI{0,8}{mm} mindre enn tegnet, så målene på tegningen kan ikke brukes direkte. Serien starter derfor med en prøvebit, LS-0, med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Prøvebiten har også glidehull for forakselen fra Ø6,1 til Ø6,5 mm. Den lages med samme produksjonsmetode og innstillinger som sideplatene. Hullene måles med skyvelære, og lageret og akselen prøves i hvert hull. Det hullet som gir best pasning, bestemmer målet i LS-1, som er setet i selve sideplaten.
+De seks 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i rammen. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. \textcite{espedal_2024} fant at hull fra 3D-printer ble 0,5--\SI{0,8}{mm} mindre enn tegnet, så målene på tegningen kan ikke brukes direkte. Serien starter derfor med en prøvebit, LS-0, med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Prøvebiten har også glidehull for forakselen fra Ø6,1 til Ø6,5 mm. Den lages med samme produksjonsmetode og innstillinger som sideplatene. Hullene måles med skyvelære, og lageret og akselen prøves i hvert hull. Det hullet som gir best pasning, bestemmer målet i LS-1, som er setet i selve rammen.
 
-Hovedtesten er at lageret sitter fast og går lett (R13). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R10), og at akslene blir parallelle når begge sideplatene er montert.
+Hovedtesten er at lageret sitter fast og går lett (R13). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R10), og at akslene blir parallelle i rammen.
+
+Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett til fem hakk og printet i samme retning som rammen (figur~\ref{fig:lager-proevering}). Ø19,0 gikk inn, men stramt, og Ø19,1 var litt romslig. Ø19,1 er brukt i rammen (seksjon~\ref{sec:gd-ramme}).
 
 \begin{figure}[H]
     \centering
