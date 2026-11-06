@@ -4,19 +4,85 @@
 \label{sec:ml-serien}
 Turtallet til svinghjulet måles for å finne tapene i lagrene og luftmotstanden på skiva, og for å sammenligne opptrekkene i TR-serien. Måleoppsettet utvikles i versjoner på samme måte som delene på bilen.
 
-I ML-1 sitter en US1881 Hall-sensor ved siden av svinghjulet, og to magneter sitter rett overfor hverandre i trommelflensen. Den ene vender sydpolen mot sensoren og den andre nordpolen. Sensoren slår seg på av sydpolen og av av nordpolen, slik at den gir én puls per omdreining, og hjulet er balansert. En Arduino registrerer tidspunktet for hver puls med et avbrudd og skriver tidene til en PC over seriell port. Tidene lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
+I ML-1 sitter to magneter i en \SI{3}{mm} tykk skive av PLA på svinghjulsakselen, på pinjongsiden. Magnetene står 180° fra hverandre, den ene med sydpolen og den andre med nordpolen ut mot sensoren, så skiva er balansert. Sensoren er en US1881 Hall-latch. Den slår seg på når sydpolen passerer og av når nordpolen passerer, og holder tilstanden imellom. Mikrokontrolleren er en XIAO ESP32-C6. US1881 trenger minst \SI{3,5}{V}, så den forsynes med \SI{5}{V} fra USB. Utgangen er en åpen kollektor, og den interne pull-up-motstanden i ESP32 drar den til \SI{3,3}{V}, så inngangen aldri får \SI{5}{V}. Et avbrudd på fallende flanke registrerer tidspunktet med mikrosekundoppløsning, som gir én puls per omdreining. Tidene sendes til en PC over USB og lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
 
-Hovedtesten er at alle omdreininger registreres uten tapte pulser, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 pulser i sekundet. Turtallet kontrolleres mot en uavhengig måling, for eksempel en optisk turtallsmåler eller sakte film. En mulig ML-2 har en sensor også på drivakselen. Da kan turtallet til svinghjulet og drivhjulene sammenlignes, og sluret ved nedsetting i DH-serien måles direkte.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/magnetskive.jpg}
+        \caption{Magnetskiva med de to magnetene}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/ml_sensor.jpg}
+        \caption{ESP32-C6 med sensoren over magnetskiva}
+    \end{subfigure}
+    \caption{Måleoppsettet på pinjongsiden av svinghjulet.}
+    \label{fig:ml-foto}
+\end{figure}
 
-\begin{comment}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Images/Foto/ml_oppsett.jpg}
+    \caption{Utsnurringstesten med PC-en som tar imot og plotter dataene.}
+    \label{fig:ml-oppsett}
+\end{figure}
+
+Hovedtesten er at alle omdreininger registreres riktig, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 omdreininger i sekundet. ML-1 ble prøvd med svinghjulet drevet av en drill på laveste trinn, maksimalt \SI{500}{o/min}. For å se hva sensoren gjorde, ble det laget en egen diagnoseversjon av programmet som registrerer begge flankene og hvilken pol som ga dem. Den viste seks flanker per omdreining, i et fast mønster på 43, 10 og \SI{16}{ms} (figur~\ref{fig:ml-flanker}). Sensoren sto så nær at den også reagerte på feltet ved kanten av hver magnet, som har motsatt retning av feltet midt over magneten. ML-1 er derfor mislykket.
+
+I ML-2 er sensoren flyttet lenger fra magnetene, og diagnoseversjonen er beholdt som måleprogram. Den gir to målepunkter per omdreining i stedet for ett. Over mer enn 1500 flanker kom sydpol og nordpol annenhver gang uten unntak, og tiden fra sydpol til nordpol var i snitt 1,003 ganger tiden fra nordpol til sydpol. Magnetene står altså 180° fra hverandre, og sensoren ser hver av dem nøyaktig én gang. Turtallet er ikke kontrollert mot en uavhengig måling ennå.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/Maling/ml_flanker.pdf}
+    \caption{Tid mellom flankene fra Hall-sensoren. I ML-1 (til venstre, drill på omtrent \SI{430}{o/min}) gir hver magnet tre flanker. I ML-2 (til høyre, under en utsnurring) kommer flankene jevnt, to per omdreining.}
+    \label{fig:ml-flanker}
+\end{figure}
+
 \begin{versjonstabell}{ML-1}{tab:ml1}
     \hovedtest
-    Alle omdreininger registreres, også ved høyeste turtall & \\
+    Alle omdreininger registreres riktig & Mislykket, 6 flanker per omdreining \\
     \tilleggstester
-    Turtallet stemmer med uavhengig måling & \\
-    Sensor og magneter sitter gjennom en testserie & \\
+    Turtallet stemmer med uavhengig måling & Ikke prøvd \\
+    Sensor og magneter sitter gjennom en testserie & Vellykket \\
 \end{versjonstabell}
-\end{comment}
+
+\begin{versjonstabell}{ML-2}{tab:ml2}
+    \hovedtest
+    Alle omdreininger registreres riktig, opp til \SI{3100}{o/min} & Vellykket \\
+    \tilleggstester
+    Turtallet stemmer med uavhengig måling & Ikke prøvd \\
+    Sensor og magneter sitter gjennom en testserie & Vellykket \\
+    Magnetene står 180° fra hverandre & Vellykket, forhold 1,003 \\
+\end{versjonstabell}
+
+En mulig ML-3 har en sensor også på drivakselen. Da kan turtallet til svinghjulet og drivhjulene sammenlignes, og sluret ved nedsetting i DH-serien måles direkte.
+
+\subsubsection{Opptrekk med drill}
+Opptrekk med snor gir bare omtrent \SI{2700}{o/min} (seksjon~\ref{sec:tr-serien}). For å måle tapene nær \SI{4000}{o/min} er det laget et friksjonshjul som spennes i en drill og trykkes ned mot kanten av svinghjulet, som stikker \SI{14}{mm} over veggene (figur~\ref{fig:drillhjul}). Hjulet har PLA-felg med TPU-dekk og en sekskantstamme med nøkkelvidde \SI{10}{mm} for chucken. Svinghjulet får turtallet $n_\text{drill} \cdot D / \SI{60}{mm}$, der $D$ er diameteren til friksjonshjulet. Drillen (Makita DDF483) går med 500 eller \SI{1700}{o/min} uten last på de to trinnene, så hjul med diameter 60, 100 og \SI{140}{mm} dekker fra 500 til omtrent \SI{4000}{o/min}. Drillen holdes på fullt pådrag, fordi turtallet da er stabilt. Den løftes bort fra svinghjulet før avtrekkeren slippes, ellers bremser motorbremsen svinghjulet. Oppsettet er laget, men ikke prøvd.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/Prototyper/drillhjul.png}
+    \caption{Friksjonshjul for drillen i tre størrelser, snitt langs aksen med svinghjulet under. Turtallene gjelder svinghjulet med drillen uten last.}
+    \label{fig:drillhjul}
+\end{figure}
+
+\subsubsection{Behandling av utsnurringsdata}
+\label{sec:utsnurring-behandling}
+Hvert opptrekk gir en serie med flanketider $t_k$. Turtallet regnes over en hel omdreining, $n_k = 60/(t_{k+2} - t_k)$ i o/min, så små feil i plasseringen av magnetene ikke gir rippel. Fila fra en testserie deles i enkeltopptrekk der det går mer enn \SI{1}{s} mellom flankene. Opptrekk som aldri når \SI{300}{o/min}, eller der turtallet stiger igjen underveis, er dreiing for hånd og tas ikke med. Hvert opptrekk starter i toppunktet, der løkka slipper. De første \SI{0,3}{s} etter toppunktet kuttes, fordi svinghjulet da bremses ekstra hardt, med 6 til \SI{15}{mN.m}, uansett turtall. Det skyldes trolig at løkka drar i trommelen før den er helt fri, og det hører ikke med i tapsmodellen.
+
+Tapsmodellen tilpasses alle opptrekkene i en serie samtidig, med minste kvadraters metode. For hvert sett med $c_0$, $c_1$ og $c_2$ løses $I \dot\omega = -T_\text{tap}(\omega)$ numerisk fra starten av hvert opptrekk, og avviket mot de målte turtallene minimeres. Treghetsmomentet til svinghjulet og akselen er $I = \SI{6,0e-5}{kg.m^2}$. For å sammenligne opptrekk med ulikt toppturtall brukes tiden fra 1000 til \SI{300}{o/min} og snittmomentet i dette vinduet, $T = I \Delta\omega / \Delta t$. Alle opptrekk lagres, og opptrekk som utelates, begrunnes i resultatene.
+
+Feilkildene er:
+\begin{itemize}
+    \item Med tannhjulet koblet inneholder $c_0$ også tapet i tannhjulsinngrepet og i lagrene på drivakselen. Simuleringen trekker i tillegg fra en virkningsgrad for tannhjulene, så dette tapet telles delvis to ganger, og simulert distanse blir litt for kort.
+    \item Svinghjulsakselen kan gli sideveis og gnisse, som gir ulikt tap fra opptrekk til opptrekk (seksjon~\ref{sec:problemlosning}).
+    \item Modellen er bare tilpasset opp til høyeste målte turtall. Leddet $c_2 \omega^2$ ekstrapoleres når simuleringen starter høyere.
+    \item Treghetsmomentet er regnet fra målene og ikke målt. En feil i $I$ gir samme relative feil i alle momentene.
+\end{itemize}
 
 \begin{comment}
 \subsection{Mål for testen}
