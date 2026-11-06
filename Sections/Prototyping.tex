@@ -112,14 +112,14 @@ Under den første utsnurringsserien løsnet klemnavet på trommelen. Trommelen s
 \label{sec:tr-serien}
 Svinghjulet spinnes opp med \SI{20}{cm} snor rundt en trommel på svinghjulsakselen. Ved \SI{4000}{o/min} har svinghjulet energien $E = \frac{1}{2} I \omega^2 \approx \SI{5,3}{J}$. Over \SI{20}{cm} snor tilsvarer det en snittkraft på $E/L \approx \SI{26}{N}$, uavhengig av trommelens diameter. Trommelradien $r_t$ bestemmer derimot hvor fort snora må trekkes, siden $v = \omega r_t$. En mindre trommel gir høyere turtall ved samme trekkhastighet, men kraften som trengs underveis øker. Hypotesen er at én trommeldiameter gir høyest turtall for et opptrekk for hånd.
 
-TR-1 til TR-3 har kjerne med diameter \SI{12}{mm}, \SI{14}{mm} og \SI{18}{mm}, og ellers lik utforming (figur~\ref{fig:snortrommel}). Snora legges i et sagtannhakk i kjernen. Hakket har en bratt vegg som løkka tar tak i under opptrekket, og en rampe på den andre siden, slik at løkka glir av når snora er trukket helt ut. Den indre flensen har en senkning for sveisekransen mellom svinghjulet og akselen. Innsiden av den ytre flensen har 45° helning, så trommelen kan printes uten support. Trommelen festes med klemnavet fra NV-1. Magnetene til måleoppsettet sitter ikke i trommelen, men i en egen skive på den andre siden av svinghjulet (seksjon~\ref{sec:ml-serien}). Trommelen veier 3,9 til \SI{6,4}{g}.
+TR-1 til TR-3 har kjerne med diameter \SI{12}{mm}, \SI{14}{mm} og \SI{18}{mm}, og ellers lik utforming. Figur~\ref{fig:snortrommel} er maskintegningen av TR-1. Snora festes med en løkke på en krok midt i kjernen, utformet som en knaggkrok: en stilk med en finger som peker mot rotasjonsretningen under opptrekket (detalj E). Så lenge snora trekker, holder fingeren løkka på plass. Når snora er trukket helt ut og trommelen spinner videre, snur trekket, og løkka glir av over fingertuppen av seg selv. Undersiden av kroken skrår 45°, så den printes uten support. Den indre flensen har en utsparing for sveisekransen mellom svinghjulet og akselen. Innsiden av den ytre flensen har 45° helning, så trommelen kan printes uten support. Trommelen festes med klemnavet fra NV-1. Magnetene til måleoppsettet sitter ikke i trommelen, men i en egen skive på den andre siden av svinghjulet (seksjon~\ref{sec:ml-serien}). Trommelen veier 3,7 til \SI{6,3}{g}.
 
-\begin{figure}[H]
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[width=0.85\textwidth]{Images/Prototyper/snortrommel.png}
-    \caption{Snortrommel TR-1 til TR-3. Øverst snitt langs aksen, nederst sett fra navenden med klemnavet og hakket for løkka (krok).}
+    \includegraphics[width=\textheight]{Images/Tegninger/TR-1.pdf}
+    \caption{Maskintegning av snortrommel TR-1. Snitt A--A langs aksen, C--C gjennom klemskruene, B--B gjennom kroken og detalj E av kroken.}
     \label{fig:snortrommel}
-\end{figure}
+\end{sidewaysfigure}
 
 Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R6) og repeterbarhet (R7). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen.
 
@@ -161,7 +161,7 @@ Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} r
 \label{sec:dh-serien}
 Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i DV-3. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. Halveres rullemotstandskoeffisienten fra 0,03 til 0,015, øker simulert distanse fra 38 til \SI{61}{m}, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{5}{\percent} lengre distanse. Et dekk bør derfor ha lav rullemotstand, og nok grep til at bilen går rett.
 
-Alle hjulene har samme nav (figur~\ref{fig:hjul}). Det har firkanthull fra NV-2 og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned. Serien prøver tre hjul:
+Alle hjulene har samme nav. Figur~\ref{fig:hjul} er maskintegningen av DH-2. Det har firkanthull fra NV-2 og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned. Serien prøver tre hjul:
 \begin{description}
     \item[DH-1: Bart hjul.] Hjulet i PLA uten dekk, med ytre diameter \SI{68}{mm}. Veier \SI{9,4}{g}.
     \item[DH-2: TPU-dekk.] En PLA-felg med sete på Ø65 og skuldre på begge sider, og et \SI{1,5}{mm} tykt dekk printet i TPU. Dekket har \SI{0,6}{mm} mindre indre diameter enn setet og strekkes over felgen. Ferdig diameter er \SI{68}{mm}, og felg og dekk veier til sammen \SI{8,8}{g}.
@@ -186,12 +186,12 @@ Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ for DH-2 og $\SI{2,6e-5}
     \label{fig:felg-foto}
 \end{figure}
 
-\begin{figure}[H]
+\begin{sidewaysfigure}
     \centering
-    \includegraphics[width=0.85\textwidth]{Images/Prototyper/hjul.png}
-    \caption{Drivhjul DH-2 sett fra utsiden, og snitt langs aksen av DH-2 (felg med TPU-dekk) og DH-1 (bart hjul).}
+    \includegraphics[width=\textheight]{Images/Tegninger/DH-2.pdf}
+    \caption{Maskintegning av drivhjul DH-2 med felg (pos.~1) og TPU-dekk (pos.~2). DH-1 har samme nav og eiker, men er et bart hjul med ytre diameter \SI{68}{mm}.}
     \label{fig:hjul}
-\end{figure}
+\end{sidewaysfigure}
 
 Hovedtesten er kjøredistanse med minst 10 kjøringer per dekk (R6, R7). Tilleggstester er sideavvik (R8), at dekket sitter på hjulet gjennom hele testserien, og hvor lenge hjulene slurer ved nedsetting. Resultatene brukes også til å kontrollere rullemotstanden som er antatt i simuleringen.
 
