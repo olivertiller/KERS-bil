@@ -141,6 +141,7 @@ def tab_lagerplan(p_ref):
              ("  + ett SKF foran (trehjuling), 0,07 mNm", ekstra(skf, 0.07e-3)),
              ("  + par tørre 626 2RS uten tetninger foran, 0,6 mNm", ekstra(skf, 0.6e-3)),
              ("Tørre 626 2RS på alle akslene (kjøretesten), 0,6 mNm per hjulaksel", ekstra(torr, 1.2e-3)),
+             ("SKF på svinghjulsakselen, tørre 626 2RS på hjulakslene, 0,6 mNm per par", ekstra(skf, 1.2e-3)),
              ("Tørre 626 2RS på alle akslene (kjøretesten), 1,5 mNm per hjulaksel", ekstra(torr, 3.0e-3)))
     print(f"Lagerplan, {rpm} o/min, i = 4,29:")
     for navn, b in rader:

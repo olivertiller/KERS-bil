@@ -1,75 +1,9 @@
 \section{Testmetode}
 \label{sec:metode}
-\subsection{Måleoppsett for turtall}
+\subsection{Måling av tap i lagrene}
 \label{sec:ml-serien}
-Turtallet til svinghjulet måles for å finne tapene i lagrene og luftmotstanden på skiva, og for å sammenligne opptrekk med ulike tromler. Måleoppsettet utvikles i versjoner på samme måte som delene på bilen.
-
-I det første oppsettet sitter to magneter i en \SI{3}{mm} tykk skive av PLA på svinghjulsakselen, på pinjongsiden. Magnetene står 180° fra hverandre, den ene med sydpolen og den andre med nordpolen ut mot sensoren, så skiva er balansert. Sensoren er en US1881 Hall-latch. Den slår seg på når sydpolen passerer og av når nordpolen passerer, og holder tilstanden imellom. Mikrokontrolleren er en XIAO ESP32-C6. US1881 trenger minst \SI{3,5}{V}, så den forsynes med \SI{5}{V} fra USB. Utgangen er en åpen kollektor, og den interne pull-up-motstanden i ESP32 drar den til \SI{3,3}{V}, så inngangen aldri får \SI{5}{V}. Et avbrudd på fallende flanke registrerer tidspunktet med mikrosekundoppløsning, som gir én puls per omdreining. Tidene sendes til en PC over USB og lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.36\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Images/Foto/magnetskive.jpg}
-        \caption{Magnetskiva med de to magnetene}
-    \end{subfigure}
-    \hspace{1.5em}
-    \begin{subfigure}[b]{0.36\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Images/Foto/ml_sensor.jpg}
-        \caption{ESP32-C6 med sensoren over magnetskiva}
-    \end{subfigure}
-    \caption{Måleoppsettet på pinjongsiden av svinghjulet.}
-    \label{fig:ml-foto}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.42\textwidth]{Images/Foto/ml_oppsett.jpg}
-    \caption{Utsnurringstesten med PC-en som tar imot og plotter dataene.}
-    \label{fig:ml-oppsett}
-\end{figure}
-
-Hovedtesten er at alle omdreininger registreres riktig, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 omdreininger i sekundet. Oppsettet ble prøvd med svinghjulet drevet av en drill på laveste trinn, maksimalt \SI{500}{o/min}. For å se hva sensoren gjorde, ble det laget en egen diagnoseversjon av programmet som registrerer begge flankene og hvilken pol som ga dem. Den viste seks flanker per omdreining, i et fast mønster på 43, 10 og \SI{16}{ms} (figur~\ref{fig:ml-flanker}). Sensoren sto så nær at den også reagerte på feltet ved kanten av hver magnet, som har motsatt retning av feltet midt over magneten. Det første oppsettet er derfor mislykket.
-
-I det andre oppsettet er sensoren flyttet lenger fra magnetene, og diagnoseversjonen er beholdt som måleprogram. Den gir to målepunkter per omdreining i stedet for ett. Over mer enn 1500 flanker kom sydpol og nordpol annenhver gang uten unntak, og tiden fra sydpol til nordpol var i snitt 1,003 ganger tiden fra nordpol til sydpol. Magnetene står altså 180° fra hverandre, og sensoren ser hver av dem nøyaktig én gang. Turtallet er ikke kontrollert mot en uavhengig måling ennå.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Images/Maling/ml_flanker.pdf}
-    \caption{Tid mellom flankene fra Hall-sensoren. I det første oppsettet (til venstre, drill på omtrent \SI{430}{o/min}) gir hver magnet tre flanker. I det andre (til høyre, under en utsnurring) kommer flankene jevnt, to per omdreining.}
-    \label{fig:ml-flanker}
-\end{figure}
-
-\begin{versjonstabell}{det første måleoppsettet}{tab:ml1}
-    \hovedtest
-    Alle omdreininger registreres riktig & Mislykket, 6 flanker per omdreining \\
-    \tilleggstester
-    Turtallet stemmer med uavhengig måling & Ikke prøvd \\
-    Sensor og magneter sitter gjennom en testserie & Vellykket \\
-\end{versjonstabell}
-
-\begin{versjonstabell}{det andre måleoppsettet}{tab:ml2}
-    \hovedtest
-    Alle omdreininger registreres riktig, opp til \SI{3100}{o/min} & Vellykket \\
-    \tilleggstester
-    Turtallet stemmer med uavhengig måling & Ikke prøvd \\
-    Sensor og magneter sitter gjennom en testserie & Vellykket \\
-    Magnetene står 180° fra hverandre & Vellykket, forhold 1,003 \\
-\end{versjonstabell}
-
-\subsubsection{Behandling av utsnurringsdata}
 \label{sec:utsnurring-behandling}
-Hvert opptrekk gir en serie med flanketider $t_k$. Turtallet regnes over en hel omdreining, $n_k = 60/(t_{k+2} - t_k)$ i o/min, så små feil i plasseringen av magnetene ikke gir rippel. Fila fra en testserie deles i enkeltopptrekk der det går mer enn \SI{1}{s} mellom flankene. Opptrekk som aldri når \SI{300}{o/min}, eller der turtallet stiger igjen underveis, er dreiing for hånd og tas ikke med. Hvert opptrekk starter i toppunktet, der løkka slipper. De første \SI{0,3}{s} etter toppunktet kuttes, fordi svinghjulet da bremses ekstra hardt, med 6 til \SI{15}{mN.m}, uansett turtall. Det skyldes trolig at løkka drar i trommelen før den er helt fri, og det hører ikke med i tapsmodellen.
-
-For å sammenligne opptrekk med ulikt toppturtall brukes tiden fra 1000 til \SI{300}{o/min} og snittmomentet i dette vinduet etter likning~\eqref{eq:snittmoment}, med $I = \SI{6,0e-5}{kg.m^2}$ for svinghjulet og akselen. For at simuleringen skal kunne bruke de målte tapene, tilpasses i tillegg en tapsmodell $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til alle opptrekkene i en serie med minste kvadraters metode. Alle opptrekk lagres, og opptrekk som utelates, begrunnes i resultatene.
-
-Feilkildene er:
-\begin{itemize}
-    \item Med tannhjulet koblet inneholder det målte tapet også tannhjulsinngrepet og lagrene på drivakselen.
-    \item Svinghjulsakselen kan gli sideveis og gnisse, som gir ulikt tap fra opptrekk til opptrekk (seksjon~\ref{sec:problemlosning}).
-    \item Treghetsmomentet er regnet fra målene og ikke målt. En feil i $I$ gir samme relative feil i alle momentene.
-\end{itemize}
+For å velge lagre ble tapet på svinghjulsakselen målt med utsnurring (seksjon~\ref{sec:teori-friksjon}). Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen. En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned med likning~\eqref{eq:snittmoment}, med $I = \SI{6,0e-5}{kg.m^2}$ for svinghjulet og akselen. Opptrekk med ulikt toppturtall sammenlignes med tiden fra 1000 til \SI{300}{o/min}. De fleste seriene er tatt med tannhjulet frakoblet, så de viser bare tapet i lagrene på svinghjulsakselen. Måleoppsettet, behandlingen av dataene og tilpasningen av en tapsmodell for simuleringen er beskrevet i arbeidet for MAST2007, der målingene brukes videre.
 
 \subsection{Første kjøretest}
 \label{sec:metode-kjoretest}
