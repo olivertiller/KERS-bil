@@ -1,10 +1,10 @@
 \section{Testmetode}
 \label{sec:metode}
-\subsection{Måleoppsett for turtall (ML)}
+\subsection{Måleoppsett for turtall}
 \label{sec:ml-serien}
-Turtallet til svinghjulet måles for å finne tapene i lagrene og luftmotstanden på skiva, og for å sammenligne opptrekkene i TR-serien. Måleoppsettet utvikles i versjoner på samme måte som delene på bilen.
+Turtallet til svinghjulet måles for å finne tapene i lagrene og luftmotstanden på skiva, og for å sammenligne opptrekk med ulike tromler. Måleoppsettet utvikles i versjoner på samme måte som delene på bilen.
 
-I ML-1 sitter to magneter i en \SI{3}{mm} tykk skive av PLA på svinghjulsakselen, på pinjongsiden. Magnetene står 180° fra hverandre, den ene med sydpolen og den andre med nordpolen ut mot sensoren, så skiva er balansert. Sensoren er en US1881 Hall-latch. Den slår seg på når sydpolen passerer og av når nordpolen passerer, og holder tilstanden imellom. Mikrokontrolleren er en XIAO ESP32-C6. US1881 trenger minst \SI{3,5}{V}, så den forsynes med \SI{5}{V} fra USB. Utgangen er en åpen kollektor, og den interne pull-up-motstanden i ESP32 drar den til \SI{3,3}{V}, så inngangen aldri får \SI{5}{V}. Et avbrudd på fallende flanke registrerer tidspunktet med mikrosekundoppløsning, som gir én puls per omdreining. Tidene sendes til en PC over USB og lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
+I det første oppsettet sitter to magneter i en \SI{3}{mm} tykk skive av PLA på svinghjulsakselen, på pinjongsiden. Magnetene står 180° fra hverandre, den ene med sydpolen og den andre med nordpolen ut mot sensoren, så skiva er balansert. Sensoren er en US1881 Hall-latch. Den slår seg på når sydpolen passerer og av når nordpolen passerer, og holder tilstanden imellom. Mikrokontrolleren er en XIAO ESP32-C6. US1881 trenger minst \SI{3,5}{V}, så den forsynes med \SI{5}{V} fra USB. Utgangen er en åpen kollektor, og den interne pull-up-motstanden i ESP32 drar den til \SI{3,3}{V}, så inngangen aldri får \SI{5}{V}. Et avbrudd på fallende flanke registrerer tidspunktet med mikrosekundoppløsning, som gir én puls per omdreining. Tidene sendes til en PC over USB og lagres som CSV, og simuleringsmodellen tilpasser tapsmomentet $T_\text{tap} = c_0 + c_1 \omega + c_2 \omega^2$ til den målte utsnurringen.
 
 \begin{figure}[H]
     \centering
@@ -30,18 +30,18 @@ I ML-1 sitter to magneter i en \SI{3}{mm} tykk skive av PLA på svinghjulsaksele
     \label{fig:ml-oppsett}
 \end{figure}
 
-Hovedtesten er at alle omdreininger registreres riktig, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 omdreininger i sekundet. ML-1 ble prøvd med svinghjulet drevet av en drill på laveste trinn, maksimalt \SI{500}{o/min}. For å se hva sensoren gjorde, ble det laget en egen diagnoseversjon av programmet som registrerer begge flankene og hvilken pol som ga dem. Den viste seks flanker per omdreining, i et fast mønster på 43, 10 og \SI{16}{ms} (figur~\ref{fig:ml-flanker}). Sensoren sto så nær at den også reagerte på feltet ved kanten av hver magnet, som har motsatt retning av feltet midt over magneten. ML-1 er derfor mislykket.
+Hovedtesten er at alle omdreininger registreres riktig, også ved høyeste turtall. Ved \SI{4000}{o/min} er det omtrent 67 omdreininger i sekundet. Oppsettet ble prøvd med svinghjulet drevet av en drill på laveste trinn, maksimalt \SI{500}{o/min}. For å se hva sensoren gjorde, ble det laget en egen diagnoseversjon av programmet som registrerer begge flankene og hvilken pol som ga dem. Den viste seks flanker per omdreining, i et fast mønster på 43, 10 og \SI{16}{ms} (figur~\ref{fig:ml-flanker}). Sensoren sto så nær at den også reagerte på feltet ved kanten av hver magnet, som har motsatt retning av feltet midt over magneten. Det første oppsettet er derfor mislykket.
 
-I ML-2 er sensoren flyttet lenger fra magnetene, og diagnoseversjonen er beholdt som måleprogram. Den gir to målepunkter per omdreining i stedet for ett. Over mer enn 1500 flanker kom sydpol og nordpol annenhver gang uten unntak, og tiden fra sydpol til nordpol var i snitt 1,003 ganger tiden fra nordpol til sydpol. Magnetene står altså 180° fra hverandre, og sensoren ser hver av dem nøyaktig én gang. Turtallet er ikke kontrollert mot en uavhengig måling ennå.
+I det andre oppsettet er sensoren flyttet lenger fra magnetene, og diagnoseversjonen er beholdt som måleprogram. Den gir to målepunkter per omdreining i stedet for ett. Over mer enn 1500 flanker kom sydpol og nordpol annenhver gang uten unntak, og tiden fra sydpol til nordpol var i snitt 1,003 ganger tiden fra nordpol til sydpol. Magnetene står altså 180° fra hverandre, og sensoren ser hver av dem nøyaktig én gang. Turtallet er ikke kontrollert mot en uavhengig måling ennå.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Images/Maling/ml_flanker.pdf}
-    \caption{Tid mellom flankene fra Hall-sensoren. I ML-1 (til venstre, drill på omtrent \SI{430}{o/min}) gir hver magnet tre flanker. I ML-2 (til høyre, under en utsnurring) kommer flankene jevnt, to per omdreining.}
+    \caption{Tid mellom flankene fra Hall-sensoren. I det første oppsettet (til venstre, drill på omtrent \SI{430}{o/min}) gir hver magnet tre flanker. I det andre (til høyre, under en utsnurring) kommer flankene jevnt, to per omdreining.}
     \label{fig:ml-flanker}
 \end{figure}
 
-\begin{versjonstabell}{ML-1}{tab:ml1}
+\begin{versjonstabell}{det første måleoppsettet}{tab:ml1}
     \hovedtest
     Alle omdreininger registreres riktig & Mislykket, 6 flanker per omdreining \\
     \tilleggstester
@@ -49,7 +49,7 @@ I ML-2 er sensoren flyttet lenger fra magnetene, og diagnoseversjonen er beholdt
     Sensor og magneter sitter gjennom en testserie & Vellykket \\
 \end{versjonstabell}
 
-\begin{versjonstabell}{ML-2}{tab:ml2}
+\begin{versjonstabell}{det andre måleoppsettet}{tab:ml2}
     \hovedtest
     Alle omdreininger registreres riktig, opp til \SI{3100}{o/min} & Vellykket \\
     \tilleggstester

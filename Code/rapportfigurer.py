@@ -61,13 +61,13 @@ def fig_flanker():
     d1 = np.diff(t1) * 1e3
     a = len(d1) // 2
     ax[0].plot(np.arange(30), d1[a:a + 30], "o-", ms=3)
-    ax[0].set(xlabel="Flanke nr.", ylabel="Tid til neste flanke [ms]", title="ML-1: sensoren for nær, 6 flanker per omdreining")
+    ax[0].set(xlabel="Flanke nr.", ylabel="Tid til neste flanke [ms]", title="Første oppsett: sensoren for nær, 6 flanker per omdreining")
     t2 = flanker(REF)
     biter = [b for b in np.split(t2, np.where(np.diff(t2) > 1.0)[0] + 1) if len(b) > 100]
     d2 = np.diff(biter[2]) * 1e3  # trekk 3, midt i utsnurringen
     b = len(d2) // 3
     ax[1].plot(np.arange(30), d2[b:b + 30], "o-", ms=3, color="C1")
-    ax[1].set(xlabel="Flanke nr.", title="ML-2: sensoren flyttet, 2 flanker per omdreining")
+    ax[1].set(xlabel="Flanke nr.", title="Andre oppsett: sensoren flyttet, 2 flanker per omdreining")
     ax[1].set_ylim(0, None)
     fig.tight_layout()
     fig.savefig(UT / "ml_flanker.pdf")

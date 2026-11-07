@@ -3,7 +3,7 @@
 
 \subsection{Utsnurring av svinghjulet}
 \label{sec:res-utsnurring}
-Utsnurringen er målt med ML-2 og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Alle seriene er tatt 6.~november 2026. Alle er tatt med trommel TR-1. De to første er tatt med fett i lagrene, og de to siste med andre lagre på svinghjulsakselen og avstandshylsene montert (seksjon~\ref{sec:res-lager}). Rådata ligger i mappen
+Utsnurringen er målt med det andre måleoppsettet og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Alle seriene er tatt 6.~november 2026. Alle er tatt med Ø12-trommelen. De to første er tatt med fett i lagrene, og de to siste med andre lagre på svinghjulsakselen og avstandshylsene montert (seksjon~\ref{sec:res-lager}). Rådata ligger i mappen
 \nolinkurl{Code/utsnurring_diagnose/data/}, og tabellene og figurene lages med \nolinkurl{Code/rapportfigurer.py}.
 
 \subsubsection{Referanseserie med tannhjulet koblet}
@@ -74,7 +74,7 @@ Spredningen i tiden fra 1000 til \SI{300}{o/min} er \SI{19,7}{\percent}. Første
 
 \subsubsection{Simulert distanse med målte tap}
 \label{sec:res-sim-lager}
-For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{eq:tapsmodell-maalt} og \eqref{eq:tapsmodell-skf} satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}). Alle tallene i tabell~\ref{tab:lagerplan} er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor, med $i = 4{,}29$, Ø68-hjul og treghetsmomentet til fire hjul fra DH-2. Lagrene foran er regnet om til ekstra rullemotstand $T/r_h$ (seksjon~\ref{sec:teori-friksjon}), med \SI{1,3}{mN.m} for et par 626 2RS med fett, midt i det målte området, og \SI{0,14}{mN.m} for et par SKF-lagre. Lagrene på drivakselen og tannhjulsinngrepet er bare med gjennom den antatte virkningsgraden, så tallene er en øvre grense og brukes til å sammenligne alternativene.
+For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{eq:tapsmodell-maalt} og \eqref{eq:tapsmodell-skf} satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}). Alle tallene i tabell~\ref{tab:lagerplan} er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor, med $i = 4{,}29$, Ø68-hjul og treghetsmomentet til fire hjul med TPU-dekk. Lagrene foran er regnet om til ekstra rullemotstand $T/r_h$ (seksjon~\ref{sec:teori-friksjon}), med \SI{1,3}{mN.m} for et par 626 2RS med fett, midt i det målte området, og \SI{0,14}{mN.m} for et par SKF-lagre. Lagrene på drivakselen og tannhjulsinngrepet er bare med gjennom den antatte virkningsgraden, så tallene er en øvre grense og brukes til å sammenligne alternativene.
 
 \begin{table}[H]
     \centering
