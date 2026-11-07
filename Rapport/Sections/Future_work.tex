@@ -1,7 +1,8 @@
 \subsection{Videre arbeid våren 2027}
 
 \subsubsection{Forbedringsforslag: trehjulsbil med ett lager foran}
-Målingene i seksjon~\ref{sec:res-lager} viser at lagrene står for en stor del av tapet. En trehjulsbil med ett forhjul trenger bare ett lager foran, for eksempel i navet på et hjul som sitter på en fast aksel i en gaffel. Bilen får da fem lagre i stedet for seks, ett hjul mindre å akselerere ved nedsetting og lavere masse. Med det simuleringsgrunnlaget som er brukt i seksjon~\ref{sec:disk-lager}, fra \SI{2700}{o/min} og $i = 4{,}29$, gir ett 626 2RS-lager foran \SI{14,3}{m} mot \SI{12,1}{m} med to. Med SKF-lagre er gevinsten liten, \SI{17,1}{m} mot \SI{16,7}{m}. Forslaget er derfor mest verdt når lagrene foran er dårlige, og vekten og treghetsmomentet som spares, er da et tillegg.
+\label{sec:videre-trehjul}
+Målingene i seksjon~\ref{sec:res-lager} viser at lagrene står for en stor del av tapet. En trehjulsbil med ett forhjul trenger bare ett lager foran, for eksempel i navet på et hjul som sitter på en fast aksel i en gaffel. Bilen får da fem lagre i stedet for seks, ett hjul mindre å akselerere ved nedsetting og lavere masse. Med det simuleringsgrunnlaget som er brukt i seksjon~\ref{sec:disk-lager}, fra \SI{2700}{o/min} og $i = 4{,}29$, gir ett 626 2RS-lager foran \SI{15,2}{m} mot \SI{12,8}{m} med to. Med SKF-lagre er gevinsten liten, \SI{18,1}{m} mot \SI{17,7}{m} (tabell~\ref{tab:lagerplan}). Forslaget er derfor mest verdt når lagrene foran er dårlige, og vekten og treghetsmomentet som spares, er da et tillegg.
 
 Ulempene må vurderes mot dette:
 \begin{itemize}
@@ -13,28 +14,13 @@ Ulempene må vurderes mot dette:
 Forslaget kan testes med en utskiftbar front, slik at samme bil kjøres med to forhjul og med ett. Begge variantene måles med minst ti kjøringer for distanse (R6, R7) og sideavvik (R8).
 
 \subsubsection{Forbedringsforslag: tohjuling med svinghjulet i styringen}
-Et steg videre er en sykkellignende doning med to hjul etter hverandre. Den trenger bare fire lagre: to for svinghjulsakselen og ett i hvert hjul. Hvis oppgaven tillater en tohjuling, er hovedproblemet å holde den oppreist.
+Et steg videre er en sykkellignende doning med to hjul etter hverandre, som bare trenger fire lagre. Et svinghjul som sitter fast i rammen, holder ikke doningen oppreist: når den heller, gir gyroeffekten en dreining om den loddrette aksen i stedet for å rette den opp. Sitter svinghjulet i en forgaffel som kan dreie, kan den samme effekten derimot styre gaffelen inn mot helningen, slik en sykkel holder seg oppreist uten fører. Det er et nytt konsept, og om det kan bli stabilt i denne størrelsen, må modelleres før noe bygges. Forslaget tas med som en mulig del av den dynamiske analysen i MAST2007.
 
-Svinghjulet har et spinn $L = I\omega \approx \SI{0,017}{N.m.s}$ ved \SI{2700}{o/min}, men det holder ikke doningen oppreist hvis det sitter fast i rammen. Når rammen heller, gir veltemomentet $\tau$ en presesjon om den loddrette aksen med vinkelhastighet $\tau / L$. Svinghjulet vil altså dreie doningen i stedet for å rette den opp. Med $m = \SI{0,25}{kg}$, tyngdepunkt \SI{35}{mm} over underlaget og \SI{10}{\degree} helning er $\tau \approx m g h \theta \approx \SI{0,015}{N.m}$, som gir nesten \SI{1}{rad/s}. Hjulene kan ikke følge denne dreiningen uten å styre, så dreiemomentet tas opp av underlaget, og doningen velter omtrent som uten svinghjul. Effekten blir også svakere etter hvert som svinghjulet bremser ned.
-
-Effekten kan i stedet brukes til å stabilisere. Sitter svinghjulet i en forgaffel som kan dreie, styrer presesjonen gaffelen inn mot helningen. Det er samme mekanisme som bidrar til at en sykkel holder seg oppreist uten fører. Svinghjulet må da også drive forhjulet, så hele drivverket ligger i gaffelen. Det gir et nytt konsept, ikke en endring av dagens bil.
-
-To forhold gjør dette usikkert:
+\subsubsection{Dynamisk analyse i MAST2007}
+Den samme bilen brukes videre i MAST2007 våren 2027. Simuleringen er i høst bare brukt til å sammenligne alternativer, og følgende er utsatt til da:
 \begin{itemize}
-    \item \textbf{Fartsområdet.} En sykkel er bare selvstabil innenfor et fartsområde. For referansesykkelen til \textcite{meijaard_2007} er det 4,3 til \SI{6,0}{m/s}. Innenfor lengdekravet på \SI{140}{mm} gir Ø68-hjul en akselavstand på høyst omtrent \SI{72}{mm}, mot \SI{1,02}{m} for referansesykkelen. Hvis området skaleres med kvadratroten av akselavstanden (Froude-skalering, som bare er et grovt anslag), blir det omtrent 1,1 til \SI{1,6}{m/s}. Med SKF-lagrene og opptrekk til \SI{2700}{o/min} er simulert toppfart \SI{1,64}{m/s}. Doningen er altså bare selvstabil i starten, og det meste av turen går under området.
-    \item \textbf{Styregeometrien.} \textcite{kooijman_2011} viste at selvstabilitet avhenger av hele geometrien og massefordelingen, ikke av én enkelt effekt. Et svinghjul med mye større spinn enn hjulene kan gjøre styringen så sterk at gaffelen slingrer.
+    \item Utledning av bevegelseslikningene for svinghjul, drivverk og bil, med sluret ved nedsetting, og validering mot kjøretestene.
+    \item Måling av rullemotstand og virkningsgrad i tannhjulsinngrepet, som nå er antatt og dominerer den simulerte distansen.
+    \item Tap ved turtall over \SI{3100}{o/min}, målt med svinghjulet drevet av en drill, og en sensor på drivakselen som kan måle sluret direkte.
+    \item Optimering av utvekslingen med målte tap i hele drivverket.
 \end{itemize}
-Før noe bygges, bør stabiliteten derfor modelleres, for eksempel med de lineariserte likningene til \textcite{meijaard_2007} utvidet med svinghjulet i gaffelen. Det passer med vårens vekt på dynamisk modellering. Med gode lagre er gevinsten i lagertap liten, så hovedgevinsten er lavere masse og færre hjul å akselerere.
-
-\begin{comment}
-\subsubsection{Foreløpig problemstilling}
-\begin{quote}
-Hvordan kan kjøredistansen til en svinghjulsdrevet lekebil forbedres gjennom dynamisk modellering, eksperimentell validering og iterative designendringer?
-\end{quote}
-\subsubsection{Beregningsgrunnlag og modellvalidering}
-Vårarbeidet skal bygge på høstens prototype og testdata. Det planlegges dynamiske og kinematiske beregninger, modellering av energioverføring og tap og sammenligning mellom beregnet og målt oppførsel. Omfang og modellforutsetninger avklares ved oppstart av vårsemesteret.
-\subsubsection{Iterasjon av prototypen}
-Modell og forsøk brukes til å prioritere forbedringer av drivverk, hjul, lager og øvrig konstruksjon. Endringer testes mot høstens referanse med en sammenlignbar prosedyre.
-\subsubsection{Grunnlag som overføres fra høsten}
-CAD-filer, tegninger, deleliste, prototypeversjoner, rådata, testprosedyre og dokumenterte svakheter samles slik at videre arbeid kan etterprøve og bygge på høstens resultater.
-\end{comment}

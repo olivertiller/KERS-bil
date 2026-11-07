@@ -6,7 +6,6 @@ Skriver PDF-er til Rapport/Images/Maling/:
   ml_flanker.pdf          tid mellom flankene i ML-1 (sensoren for nær) og ML-2
   utsnurring_referanse.pdf  referanseserien (tannhjulet koblet) med tilpasset tapsmodell
   tapsmoment.pdf          tapsmoment mot turtall, tannhjulet koblet og frakoblet
-  sim_maalte_tap.pdf      simulert distanse mot utveksling med antatte og målte tap
   lagervarianter.pdf      tapsmoment mot turtall for tre lagervarianter, tannhjulet frakoblet
 Tallene som skrives ut, er de som står i rapporten.
 """
@@ -118,25 +117,25 @@ def fig_moment():
     plt.close(fig)
 
 
-def fig_sim(p):
+def tab_lagerplan(p_ref):
+    """Simulert distanse fra 2700 o/min med i = 73/17 for lagerkonfigurasjonene i tab:lagerplan.
+    Tap i lagrene på en hjulaksel regnes om til ekstra rullemotstand T/r_h. Optimering av
+    utvekslingen (tidligere fig_sim / sim_maalte_tap.pdf) er flyttet til KERS-bil-dynamikkV27."""
     b0 = ks.Bil(r_h=0.034, J_hjul=2.9e-5)
-    bm = replace(b0, c0=p[0], c1=p[1], c2=p[2])
-    ii = np.arange(1.5, 10.01, 0.25)
-    fig, ax = plt.subplots(1, 2, figsize=(10, 3.4))
-    for a, b, tittel in ((ax[0], b0, "Antatte lagertap"), (ax[1], bm, "Målte tap (referanseserien)")):
-        for rpm in (4000, 2700):
-            d = [ks.simuler(b, x, rpm)["distanse"] for x in ii]
-            k = int(np.argmax(d))
-            r = ks.simuler(b, 73 / 17, rpm)["distanse"]
-            a.plot(ii, d, label=f"{rpm} o/min")
-            print(f"{tittel}, {rpm} o/min: i = 4,29 gir {r:.1f} m, beste i = {ii[k]:.2f} gir {d[k]:.1f} m")
-        a.axvline(73 / 17, color="k", ls=":", lw=0.8)
-        a.set(xlabel="Utveksling $i$", title=tittel)
-        a.legend(fontsize=7)
-    ax[0].set_ylabel("Simulert kjøredistanse [m]")
-    fig.tight_layout()
-    fig.savefig(UT / "sim_maalte_tap.pdf")
-    plt.close(fig)
+    p_skf, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(SKF, ())], ks.Bil().I)
+    ref = replace(b0, c0=p_ref[0], c1=p_ref[1], c2=p_ref[2])
+    skf = replace(b0, c0=p_skf[0], c1=p_skf[1], c2=p_skf[2])
+    i, rpm = 73 / 17, 2700
+    ekstra = lambda b, T: replace(b, C_rr=b.C_rr + T / b.r_h / (b.m * ks.g))
+    rader = (("Opprinnelige 626 2RS, tannhjulet koblet (referanseserien)", ref),
+             ("SKF på svinghjulsakselen, ingen andre lagertap", skf),
+             ("  + 626 2RS-par med fett foran, 1,3 mNm", ekstra(skf, 1.3e-3)),
+             ("  + ett 626 2RS foran (trehjuling), 0,65 mNm", ekstra(skf, 0.65e-3)),
+             ("  + SKF-par foran, 0,14 mNm", ekstra(skf, 0.14e-3)),
+             ("  + ett SKF foran (trehjuling), 0,07 mNm", ekstra(skf, 0.07e-3)))
+    print(f"Lagerplan, {rpm} o/min, i = 4,29:")
+    for navn, b in rader:
+        print(f"  {navn:60s} {ks.simuler(b, i, rpm)['distanse']:5.1f} m")
 
 
 def fig_lager():
@@ -164,13 +163,6 @@ def fig_lager():
               f"moment {ks.Bil().I * 700 * math.pi / 30 / dt.mean() * 1e3:.2f} mNm, topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
     p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(SKF, ())], ks.Bil().I)
     print(f"SKF: c0 = {p[0] * 1e3:.3f} mNm, c1 = {p[1]:.1e}, c2 = {p[2]:.1e} N m s^2")
-    b = ks.Bil(r_h=0.034, J_hjul=2.9e-5, c0=p[0], c1=p[1], c2=p[2])
-    ii = np.arange(1.5, 10.01, 0.25)
-    for rpm in (2700, 4000):
-        d = [ks.simuler(b, x, rpm)["distanse"] for x in ii]
-        k = int(np.argmax(d))
-        print(f"SKF, {rpm} o/min: i = 4,29 gir {ks.simuler(b, 73 / 17, rpm)['distanse']:.1f} m, "
-              f"beste i = {ii[k]:.2f} gir {d[k]:.1f} m")
 
 
 def main():
@@ -188,7 +180,7 @@ def main():
         print(f"  snitt 1000->300 {dt.mean():.2f} ± {dt.std(ddof=1):.2f} s ({dt.std(ddof=1) / dt.mean() * 100:.1f} %), "
               f"topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
     fig_moment()
-    fig_sim(p)
+    tab_lagerplan(p)
     fig_lager()
     print("Skrevet til", UT)
 

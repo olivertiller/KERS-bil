@@ -132,164 +132,87 @@ For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3
 
 \subsection{Generativ design av rammen}
 \label{sec:gd-ramme}
-Rammen bærer de seks lagrene og må holde de tre akslene parallelle. Samtidig skal den være lett, og den skal tåle at bilen holdes i hånda mens snora trekkes. I konseptene var rammen to sideplater (seksjon~\ref{sec:konseptutvikling}). Rammen i prototypen er i stedet laget med generativ design i Fusion og 3D-printet i PLA. En laserkuttet kropp i MDF ble også tegnet. Der måtte hver vegg limes av to lag på \SI{3}{mm} for å bli like tykk som lagrene. Den printede rammen kommer ferdig i ett stykke og sparer dette limearbeidet.
-
-Ved generativ design bestemmer konstruktøren hvilken geometri som må være med, hvor det ikke kan være materiale, hvilke laster delen skal tåle og hva som skal optimaliseres. Programmet genererer deretter former som oppfyller dette \parencite{autodesk_gd}. Fremgangsmåten bygger på kapittel 7 i rapporten fra en tidligere gruppe i emnet, som laget rammen sin på samme måte \parencite{kers_2026}. Rammen er utviklet i to versjoner, GD-1 og GD-2, med samme metode som de andre delene (seksjon~\ref{sec:iterativ-prototyping}).
+Rammen bærer de seks lagrene, må holde de tre akslene parallelle og skal tåle at bilen holdes i hånda mens snora trekkes. I stedet for sideplatene fra konseptene, eller en laserkuttet MDF-kropp der hver vegg måtte limes av to lag, er rammen laget med generativ design i Fusion og 3D-printet i PLA i ett stykke. Ved generativ design angir konstruktøren geometri som må være med, områder uten materiale, laster og mål, og programmet genererer former som oppfyller dette \parencite{autodesk_gd}. Fremgangsmåten bygger på en tidligere gruppe i emnet \parencite{kers_2026}.
 
 \subsubsection{Oppsett av studien}
-Oppsettet bygges av et Python-skript i Fusion. Alle mål hentes fra DV-3, slik at oppsettet kan bygges på nytt hvis drivverket endres. Geometrien er delt i tre grupper, vist i figur~\ref{fig:gd-oppsett} og~\ref{fig:fusion-oppsett}:
-\begin{description}
-    \item[Bevart geometri.] Fire lukkede lagerhus for bak- og forakselen, to U-seter for svinghjulslagrene og en tverrbjelke i full bredde foran og bak. Den fremre tverrbjelken er gripepunktet under opptrekk.
-    \item[Hindringer.] Hjul, aksler, lagre, svinghjul, tannhjul, pinjong, nav, trommel og snorbanen. I tillegg er det lagt inn baner der delene må passere under montering, og der en skrutrekker må komme til. Et innerrom midt i bilen holder midten åpen, slik at rammen blir et rektangel rundt drivverket.
-    \item[Grenser.] En boks på $140 \times 85 \times 70$ mm (R1) og \SI{3}{mm} bakkeklaring.
-\end{description}
-
-Svinghjulet er sveiset fast på akselen, og akselen er like lang som avstanden mellom yttersidene på lagrene. Det kan derfor ikke tres inn i lukkede lagerhus i en ramme som er printet i ett stykke. Svinghjulet senkes i stedet ned ovenfra med lagrene på akselendene, og to lagerlokk skrus over U-setene. Bak- og forakselen stikkes inn utenfra gjennom de lukkede lagerhusene.
+Oppsettet bygges av et Python-skript med målene fra DV-3, så det kan bygges på nytt hvis drivverket endres (figur~\ref{fig:fusion-oppsett}). Bevart geometri er fire lukkede lagerhus for bak- og forakselen, to U-seter for svinghjulslagrene og en tverrbjelke foran og bak. Hindringer er alle roterende deler, snorbanen og baner for montering og skrutrekker. Grensen er $140 \times 85 \times 70$ mm (R1). Svinghjulet er sveiset fast på akselen og kan ikke tres inn i lukkede lagerhus. Det senkes derfor ned ovenfra, og to lagerlokk skrus over U-setene.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\textwidth]{Images/Ramme/gd_oppsett.png}
-    \caption{Oppsettet for generativ design i tre riss. Grønt er bevart geometri, rødt er hindringer, oransje er lagerlokkene og stiplet linje er grensen på $140 \times 85 \times 70$ mm.}
-    \label{fig:gd-oppsett}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Images/Ramme/fusion_oppsett.png}
-    \caption{Oppsettet i Fusion, med hindringer i rødt og bevart geometri i grønt. Til venstre står de to studiene og de fem lasttilfellene i GD-2. Den gule pila er en av lastene i lasttilfellet for vridning.}
+    \includegraphics[width=0.85\textwidth]{Images/Ramme/fusion_oppsett.png}
+    \caption{Oppsettet i Fusion, med hindringer i rødt og bevart geometri i grønt. Til venstre står de fem lasttilfellene i GD-2. Den gule pila er en av lastene i lasttilfellet for vridning.}
     \label{fig:fusion-oppsett}
 \end{figure}
 
-Studien har fem lasttilfeller, vist i tabell~\ref{tab:gd-lasttilfeller}. Snorkraften i opptrekket er satt til \SI{50}{N}, som er det samme som den tidligere gruppen antok \parencite{kers_2026}. Snittkraften i et opptrekk til \SI{4000}{o/min} er omtrent \SI{26}{N} (seksjon~\ref{sec:tr-serien}), så \SI{50}{N} gir margin for toppen i trekket. De andre kreftene er anslått. Ved nedsetting er forakselen fri sideveis. Den tidligere gruppen fant at en ramme som var låst i sideretning, fikk altfor optimistisk stivhet \parencite{kers_2026}.
+Lasttilfellene står i tabell~\ref{tab:gd-lasttilfeller}. Snorkraften er satt til \SI{50}{N}, nesten dobbelt så mye som snittkraften på \SI{26}{N} i et opptrekk til \SI{4000}{o/min} (seksjon~\ref{sec:tr-serien}). De andre kreftene er anslått. Målet er størst mulig stivhet med massemål \SI{40}{g} og sikkerhetsfaktor 2. Studien regner med ABS, fordi Fusion ikke har PLA for generativ design, og kjøres for additiv produksjon med rammen liggende på siden, største overheng 45° og minste godstykkelse \SI{2}{mm}.
 
 \begin{table}[H]
     \centering
-    \caption{Lasttilfellene i studien for generativ design}
+    \caption{Lasttilfellene i studien. GD-1 har bare tilfelle 1--3.}
     \label{tab:gd-lasttilfeller}
     \small
-    \renewcommand{\arraystretch}{1.3}
+    \renewcommand{\arraystretch}{1.2}
     \begin{tabular}{|l|p{4.6cm}|p{5.4cm}|}
         \hline
         \textbf{Lasttilfelle} & \textbf{Innspenning} & \textbf{Last} \\
         \hline
         1. Opptrekk & Fremre tverrbjelke fast & \SI{25}{N} bakover i hvert U-sete \\
-        \hline
-        2. Nedsetting & Lagerhusene låst, de fremre fri sideveis & \SI{10}{N} nedover i hvert U-sete \\
-        \hline
+        2. Nedsetting & Lagerhusene låst, fremre fri sideveis & \SI{10}{N} nedover i hvert U-sete \\
         3. Sidestøt & Som tilfelle 2 & \SI{10}{N} sideveis på fremre tverrbjelke \\
-        \hline
         4. Klem bak & Fremre tverrbjelke fast & \SI{20}{N} innover på hvert bakre lagerhus \\
-        \hline
-        5. Vridning & Fremre tverrbjelke fast & \SI{10}{N} opp på det ene og \SI{10}{N} ned på det andre bakre lagerhuset \\
+        5. Vridning & Fremre tverrbjelke fast & \SI{10}{N} opp og \SI{10}{N} ned på de bakre lagerhusene \\
         \hline
     \end{tabular}
 \end{table}
 
-Målet er størst mulig stivhet med et massemål på \SI{40}{g} og sikkerhetsfaktor 2. Fusion har ikke PLA i materialbiblioteket for generativ design, så studien regner med ABS, slik den tidligere gruppen også gjorde. Sikkerhetsfaktoren dekker blant annet at en printet del er svakere mellom lagene enn i lagene. Studien kjøres både uten produksjonsbegrensning og for additiv produksjon. For additiv produksjon er byggeretningen satt langs bilens bredde, slik at rammen printes liggende på siden og lagerboringene blir runde. Største overheng er 45°, og minste godstykkelse er \SI{2}{mm}, som tilsvarer fem perimetre med \SI{0,4}{mm} dyse.
-
-\subsubsection{GD-1: Tre lasttilfeller}
-Den første studien hadde bare lasttilfelle 1 til 3. Resultatet var en åpen U-form, der den bakre tverrbjelken bare hang på en tynn stilk (figur~\ref{fig:gd1}). Grunnen var innspenningen. I tilfelle 2 og 3 er begge de bakre lagerhusene låst, og innspenningen virker da som en uendelig stiv bjelke mellom dem. Studien hadde derfor ingen grunn til å bruke materiale på en ekte bjelke bak. En åpen U er lite egnet, fordi den gir etter når bilen holdes bak under opptrekk, og fordi lagrene bak kan vris i forhold til hverandre. Det kan gi en mindre forutsigbar bane.
+\subsubsection{GD-1 og GD-2}
+GD-1 hadde bare lasttilfelle 1--3, og resultatet ble en åpen U der den bakre tverrbjelken hang på en tynn stilk (figur~\ref{fig:gd-utfall}a). Grunnen var innspenningen: i tilfelle 2 og 3 er begge de bakre lagerhusene låst, og det virker som en uendelig stiv bjelke mellom dem. En åpen U gir etter når bilen holdes under opptrekk, og lagrene bak kan vris i forhold til hverandre. GD-2 fikk derfor også tilfelle 4 og 5, der bare den fremre tverrbjelken holdes fast, så rammen selv må ta klem og vridning bak. Da ble rammen lukket (figur~\ref{fig:gd-utfall}b). Tabell~\ref{tab:gd} sammenligner de to versjonene.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.55\textwidth]{Images/Ramme/fusion_gd1.png}
-    \caption{Resultat 1 fra GD-1, uten produksjonsbegrensning. Uten lasttilfelle 4 og 5 ble rammen en åpen U, der den bakre tverrbjelken (nede til venstre) bare henger på en tynn stilk.}
-    \label{fig:gd1}
-\end{figure}
-
-\begin{versjonstabell}{GD-1}{tab:gd1}
-    \hovedtest
-    Lukket ramme rundt drivverket & Mislykket, åpen U \\
-    \tilleggstester
-    Rammen bærer lastene bak selv & Mislykket, innspenningen tok lastene \\
-\end{versjonstabell}
-
-\subsubsection{GD-2: Klem og vridning bak}
-\label{sec:gd2}
-GD-2 har i tillegg lasttilfelle 4 og 5. Begge holder bare den fremre tverrbjelken fast, så rammen må selv ta opp klemming og vridning bak. Da lønner det seg for studien å lukke rammen.
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Images/Ramme/fusion_gd2_utfall1.png}
-        \caption{Resultat 1, uten produksjonsbegrensning}
+        \includegraphics[width=\textwidth]{Images/Ramme/fusion_gd1.png}
+        \caption{GD-1: åpen U}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Images/Ramme/fusion_gd2_utfall2.png}
-        \caption{Resultat 2, additiv produksjon (valgt)}
+        \caption{GD-2: lukket ramme (valgt)}
     \end{subfigure}
-    \caption{To resultater fra GD-2. Med lasttilfelle 4 og 5 er rammen lukket, og den bakre tverrbjelken er bygd inn i sidene.}
-    \label{fig:gd2-utfall}
+    \caption{Resultater fra GD-1 og GD-2. Med lasttilfelle 4 og 5 er den bakre tverrbjelken bygd inn i sidene.}
+    \label{fig:gd-utfall}
 \end{figure}
-
-Tabell~\ref{tab:gd-resultater} sammenligner resultatene slik Fusion oppgir dem for ABS. Alle tre veier omtrent like mye, fordi massemålet styrer hvor mye materiale studien bruker. Spenningene er svært lave i begge. Den minste sikkerhetsfaktoren i GD-2 er 9,3 til 9,6, langt over kravet på 2. Det er derfor stivheten og minste godstykkelse som bestemmer formen, ikke styrken. GD-2 har dobbelt så høy spenning som GD-1, fordi klem og vridning bak nå bæres av rammen og ikke av innspenningen. Største forskyvning er 0,43 til \SI{0,45}{mm} i alle tre, men GD-1 og GD-2 har ulike lasttilfeller, så tallene kan ikke sammenlignes direkte.
 
 \begin{table}[H]
     \centering
-    \caption{Egenskaper for resultatene fra GD-1 og GD-2, regnet i ABS av Fusion}
-    \label{tab:gd-resultater}
+    \caption{Evaluering av GD-1 og GD-2. Masse, spenning og forskyvning er regnet i massiv ABS av Fusion.}
+    \label{tab:gd}
     \small
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|l|c|c|c|}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|c|c|}
         \hline
-        \textbf{Egenskap} & \textbf{GD-1, res.~1} & \textbf{GD-2, res.~1} & \textbf{GD-2, res.~2} \\
+        \textbf{Test} & \textbf{GD-1} & \textbf{GD-2} \\
         \hline
-        Produksjon & Fri & Fri & Additiv \\
+        Hovedtest: lukket ramme rundt drivverket & Mislykket, åpen U & Vellykket \\
         \hline
-        Form & Åpen U & Lukket & Lukket \\
-        \hline
-        Volum [\si{cm^3}] & 36,3 & 36,5 & 36,2 \\
-        \hline
-        Masse i ABS [g] & 38,5 & 38,7 & 38,3 \\
-        \hline
-        Største von Mises-spenning [MPa] & 1,0 & 2,1 & 2,2 \\
-        \hline
-        Minste sikkerhetsfaktor & 19,5 & 9,6 & 9,3 \\
-        \hline
-        Største forskyvning [mm] & 0,44 & 0,43 & 0,45 \\
+        Rammen bærer lastene bak selv & Mislykket & Vellykket \\
+        Masse i ABS, massemål \SI{40}{g} & \SI{38,5}{g} & \SI{38,3}{g} \\
+        Minste sikkerhetsfaktor, krav 2 & 19,5 & 9,3 \\
+        Største forskyvning & \SI{0,44}{mm} & \SI{0,45}{mm} \\
+        Innenfor $140 \times 85 \times 70$ mm (R1) & -- & $123{,}7 \times 65{,}5 \times 43{,}2$ mm \\
+        Ingen kollisjon med drivverket & -- & Vellykket \\
+        Svinghjulet kan tas ut uten å skille rammen (R10) & -- & Vellykket \\
+        Kan printes uten support (R13) & -- & Mislykket \\
         \hline
     \end{tabular}
 \end{table}
 
-Resultatene er sammenlignet på stivhet, masse og om de er realistiske å printe. Som hos den tidligere gruppen er et robust resultat valgt framfor det letteste \parencite{kers_2026}. Valgt resultat er nummer 2 fra GD-2, vist i figur~\ref{fig:gd2-utfall} og~\ref{fig:gd2-ramme}. Det er laget med begrensningene for additiv produksjon, med byggeretning langs bredden, og så ut til å være det mest printbare. Det har minst uregelmessig geometri mot byggeplaten. Stivheten og sikkerhetsfaktoren er nesten den samme som for resultat 1, så begrensningene for printing koster lite. Rammen måler $123{,}7 \times 65{,}5 \times 43{,}2$ mm. Etter at lagerboringene er utvidet (se under), har den ferdige modellen et volum på \SI{35,8}{cm^3}. I PLA, som er tyngre enn ABS, tilsvarer det omtrent \SI{44}{g} som massiv del. Rammen er printet med \SI{20}{\percent} fyll, og den printede rammen veier \SI{23}{g}. Det er omtrent halvparten av en massiv del. Formen har myke overganger uten skarpe hjørner, der spenningene ellers ville samlet seg.
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.55\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Images/Ramme/ramme_skraatt.png}
-        \caption{Skrått forfra}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Images/Ramme/ramme_side.png}
-        \caption{Fra siden}
-    \end{subfigure}
-    \caption{Valgt resultat fra GD-2, slik det ble printet. De fire lagerhusene er lukket, og svinghjulslagrene ligger i U-seter som lukkes med lagerlokk.}
-    \label{fig:gd2-ramme}
-\end{figure}
+Sikkerhetsfaktoren i GD-2 er langt over kravet, så det er stivheten og minste godstykkelse som bestemmer formen, ikke styrken. Forskyvningene kan ikke sammenlignes direkte, fordi versjonene har ulike lasttilfeller. Av resultatene i GD-2 er det med begrensninger for additiv produksjon valgt, fordi det så mest printbart ut og hadde nesten samme stivhet som resultatet uten begrensninger.
 
 \subsubsection{Fra resultat til printet ramme}
-Resultatet er gjort om til en vanlig CAD-modell med \emph{Create Design From Outcome}. Den bevarte geometrien beholdes nøyaktig, så lagerboringene blir Ø19,0 som i oppsettet. Prøveringene for lagersetet (seksjon~\ref{sec:ls-serien}) viste at Ø19,0 var stram og Ø19,1 litt romslig. Ø19,1 er valgt, fordi rammen kan slå seg litt under printing og gjøre boringene trangere. Boringene er utvidet i den ferdige modellen i stedet for å kjøre studien på nytt. Før printing ble rammen kontrollert mot drivverket med en kollisjonstest i Fusion, uten treff.
-
-Rammen er printet liggende på siden i PLA på en Bambu Lab H2S med \SI{0,4}{mm} dyse og \SI{20}{\percent} fyll. Den trengte support, selv om studien var satt opp for additiv produksjon med største overheng på 45°. Trolig er grunnen at begrensningen bare gjelder materialet studien legger til. Den bevarte geometrien, som lagerhusene, U-setene og tverrbjelkene, er tegnet uten hensyn til overheng. Fusion-dokumentet sto i centimeter, og den første eksporten som STL ble ti ganger for liten i sliceren. Rammen ble derfor eksportert som 3MF med millimeter som enhet. Lagerlokkene printes for seg og festes med fire M3 × 16-skruer, som skrus rett i Ø2,8-hull i PLA. Godset rundt hullene er bare 1,6 til \SI{1,9}{mm}, så skruene må skrus forsiktig inn første gang, slik at de former gjengene uten at PLA-en sprekker. Gjengeinnsatser fikk ikke plass. Figur~\ref{fig:prototype} viser rammen montert med drivverket.
-
-\begin{versjonstabell}{GD-2}{tab:gd2}
-    \hovedtest
-    Lukket ramme rundt drivverket & Vellykket \\
-    \tilleggstester
-    Innenfor $140 \times 85 \times 70$ mm, $123{,}7 \times 65{,}5 \times 43{,}2$ mm (R1) & Vellykket \\
-    Ingen kollisjon med drivverket & Vellykket \\
-    Svinghjulet kan monteres og tas ut uten å skille rammen (R10) & Vellykket \\
-    Masse i ABS \SI{38,3}{g}, massemål \SI{40}{g} & Vellykket \\
-    Printet masse \SI{23}{g} med \SI{20}{\percent} fyll & Vellykket \\
-    Minste sikkerhetsfaktor 9,3, krav 2 & Vellykket \\
-    Kan printes uten support (R13) & Mislykket, trengte support \\
-\end{versjonstabell}
+Lagerboringene er utvidet fra Ø19,0 til Ø19,1 etter prøveringene (seksjon~\ref{sec:ls-serien}), og rammen er kontrollert mot drivverket med en kollisjonstest i Fusion. Den er printet liggende på siden med \SI{20}{\percent} fyll og veier \SI{23}{g}. Den trengte likevel support, trolig fordi overhengsbegrensningen bare gjelder materialet studien legger til, ikke den bevarte geometrien. Lagerlokkene festes med M3-skruer rett i PLA, fordi gjengeinnsatser ikke fikk plass. Figur~\ref{fig:prototype} viser rammen montert.
 
 \subsubsection{Vurdering}
-Kreftene i studien er anslått, bortsett fra at snorkraften er kontrollert mot energien i et opptrekk. Studien regner med massiv ABS, mens rammen er printet i PLA med \SI{20}{\percent} fyll, og en printet del er svakere mellom lagene. Fyllet gjør rammen mindre stiv enn studien regner med. Sikkerhetsfaktoren på 9,3 gir god margin for styrken, men stivheten til den printede rammen er ikke målt. Overhengsbegrensningen i studien var ikke nok til å unngå support, så den bevarte geometrien bør også formes for printing i en senere versjon. Erfaringen fra GD-1 er at innspenningene betyr like mye som lastene: en innspenning som er stivere enn virkeligheten, fjerner behovet for materiale der det trengs. Under testingen viste det seg at svinghjulsakselen hadde for mye klaring sideveis, slik at trommelen kunne komme borti rammen. Det ble løst med avstandshylser og ikke med endringer i rammen (seksjon~\ref{sec:problemlosning}).
+Kreftene er anslått, og studien regner med massiv ABS, mens rammen er printet i PLA med \SI{20}{\percent} fyll og er svakere mellom lagene. Sikkerhetsfaktoren gir god margin for styrken, men stivheten til den printede rammen er ikke målt. Erfaringen fra GD-1 er at innspenningene betyr like mye som lastene: en innspenning som er stivere enn virkeligheten, fjerner materiale der det trengs. I en senere versjon bør også den bevarte geometrien formes for printing, så support unngås.

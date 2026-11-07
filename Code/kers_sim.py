@@ -46,7 +46,7 @@ class Bil:
     J_hjul: float = 0.0  # samlet treghetsmoment for alle hjul [kg m^2]
     C_rr: float = 0.03  # rullemotstandskoeffisient (antatt)
     eta_trinn: float = 0.95  # virkningsgrad per tannhjulstrinn (antatt)
-    n_trinn: int = 2  # antall tannhjulstrinn
+    n_trinn: int = 1  # antall tannhjulstrinn (DV-3 har ett: 17 : 73; var feilaktig 2 før 2026-11-07)
     mu: float = 0.6  # friksjon mellom dekk og underlag (antatt)
     andel_drivhjul: float = 0.5  # andel av vekten som hviler på drivhjulene
     c0: float = 2e-4  # konstant friksjonsmoment i lagrene [N m] (antatt, mål dette!)

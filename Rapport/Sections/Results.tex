@@ -7,29 +7,7 @@ Utsnurringen er målt med ML-2 og behandlet som beskrevet i seksjon~\ref{sec:uts
 \nolinkurl{Code/utsnurring_diagnose/data/}, og tabellene og figurene lages med \nolinkurl{Code/rapportfigurer.py}.
 
 \subsubsection{Referanseserie med tannhjulet koblet}
-I referanseserien griper pinjongen i tannhjulet, så drivakselen med de to drivhjulene snurrer med. Bilen er løftet, så hjulene går fritt. Serien har åtte opptrekk. Opptrekk 1 hadde omtrent \SI{1,8}{mN.m} tapsmoment, en tredjedel lavere enn de andre, uten at det er funnet noen forklaring. Det kan skyldes at noe satte seg etter at trommelen ble strammet. I opptrekk 5 hang løkka seg opp, og svinghjulet stoppet fra \SI{1080}{o/min} på under ett sekund. Begge er utelatt. De seks andre er vist i tabell~\ref{tab:utsnurring-koblet} og figur~\ref{fig:utsnurring-referanse}.
-
-\begin{table}[H]
-    \centering
-    \caption{Utsnurring med tannhjulet koblet. Toppturtallet er rett etter at løkka slipper.}
-    \label{tab:utsnurring-koblet}
-    \small
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \textbf{Opptrekk} & \textbf{Topp [o/min]} & \textbf{Til stopp [s]} & \textbf{1000 til 300 o/min [s]} & \textbf{Snittmoment [mN\,m]} \\
-        \hline
-        2 & 2166 & 3,88 & 1,66 & 2,66 \\
-        3 & 2830 & 4,96 & 1,66 & 2,65 \\
-        4 & 2281 & 4,20 & 1,61 & 2,74 \\
-        6 & 3030 & 5,16 & 1,66 & 2,66 \\
-        7 & 3125 & 4,76 & 1,56 & 2,83 \\
-        8 & 2791 & 5,14 & 1,74 & 2,54 \\
-        \hline
-        \textbf{Snitt} & \textbf{2704 ± 394} & & \textbf{1,65 ± 0,06} & \textbf{2,68} \\
-        \hline
-    \end{tabular}
-\end{table}
+I referanseserien griper pinjongen i tannhjulet, så drivakselen med de to drivhjulene snurrer med. Bilen er løftet, så hjulene går fritt. Serien har åtte opptrekk. Opptrekk 1 hadde omtrent \SI{1,8}{mN.m} tapsmoment, en tredjedel lavere enn de andre, uten at det er funnet noen forklaring. Det kan skyldes at noe satte seg etter at trommelen ble strammet. I opptrekk 5 hang løkka seg opp, og svinghjulet stoppet fra \SI{1080}{o/min} på under ett sekund. Begge er utelatt. De seks andre er vist i figur~\ref{fig:utsnurring-referanse}, og hvert opptrekk står i tabell~\ref{tab:utsnurring-koblet} i vedlegg~\ref{app:raadata}. Toppturtallet var \SI[separate-uncertainty=true]{2704 \pm 394}{o/min}, og svinghjulet brukte \SI[separate-uncertainty=true]{1,65 \pm 0,06}{s} fra 1000 til \SI{300}{o/min}. Det gir et snittmoment på \SI{2,68}{mN.m}.
 
 \begin{figure}[H]
     \centering
@@ -46,28 +24,7 @@ Tiden fra 1000 til \SI{300}{o/min} har et standardavvik på \SI{3,6}{\percent}, 
 Ved \SI{2700}{o/min} er de to leddene omtrent like store, \SI{2,35}{mN.m} og \SI{3,4}{mN.m}. Det konstante leddet er omtrent ti ganger det simuleringen antok fra før, $c_0 = \SI{0,2}{mN.m}$.
 
 \subsubsection{Tannhjulet frakoblet}
-For å skille tapet i svinghjullagrene fra tapet i tannhjulene og drivakselen ble tannhjulet koblet fra pinjongen. Serien har seks opptrekk. Opptrekk 1 er utelatt, fordi turtallet falt fra 2055 til \SI{1285}{o/min} på \SI{0,3}{s}, som tyder på at løkka hang seg opp. Resultatene er vist i tabell~\ref{tab:utsnurring-frakoblet}.
-
-\begin{table}[H]
-    \centering
-    \caption{Utsnurring med tannhjulet frakoblet.}
-    \label{tab:utsnurring-frakoblet}
-    \small
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \textbf{Opptrekk} & \textbf{Topp [o/min]} & \textbf{Til stopp [s]} & \textbf{1000 til 300 o/min [s]} & \textbf{Snittmoment [mN\,m]} \\
-        \hline
-        2 & 1709 & 6,97 & 3,27 & 1,35 \\
-        3 & 1987 & 6,85 & 2,83 & 1,56 \\
-        4 & 2362 & 5,56 & 2,40 & 1,83 \\
-        5 & 2007 & 9,44 & 3,99 & 1,10 \\
-        6 & 2335 & 5,65 & 2,17 & 2,03 \\
-        \hline
-        \textbf{Snitt} & \textbf{2080 ± 272} & & \textbf{2,93 ± 0,73} & \textbf{1,50} \\
-        \hline
-    \end{tabular}
-\end{table}
+For å skille tapet i svinghjullagrene fra tapet i tannhjulene og drivakselen ble tannhjulet koblet fra pinjongen. Serien har seks opptrekk. Opptrekk 1 er utelatt, fordi turtallet falt fra 2055 til \SI{1285}{o/min} på \SI{0,3}{s}, som tyder på at løkka hang seg opp. Hvert opptrekk står i tabell~\ref{tab:utsnurring-frakoblet} i vedlegg~\ref{app:raadata}. Toppturtallet var \SI[separate-uncertainty=true]{2080 \pm 272}{o/min}, og svinghjulet brukte \SI[separate-uncertainty=true]{2,93 \pm 0,73}{s} fra 1000 til \SI{300}{o/min}, som gir \SI{1,50}{mN.m}.
 
 Uten tannhjulet går svinghjulet lenger, men spredningen er \SI{25}{\percent} mot \SI{3,6}{\percent} i referanseserien. Figur~\ref{fig:tapsmoment} viser at hvert opptrekk holder et jevnt nivå hele veien ned, mens nivået varierer fra 1,1 til \SI{2,0}{mN.m} mellom opptrekkene. Spredningen er derfor ikke målestøy, men et tap som endrer seg fra gang til gang. Den sannsynlige årsaken er at svinghjulsakselen glir sideveis (seksjon~\ref{sec:problemlosning}). Ekstra gnissing kan bare øke tapet, så det laveste opptrekket, \SI{1,1}{mN.m}, er det beste anslaget for svinghjullagrene alene. Tannhjulene og drivakselen står da for omtrent $2{,}68 - 1{,}10 \approx \SI{1,6}{mN.m}$ av snittmomentet i referanseserien. Anslaget er usikkert til serien er gjentatt med avstandshylsene på plass.
 
@@ -115,17 +72,34 @@ Uten tetninger og med olje ble tapet nesten tre ganger så stort som med fett, s
 \end{equation}
 Spredningen i tiden fra 1000 til \SI{300}{o/min} er \SI{19,7}{\percent}. Første opptrekk har høyest tap, \SI{0,24}{mN.m}, mens de andre ligger mellom 0,15 og \SI{0,21}{mN.m}. Spredningen er altså fortsatt stor med avstandshylsene på, men den absolutte forskjellen mellom opptrekkene er bare omtrent \SI{0,1}{mN.m}.
 
-\subsubsection{Simulering med målte tap}
-Figur~\ref{fig:sim-maalte-tap} viser simulert kjøredistanse med de antatte tapene og med tapsmodellen fra likning~\eqref{eq:tapsmodell-maalt}, både fra \SI{4000}{o/min} og fra \SI{2700}{o/min}, som er snittet for opptrekk med snor. Begge regner med Ø68-hjul og treghetsmomentet til fire hjul fra DH-2. Med antatte tap og \SI{4000}{o/min} kjører bilen \SI{35,4}{m} med $i = 4{,}29$. Med målte tap og \SI{2700}{o/min} kjører den \SI{3,1}{m} med samme utveksling, og beste utveksling flytter seg til $i \approx 3$ med \SI{3,3}{m}. Simuleringen fra \SI{4000}{o/min} med målte tap, \SI{5,1}{m}, bygger på et $c_2$-ledd som er ekstrapolert utenfor måleområdet.
+\subsubsection{Simulert distanse med målte tap}
+\label{sec:res-sim-lager}
+For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{eq:tapsmodell-maalt} og \eqref{eq:tapsmodell-skf} satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}). Alle tallene i tabell~\ref{tab:lagerplan} er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor, med $i = 4{,}29$, Ø68-hjul og treghetsmomentet til fire hjul fra DH-2. Lagrene foran er regnet om til ekstra rullemotstand $T/r_h$ (seksjon~\ref{sec:teori-friksjon}), med \SI{1,3}{mN.m} for et par 626 2RS med fett, midt i det målte området, og \SI{0,14}{mN.m} for et par SKF-lagre. Lagrene på drivakselen og tannhjulsinngrepet er bare med gjennom den antatte virkningsgraden, så tallene er en øvre grense og brukes til å sammenligne alternativene.
 
-Med tapsmodellen for SKF-lagrene fra likning~\eqref{eq:tapsmodell-skf} kjører bilen \SI{17,5}{m} fra \SI{2700}{o/min} og \SI{38,1}{m} fra \SI{4000}{o/min} med $i = 4{,}29$. Beste utveksling er da $i \approx 6{,}5$, med 18,7 og \SI{40,5}{m}. Denne modellen inneholder bare svinghjullagrene. Tapet i tannhjulsinngrepet og i lagrene på drivakselen og forakselen er bare med gjennom den antatte virkningsgraden og rullemotstanden, så tallene er en øvre grense.
-
-\begin{figure}[H]
+\begin{table}[H]
     \centering
-    \includegraphics[width=\textwidth]{Images/Maling/sim_maalte_tap.pdf}
-    \caption{Simulert kjøredistanse mot utveksling med antatte og målte tap. Den stiplede linjen er $i = 73/17 = 4{,}29$ fra DV-3.}
-    \label{fig:sim-maalte-tap}
-\end{figure}
+    \caption{Simulert kjøredistanse fra \SI{2700}{o/min} med $i = 4{,}29$ for ulike lagerkombinasjoner.}
+    \label{tab:lagerplan}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|p{9.5cm}|r|}
+        \hline
+        \textbf{Lager} & \textbf{Distanse [m]} \\
+        \hline
+        Opprinnelige 626 2RS, tap fra referanseserien (tannhjulet koblet) & 3,1 \\
+        \hline
+        SKF på svinghjulsakselen, ingen tap i de andre lagrene & 18,5 \\
+        \hline
+        \quad + par 626 2RS med fett foran (planlagt) & 12,8 \\
+        \hline
+        \quad + ett 626 2RS foran (trehjuling, seksjon~\ref{sec:videre-trehjul}) & 15,2 \\
+        \hline
+        \quad + par SKF foran & 17,7 \\
+        \hline
+        \quad + ett SKF foran (trehjuling) & 18,1 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \begin{comment}
 % Testresultatene presenteres her. Tolkninger hører hjemme i diskusjonen.
