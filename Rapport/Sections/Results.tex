@@ -3,7 +3,7 @@
 
 \subsection{Utsnurring av svinghjulet}
 \label{sec:res-utsnurring}
-Utsnurringen er målt med det andre måleoppsettet og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Alle seriene er tatt 6.~november 2026. Alle er tatt med Ø12-trommelen. De to første er tatt med fett i lagrene, og de to siste med andre lagre på svinghjulsakselen og avstandshylsene montert (seksjon~\ref{sec:res-lager}). Rådata ligger i mappen
+Utsnurringen er målt med det andre måleoppsettet og behandlet som beskrevet i seksjon~\ref{sec:utsnurring-behandling}. Seriene er tatt 6.~november 2026, bortsett fra serien med tørre lagre, som er tatt natt til 7.~november. Alle er tatt med Ø12-trommelen. De to første er tatt med fett i lagrene, og de tre siste med andre lagre på svinghjulsakselen (seksjon~\ref{sec:res-lager}). Rådata ligger i mappen
 \nolinkurl{Code/utsnurring_diagnose/data/}, og tabellene og figurene lages med \nolinkurl{Code/rapportfigurer.py}.
 
 \subsubsection{Referanseserie med tannhjulet koblet}
@@ -37,11 +37,11 @@ Uten tannhjulet går svinghjulet lenger, men spredningen er \SI{25}{\percent} mo
 
 \subsubsection{Lagervarianter på svinghjulsakselen}
 \label{sec:res-lager}
-For å finne hvor mye av tapet som ligger i selve lagrene, ble utsnurringen med tannhjulet frakoblet gjentatt med to andre lagervarianter på svinghjulsakselen (seksjon~\ref{sec:problemlosning}). I den første er tetningene tatt ut av de opprinnelige 626 2RS-lagrene, fettet vasket ut med isopropanol, og lagrene smurt med Bambu Lab sin smøreolje for 3D-printere. I den andre er lagrene byttet til SKF Explorer 626, som er åpne lagre uten tetning eller skjold. Begge seriene er tatt med avstandshylsene montert, mens serien med fett er tatt uten dem. Ingen opptrekk er utelatt. Tabell~\ref{tab:lagervarianter} sammenligner snittene, og figur~\ref{fig:lagervarianter} viser tapsmomentet mot turtall for alle tre variantene.
+For å finne hvor mye av tapet som ligger i selve lagrene, ble utsnurringen med tannhjulet frakoblet gjentatt med tre andre lagervarianter på svinghjulsakselen (seksjon~\ref{sec:problemlosning}). I den første er tetningene tatt ut av de opprinnelige 626 2RS-lagrene, fettet vasket ut med isopropanol, og lagrene smurt med Bambu Lab sin smøreolje for 3D-printere. I den andre er lagrene byttet til SKF Explorer 626, som er åpne lagre uten tetning eller skjold. I den tredje er det 626 2RS-lagre uten tetninger og uten olje, de samme som ble brukt i kjøretesten (seksjon~\ref{sec:res-kjoretest}). Seriene med olje, SKF-lagre og tørre lagre er tatt med avstandshylsene montert, mens serien med fett er tatt uten dem. Ingen opptrekk er utelatt. Tabell~\ref{tab:lagervarianter} sammenligner snittene, og figur~\ref{fig:lagervarianter} viser tapsmomentet mot turtall for alle fire variantene.
 
 \begin{table}[H]
     \centering
-    \caption{Utsnurring med tannhjulet frakoblet for tre lagervarianter på svinghjulsakselen. Snitt med standardavvik.}
+    \caption{Utsnurring med tannhjulet frakoblet for fire lagervarianter på svinghjulsakselen. Snitt med standardavvik.}
     \label{tab:lagervarianter}
     \small
     \renewcommand{\arraystretch}{1.3}
@@ -53,6 +53,7 @@ For å finne hvor mye av tapet som ligger i selve lagrene, ble utsnurringen med 
         \hline
         626 2RS med fett & 5 & 2080 ± 272 & 5,6--9,4 & 2,93 ± 0,73 & 1,50 \\
         626 2RS uten tetninger, olje & 8 & 2453 ± 199 & 2,2--3,9 & 1,07 ± 0,09 & 4,11 \\
+        626 2RS uten tetninger, tørt & 6 & 2912 ± 197 & 22--37 & 6,17 ± 1,18 & 0,71 \\
         SKF Explorer 626, åpent & 5 & 2749 ± 123 & 88--110 & 23,8 ± 4,7 & 0,19 \\
         \hline
     \end{tabular}
@@ -61,7 +62,7 @@ For å finne hvor mye av tapet som ligger i selve lagrene, ble utsnurringen med 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Images/Maling/lagervarianter.pdf}
-    \caption{Tapsmoment mot turtall for de tre lagervariantene, regnet fra stigningstallet over 16 flanker. Merk den logaritmiske aksen.}
+    \caption{Tapsmoment mot turtall for de fire lagervariantene, regnet fra stigningstallet over 16 flanker. Merk den logaritmiske aksen.}
     \label{fig:lagervarianter}
 \end{figure}
 
@@ -72,9 +73,16 @@ Uten tetninger og med olje ble tapet nesten tre ganger så stort som med fett, s
 \end{equation}
 Spredningen i tiden fra 1000 til \SI{300}{o/min} er \SI{19,7}{\percent}. Første opptrekk har høyest tap, \SI{0,24}{mN.m}, mens de andre ligger mellom 0,15 og \SI{0,21}{mN.m}. Spredningen er altså fortsatt stor med avstandshylsene på, men den absolutte forskjellen mellom opptrekkene er bare omtrent \SI{0,1}{mN.m}.
 
+De tørre lagrene uten tetninger ble målt i to serier rett etter hverandre, med sju og seks opptrekk. En prøvekjøring med lave opptrekk før dem er ikke tatt med. Tapet sank jevnt gjennom begge seriene, fra \SI{1,53}{mN.m} i første opptrekk til \SI{0,61}{mN.m} i de to siste. Lagrene gikk seg altså til, og nivået ser ut til å flate ut rundt \SI{0,6}{mN.m}. Tabell~\ref{tab:lagervarianter} og tilpasningen bruker derfor bare den andre serien, som gir
+\begin{equation}
+    c_0 = \SI{0,38}{mN.m}, \qquad c_1 = \SI{7,1e-7}{N.m.s}, \qquad c_2 \approx 0.
+    \label{eq:tapsmodell-torr}
+\end{equation}
+Med tørre lagre er tapet under halvparten av tapet med fett og omtrent en sjettedel av tapet med olje, men fortsatt tre ganger tapet med SKF-lagrene.
+
 \subsubsection{Simulert distanse med målte tap}
 \label{sec:res-sim-lager}
-For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{eq:tapsmodell-maalt} og \eqref{eq:tapsmodell-skf} satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}). Alle tallene i tabell~\ref{tab:lagerplan} er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor, med $i = 4{,}29$, Ø68-hjul og treghetsmomentet til fire hjul med TPU-dekk. Lagrene foran er regnet om til ekstra rullemotstand $T/r_h$ (seksjon~\ref{sec:teori-friksjon}), med \SI{1,3}{mN.m} for et par 626 2RS med fett, midt i det målte området, og \SI{0,14}{mN.m} for et par SKF-lagre. Lagrene på drivakselen og tannhjulsinngrepet er bare med gjennom den antatte virkningsgraden, så tallene er en øvre grense og brukes til å sammenligne alternativene.
+For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{eq:tapsmodell-maalt}, \eqref{eq:tapsmodell-skf} og \eqref{eq:tapsmodell-torr} satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}). Alle tallene i tabell~\ref{tab:lagerplan} er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor, med $i = 4{,}29$, Ø68-hjul og treghetsmomentet til fire hjul med TPU-dekk. Lagrene foran er regnet om til ekstra rullemotstand $T/r_h$ (seksjon~\ref{sec:teori-friksjon}), med \SI{1,3}{mN.m} for et par 626 2RS med fett, midt i det målte området, \SI{0,6}{mN.m} for et par tørre 626 2RS og \SI{0,14}{mN.m} for et par SKF-lagre. Lagrene på drivakselen og tannhjulsinngrepet er bare med gjennom den antatte virkningsgraden, så tallene er en øvre grense og brukes til å sammenligne alternativene.
 
 \begin{table}[H]
     \centering
@@ -92,11 +100,87 @@ For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{e
         \hline
         \quad + par 626 2RS med fett foran (planlagt) & 12,8 \\
         \hline
+        \quad + par tørre 626 2RS uten tetninger foran & 15,4 \\
+        \hline
         \quad + ett 626 2RS foran (trehjuling, seksjon~\ref{sec:videre-trehjul}) & 15,2 \\
         \hline
         \quad + par SKF foran & 17,7 \\
         \hline
         \quad + ett SKF foran (trehjuling) & 18,1 \\
+        \hline
+        Tørre 626 2RS uten tetninger på alle akslene (kjøretesten, seksjon~\ref{sec:res-kjoretest}) & 7,3--9,9 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Første kjøretest}
+\label{sec:res-kjoretest}
+Bilen ble kjørt fem ganger etter prosedyren i seksjon~\ref{sec:metode-kjoretest}. Tabell~\ref{tab:kjoretest1} viser alle forsøkene, og ingen er utelatt. Lengden var \SI[separate-uncertainty=true]{5,48 \pm 1,36}{m} (snitt og standardavvik), som er en spredning på \SI{25}{\percent}. Forsøk 2 endte i et bord, så lengden der er en nedre grense.
+
+\begin{table}[H]
+    \centering
+    \caption{Første kjøretest, 7.~november 2026. Svingradiusen er regnet med likning~\eqref{eq:svingradius}.}
+    \label{tab:kjoretest1}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|l|}
+        \hline
+        \textbf{Forsøk} & \textbf{Lengde [m]} & \textbf{Sideavvik [m]} & \textbf{Svingradius [m]} & \textbf{Kommentar} \\
+        \hline
+        1 & 3,29 & $-0{,}50$ & 10,8 & \\
+        2 & 6,12 & $-4{,}15$ & 4,5 & Krasjet i et bord \\
+        3 & 6,76 & $-1{,}75$ & 13,1 & \\
+        4 & 6,14 & $-2{,}80$ & 6,7 & \\
+        5 & 5,09 & 0 & -- & Rett fram \\
+        \hline
+        Snitt & 5,48 ± 1,36 & $-1{,}84$ & & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Bilen dro til venstre i fire av fem forsøk, med svingradius fra 4,5 til \SI{13}{m}. Bare forsøk 5 gikk rett. Bilen kjørte i en jevn bue og fikk ikke et brått retningsskifte ved starten. I forsøk 2 og 4 hadde bilen snudd henholdsvis omtrent 85° og 54° når den stoppet. Etter en så krapp bue er veien bilen faktisk kjørte, litt lengre enn den rette linja, \SI{6,7}{m} mot \SI{6,1}{m} i forsøk 2.
+
+Ved nedsettingen slurte ofte høyre drivhjul så mye at det bare spant rundt, og bilen beveget seg nesten ikke fremover før hjulet fikk tak. For å finne årsaken til sideavviket ble tre ting kontrollert etter testen:
+\begin{itemize}
+    \item Ingen av drivhjulene slurer på akselen.
+    \item Bilen går rett når den dyttes uten at svinghjulet driver.
+    \item Drivhjulene har samme diameter.
+\end{itemize}
+Etterpå ble det gjort en papirtest: bilen ble satt på et plant underlag, og en papirlapp ble trukket ut under hvert drivhjul. Lappen gled tydelig lettere under venstre drivhjul enn under høyre, så venstre drivhjul har mindre last enn høyre. Med et lodd på \SI{34}{g} over venstre drivhjul var lasten fortsatt størst på høyre. Papirtesten på alle fire hjulene viste at diagonalen høyre bakhjul og venstre forhjul bærer det meste av vekten.
+
+For å sammenligne med simuleringen er tapsmodellen for de tørre lagrene, likning~\eqref{eq:tapsmodell-torr}, brukt på svinghjulsakselen. Lagrene på drivakselen og forakselen er regnet om til ekstra rullemotstand, med mellom 0,6 og \SI{1,5}{mN.m} per par. Det er nivået de tørre lagrene hadde etter og før innkjøringen, og det er ikke kjent hvor godt lagrene på hjulakslene hadde gått seg til. Da gir simuleringen 7,3 til \SI{9,9}{m} fra \SI{2700}{o/min} (tabell~\ref{tab:lagerplan}). Over området som opptrekk med snor gir, 1700 til \SI{2850}{o/min}, gir den 3,0 til \SI{11,0}{m}.
+
+\subsection{Oppsummering av kravoppfyllelse}
+\label{sec:res-kravstatus}
+Tabell~\ref{tab:kravstatus} viser status for kravene i seksjon~\ref{sec:produktkrav} etter den første kjøretesten.
+
+\begin{table}[H]
+    \centering
+    \caption{Status for kravene etter den første kjøretesten, 7.~november 2026.}
+    \label{tab:kravstatus}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|p{4.3cm}|p{5.2cm}|l|}
+        \hline
+        \textbf{Krav} & \textbf{Grense} & \textbf{Resultat} & \textbf{Status} \\
+        \hline
+        R1 & $140 \times 85 \times 70$ mm & $140 \times 83$ mm i CAD, høyden under 70. Lengden er på grensen og er ikke målt på bilen & Oppfylt i CAD \\
+        \hline
+        R2--R4 & Utdelt svinghjul og aksel, 20 cm snor & Brukt som utdelt & Oppfylt \\
+        \hline
+        R5 & Kjører av seg selv & 5 av 5 forsøk & Oppfylt \\
+        \hline
+        R6 & Minst \SI{5}{m} i snitt, 10 kjøringer & \SI{5,48}{m} i snitt, 5 kjøringer & Delvis \\
+        \hline
+        R7 & Standardavvik under \SI{15}{\percent} & \SI{25}{\percent} & Ikke oppfylt \\
+        \hline
+        R8 & Sideavvik under \SI{10}{\percent} av lengden & \SI{31}{\percent} i snitt, til venstre i 4 av 5 & Ikke oppfylt \\
+        \hline
+        R9 & Minst 9 av 10 vellykkede & 4 av 5 (forsøk 2 traff et bord) & Ikke prøvd fullt \\
+        \hline
+        R10--R12 & Kan demonteres og justeres & Klemnav og firkantnav kan løsnes. Andre utvekslinger med samme akseavstand, som 18\,:\,72, kan printes & Oppfylt ved inspeksjon \\
+        \hline
+        R13 & Kan lages med tilgjengelig utstyr & 3D-printer og verksted & Oppfylt \\
         \hline
     \end{tabular}
 \end{table}
@@ -106,6 +190,5 @@ For å se hva lagerbyttet betyr for bilen, er tapsmodellene fra likning~\eqref{e
 \subsection{Funksjon og pålitelighet}
 \subsection{Kjøredistanse og repeterbarhet}
 \subsection{Retningsstabilitet og sammenligning av konfigurasjoner}
-\subsection{Oppsummering av kravoppfyllelse}
 % Fyll inn faktiske målinger, tabeller og figurer etter testing.
 \end{comment}

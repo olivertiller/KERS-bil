@@ -6,7 +6,7 @@ Skriver PDF-er til Rapport/Images/Maling/:
   ml_flanker.pdf          tid mellom flankene i ML-1 (sensoren for nær) og ML-2
   utsnurring_referanse.pdf  referanseserien (tannhjulet koblet) med tilpasset tapsmodell
   tapsmoment.pdf          tapsmoment mot turtall, tannhjulet koblet og frakoblet
-  lagervarianter.pdf      tapsmoment mot turtall for tre lagervarianter, tannhjulet frakoblet
+  lagervarianter.pdf      tapsmoment mot turtall for fire lagervarianter, tannhjulet frakoblet
 Tallene som skrives ut, er de som står i rapporten.
 """
 
@@ -30,8 +30,12 @@ REF = DATA / "diagnose_20261106_022052.csv"  # tannhjulet koblet, fett i lagrene
 FRA = DATA / "diagnose_20261106_022930_frakoblet.csv"  # tannhjulet frakoblet
 BAMBU = DATA / "diagnose_20261106_161745.csv"  # samme 626 2RS-lagre, tetningene ut, Bambu Lab-olje
 SKF = DATA / "diagnose_20261106_163914.csv"  # SKF Explorer 626, åpne lagre
+TORR1 = DATA / "diagnose_20261107_001343.csv"  # 626 2RS uten tetninger og uten olje, første serie (innkjøring)
+TORR2 = DATA / "diagnose_20261107_002109.csv"  # samme lagre, andre serie rett etter
+# diagnose_20261107_000144.csv er en prøvekjøring med samme lagre og lave opptrekk, og brukes ikke.
 UTELAT_REF, UTELAT_FRA = (1, 5), (1,)
 LAGERVARIANTER = (("626 2RS med fett", FRA, UTELAT_FRA), ("626 2RS uten tetninger, olje", BAMBU, ()),
+                  ("626 2RS uten tetninger, tørt", TORR2, ()),
                   ("SKF Explorer 626, åpent", SKF, ()))
 plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3})
 
@@ -127,19 +131,24 @@ def tab_lagerplan(p_ref):
     skf = replace(b0, c0=p_skf[0], c1=p_skf[1], c2=p_skf[2])
     i, rpm = 73 / 17, 2700
     ekstra = lambda b, T: replace(b, C_rr=b.C_rr + T / b.r_h / (b.m * ks.g))
+    p_torr, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(TORR2, ())], ks.Bil().I)
+    torr = replace(b0, c0=p_torr[0], c1=p_torr[1], c2=p_torr[2])
     rader = (("Opprinnelige 626 2RS, tannhjulet koblet (referanseserien)", ref),
              ("SKF på svinghjulsakselen, ingen andre lagertap", skf),
              ("  + 626 2RS-par med fett foran, 1,3 mNm", ekstra(skf, 1.3e-3)),
              ("  + ett 626 2RS foran (trehjuling), 0,65 mNm", ekstra(skf, 0.65e-3)),
              ("  + SKF-par foran, 0,14 mNm", ekstra(skf, 0.14e-3)),
-             ("  + ett SKF foran (trehjuling), 0,07 mNm", ekstra(skf, 0.07e-3)))
+             ("  + ett SKF foran (trehjuling), 0,07 mNm", ekstra(skf, 0.07e-3)),
+             ("  + par tørre 626 2RS uten tetninger foran, 0,6 mNm", ekstra(skf, 0.6e-3)),
+             ("Tørre 626 2RS på alle akslene (kjøretesten), 0,6 mNm per hjulaksel", ekstra(torr, 1.2e-3)),
+             ("Tørre 626 2RS på alle akslene (kjøretesten), 1,5 mNm per hjulaksel", ekstra(torr, 3.0e-3)))
     print(f"Lagerplan, {rpm} o/min, i = 4,29:")
     for navn, b in rader:
         print(f"  {navn:60s} {ks.simuler(b, i, rpm)['distanse']:5.1f} m")
 
 
 def fig_lager():
-    """Tapsmoment mot turtall for de tre lagervariantene på svinghjulsakselen, logaritmisk akse."""
+    """Tapsmoment mot turtall for de fire lagervariantene på svinghjulsakselen, logaritmisk akse."""
     fig, ax = plt.subplots(figsize=(6.5, 4))
     for k, (navn, fil, utelat) in enumerate(LAGERVARIANTER):
         for j, (n, (t, rpm)) in enumerate(trekk(fil, utelat)):
@@ -163,6 +172,11 @@ def fig_lager():
               f"moment {ks.Bil().I * 700 * math.pi / 30 / dt.mean() * 1e3:.2f} mNm, topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
     p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(SKF, ())], ks.Bil().I)
     print(f"SKF: c0 = {p[0] * 1e3:.3f} mNm, c1 = {p[1]:.1e}, c2 = {p[2]:.1e} N m s^2")
+    p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(TORR2, ())], ks.Bil().I)
+    print(f"Tørt: c0 = {p[0] * 1e3:.3f} mNm, c1 = {p[1]:.1e}, c2 = {p[2]:.1e} N m s^2")
+    print("Innkjøring, første serie med tørre lagre (trekk, topp, til stopp, 1000->300, moment):")
+    for r in tid_1000_300(TORR1, ()):
+        print(f"  {r[0]}  {r[1]:5.0f}  {r[2]:6.2f}  {r[3]:5.2f}  {r[4]:4.2f}")
 
 
 def main():

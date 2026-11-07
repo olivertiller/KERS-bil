@@ -1,4 +1,17 @@
 \section{Konklusjon}
 \label{sec:konklusjon}
-% Besvar problemstillingen kort med grunnlag i dokumenterte resultater.
-% Oppsummer oppnådd funksjon og ytelse, kravoppfyllelse og viktigste begrensninger.
+% Oppdateres når testserien etter lagerbyttet og mellomleggene er kjørt.
+Problemstillingen spurte om bilen kan kjøre minst \SI{5}{m} i snitt over ti kjøringer, med under \SI{15}{\percent} spredning og et sideavvik under \SI{10}{\percent} av lengden. Etter den første kjøretesten er svaret nei, ikke ennå. Resultatmålene vurderes slik (tabell~\ref{tab:kravstatus}):
+\begin{enumerate}
+    \item \textbf{Funksjon og pålitelighet.} Bilen kjørte av seg selv i alle de fem forsøkene, men forsøk 2 endte i et bord, så 4 av 5 var vellykkede. Målet om minst 9 av 10 er ikke prøvd med ti kjøringer.
+    \item \textbf{Kjøredistanse.} Bilen kjørte \SI{5,5}{m} i snitt, over målet på \SI{5}{m}, men i fem forsøk og ikke ti. Målet er delvis nådd.
+    \item \textbf{Repeterbarhet.} Spredningen var \SI{25}{\percent}, over grensen på \SI{15}{\percent}. Målet er ikke nådd.
+    \item \textbf{Retningsstabilitet.} Bilen dro til venstre i fire av fem forsøk, og sideavviket var i snitt \SI{31}{\percent} av lengden. Målet er ikke nådd.
+    \item \textbf{Rammer og produksjon.} Bilen bruker det utdelte svinghjulet og akselen, trekkes opp med 20 cm snor og holder seg innenfor $140 \times 85 \times 70$ mm i CAD. Alle delene er laget med 3D-printer og utstyret på verkstedet.
+\end{enumerate}
+
+Årsaken til sideavviket er funnet. Den printede rammen er vridd, så høyre bakhjul og venstre forhjul bærer det meste av vekten. Med en stiv drivaksel tar da høyre drivhjul mest av drivkraften. Det kan rettes med mellomlegg i lagerhusene.
+
+For distansen var tapet i lagrene på svinghjulsakselen det viktigste funnet. Åpne SKF-lagre ga omtrent en åttendedel av tapet med 626 2RS med fett og en tredel av tapet med tørre 626 2RS uten tetninger. Med tørre lagre på hjulakslene øker den simulerte distansen fra 9,9 til \SI{13,2}{m} når SKF-lagrene settes på svinghjulsakselen. Opptrekk med snor ga dessuten bare 1700 til \SI{2850}{o/min}, ikke de \SI{4000}{o/min} som ble antatt i konseptfasen.
+
+Iterasjonene med prøvebiter fungerte godt for delene som må passe sammen, som lagersetet, firkantnavet og trommelen. Den første kjøretesten avdekket likevel et problem som ingen av delprøvene kunne vise: den printede rammen er vridd, så lasten fordeles skjevt på hjulene. Svinghjulet ble først mottatt 2.~november 2026. Flere av delene, blant annet trommelen, måtte tilpasses sveisen og akselen slik de faktisk ble, og bilen kunne ikke kjøres før svinghjulet var på plass. Det begrenset tiden til å designe, iterere og teste, og den første kjøretesten kom derfor bare ni dager før innlevering. Erfaringen er at bilen også må prøves som helhet så tidlig som mulig, og ikke bare del for del.

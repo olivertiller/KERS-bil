@@ -71,6 +71,18 @@ Feilkildene er:
     \item Treghetsmomentet er regnet fra målene og ikke målt. En feil i $I$ gir samme relative feil i alle momentene.
 \end{itemize}
 
+\subsection{Første kjøretest}
+\label{sec:metode-kjoretest}
+Den første kjøretesten ble gjort 7.~november 2026 med hele bilen: den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre på alle tre akslene, med tetningene tatt ut og uten olje. Målet var å se om bilen fungerer som helhet, og å få et første tall for kjøredistanse og sideavvik før testserien planlegges i detalj.
+
+Svinghjulet ble trukket opp med snor på Ø12-trommelen mens bilen ble holdt løftet, og bilen ble satt ned på et parkett- eller laminatgulv med svinghjulet i gang, slik konkurransereglene krever. Lengden er målt som rett linje fra startpunktet til der bilen stoppet. Sideavviket er den vinkelrette avstanden fra stoppunktet til startlinja, altså startretningen forlenget, positivt mot høyre og negativt mot venstre. Turtallet etter opptrekk ble ikke målt, fordi Hall-sensoren bare sitter på teststasjonen.
+
+Hvis bilen kjører i en sirkelbue som starter langs startlinja, gir lengden $L$ og sideavviket $y$ svingradiusen
+\begin{equation}
+    R = \frac{L^2}{2\,|y|}.
+    \label{eq:svingradius}
+\end{equation}
+
 \begin{comment}
 \subsection{Mål for testen}
 Testene skal dokumentere funksjon, kjøredistanse, repeterbarhet og retningsstabilitet.
