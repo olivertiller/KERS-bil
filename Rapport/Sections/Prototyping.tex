@@ -22,9 +22,9 @@ De fysiske delene utvikles etter metoden i seksjon~\ref{sec:iterativ-prototyping
 
 \subsubsection{Lagersete}
 \label{sec:ls-serien}
-De seks 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i rammen. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. \textcite{espedal_2024} fant at hull fra 3D-printer ble 0,5--\SI{0,8}{mm} mindre enn tegnet, så målene på tegningen kan ikke brukes direkte. Det ble derfor først laget en prøvebit med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Prøvebiten har også glidehull for forakselen fra Ø6,1 til Ø6,5 mm. Den lages med samme produksjonsmetode og innstillinger som sideplatene. Hullene måles med skyvelære, og lageret og akselen prøves i hvert hull. Det hullet som gir best pasning, bestemmer målet på setet i selve rammen.
+De seks 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i rammen. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. 3D-printede hull har en tendens til å krympe, så målene på tegningen kan ikke brukes direkte. Det ble derfor først laget en prøvebit med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Det hullet som gir best pasning, bestemmer målet på setet i selve rammen.
 
-Hovedtesten er at lageret sitter fast og går lett (R8). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R7), og at akslene blir parallelle i rammen.
+\textbf{Bilde av alle prøvebitene}
 
 Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett til fem hakk og printet i samme retning som rammen (figur~\ref{fig:lager-proevering}). Ø19,0 gikk inn, men stramt, og Ø19,1 var litt romslig. Ø19,1 er brukt i rammen (seksjon~\ref{sec:gd-ramme}).
 
@@ -74,7 +74,8 @@ Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett ti
 
 \subsubsection{Feste av nav på aksel}
 \label{sec:nv-serien}
-Pinjongen, tannhjulet, trommelen og hjulene festes til Ø6-akslene. Delene kan ikke ha D-hull, fordi de må tres forbi de runde lagersetene på akselen. Opprinnelig var planen runde Ø6,2-hull med en M3-madenskrue mot en frest flate. Madenskruer var ikke tilgjengelig, mens vanlige M3-skruer og muttere var det, og det ble i stedet laget to andre festemåter:
+Pinjongen, tannhjulet, trommelen og hjulene festes til Ø6-akslene. Delene kan ikke ha D-hull, fordi de må tres forbi de runde lagersetene på akselen.
+
 \begin{description}
     \item[Klemnav.] Brukes på trommelen og pinjongen. Navet er Ø20 med Ø6,2-hull og to slisser på \SI{1}{mm}. To M3 × 12-skruer går på tvers av slissene og strammes mot muttere i sekskantlommer. Skruene står 180° fra hverandre, så navet er balansert. Navet kan løsnes og skyves langs akselen, noe som gjør det mulig å justere delene sideveis (R7).
     \item[Firkantnav.] Brukes på hjulene. Hjulakslene er 3D-printet med Ø6 og har en firkant på 4 × 4 × \SI{10}{mm} i hver ende. Diagonalen er \SI{5,66}{mm}, mindre enn Ø6. Hjulet tres på firkanten og kan ikke slure.
@@ -89,18 +90,6 @@ Firkanthullet ble bestemt med en prøvebit på samme måte som lagersetet, med f
     \label{fig:firkanttest}
 \end{figure}
 
-Hovedtesten er at navet ikke slurer på akselen under opptrekk eller når svinghjulet stoppes brått (R6). Tilleggstester er at navet kan demonteres og monteres flere ganger uten at festet blir dårligere (R7), og at skruene ikke løsner i løpet av en testserie.
-
-Under den første utsnurringsserien løsnet klemnavet på trommelen. Trommelen sklei på akselen under opptrekket, og toppturtallet falt fra omtrent 1500 til \SI{1000}{o/min}. Mutterne ble kontrollert og skruene strammet jevnt, og etter det holdt navet gjennom 14 opptrekk i de to neste seriene. Pinjongnavet ble løsnet og flyttet da tannhjulet ble koblet fra (seksjon~\ref{sec:res-utsnurring}), uten at festet ble dårligere.
-
-\begin{versjonstabell}{klemnavet}{tab:nv1}
-    \hovedtest
-    Trommelnavet slurer ikke under opptrekk (R6) & Delvis vellykket, løsnet i første serie, holdt etter ny stramming \\
-    \tilleggstester
-    Kan demonteres, flyttes og monteres igjen (R7) & Vellykket \\
-    Skruene løsner ikke i løpet av en testserie & Delvis vellykket \\
-\end{versjonstabell}
-
 \begin{comment}
 \begin{versjonstabell}{firkantnavet}{tab:nv2}
     \hovedtest
@@ -114,7 +103,7 @@ Under den første utsnurringsserien løsnet klemnavet på trommelen. Trommelen s
 \label{sec:tr-serien}
 Svinghjulet spinnes opp med \SI{20}{cm} snor rundt en trommel på svinghjulsakselen. Ved \SI{4000}{o/min} har svinghjulet energien $E = \frac{1}{2} I \omega^2 \approx \SI{5,3}{J}$. Over \SI{20}{cm} snor tilsvarer det en snittkraft på $E/L \approx \SI{26}{N}$, uavhengig av trommelens diameter. Trommelradien $r_t$ bestemmer derimot hvor fort snora må trekkes, siden $v = \omega r_t$. En mindre trommel gir høyere turtall ved samme trekkhastighet, men kraften som trengs underveis øker. Hypotesen er at én trommeldiameter gir høyest turtall for et opptrekk for hånd.
 
-Det er tegnet tre tromler med kjerne Ø12, Ø14 og Ø18, ellers like. Maskintegningen av Ø12-trommelen står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:snortrommel}). Snora festes med en løkke på en krok midt i kjernen, utformet som en knaggkrok: en stilk med en finger som peker mot rotasjonsretningen under opptrekket (detalj E). Så lenge snora trekker, holder fingeren løkka på plass. Når snora er trukket helt ut og trommelen spinner videre, snur trekket, og løkka glir av over fingertuppen av seg selv. Undersiden av kroken skrår 45°, så den printes uten support. Den indre flensen har en utsparing for sveisekransen mellom svinghjulet og akselen. Innsiden av den ytre flensen har 45° helning, så trommelen kan printes uten support. Trommelen festes med klemnavet fra seksjon~\ref{sec:nv-serien}. Trommelen veier 3,7 til \SI{6,3}{g}.
+Det er tegnet tre tromler med kjerne Ø12, Ø14 og Ø18, ellers like. Maskintegningen av Ø12-trommelen står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:snortrommel}). Snora festes med en løkke på en krok midt i kjernen, utformet som en knaggkrok: en stilk med en finger som peker mot rotasjonsretningen under opptrekket (detalj E). Så lenge snora trekker, holder kroken løkka på plass. Undersiden av kroken skrår 45°, så den printes uten support. Den indre flensen har en utsparing for sveisekransen mellom svinghjulet og akselen. Innsiden av den ytre flensen har 45° helning, så trommelen kan printes uten support. Trommelen festes med klemnavet fra seksjon~\ref{sec:nv-serien}. Trommelen veier 3,7 g. 
 
 Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R3) og repeterbarhet (R4). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen.
 
@@ -156,11 +145,10 @@ Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} r
 \label{sec:dh-serien}
 Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i drivverket. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. Halveres rullemotstandskoeffisienten fra 0,03 til 0,015, øker simulert distanse fra 38 til \SI{61}{m}, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{5}{\percent} lengre distanse. Et dekk bør derfor ha lav rullemotstand, og nok grep til at bilen går rett.
 
-Alle hjulene har samme nav. Maskintegningen av hjulet med TPU-dekk står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:hjul}). Navet har firkanthullet fra seksjon~\ref{sec:nv-serien} og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned. Tre hjul skal prøves:
+Alle hjulene har samme nav. Maskintegningen av hjulet med TPU-dekk står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:hjul}). Navet har firkanthullet fra seksjon~\ref{sec:nv-serien} og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned.
 \begin{description}
     \item[Bart hjul.] Hjulet i PLA uten dekk, med ytre diameter \SI{68}{mm}. Veier \SI{9,4}{g}.
     \item[TPU-dekk.] En PLA-felg med sete på Ø65 og skuldre på begge sider, og et \SI{1,5}{mm} tykt dekk printet i TPU. Dekket har \SI{0,6}{mm} mindre indre diameter enn setet og strekkes over felgen. Ferdig diameter er \SI{68}{mm}, og felg og dekk veier til sammen \SI{8,8}{g}.
-    \item[TPU-dekk, Ø66.] Som forrige, men \SI{2}{mm} mindre i diameter. Det gir \SI{2}{mm} margin til lengdekravet i R1 og \SI{1}{mm} lavere bakkeklaring.
 \end{description}
 Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,6e-5}{kg.m^2}$ med Ø66-dekk, regnet fra CAD-geometrien. Det er omtrent halvparten av svinghjulets, men hjulene går $i$ ganger saktere, så bidraget til bilens effektive masse er lite.
 
@@ -181,7 +169,6 @@ Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,
     \label{fig:felg-foto}
 \end{figure}
 
-Hovedtesten er kjøredistanse med minst 10 kjøringer per dekk (R3, R4). Tilleggstester er sideavvik (R5), at dekket sitter på hjulet gjennom hele testserien, og hvor lenge hjulene slurer ved nedsetting. Resultatene brukes også til å kontrollere rullemotstanden som er antatt i simuleringen.
 
 \begin{comment}
 \begin{versjonstabell}{det bare hjulet}{tab:dh1}
@@ -211,11 +198,4 @@ Testingen av den første prototypen avdekket tre problemer. Hvert av dem førte 
 
 \paragraph{Svinghjulsakselen glir sideveis.} Med tannhjulet frakoblet varierte tapet mye fra opptrekk til opptrekk, og hvert opptrekk holdt et jevnt nivå hele veien ned. Det tydet på at noe gnisset med ulik kraft fra gang til gang. Akselen hadde for mye klaring sideveis, og avhengig av hvilken vei snora trakk, kom trommelen eller pinjongen borti noe. Tiltaket er to C-formede avstandshylser som klikkes på akselen uten at den tas ut av lagrene (figur~\ref{fig:avstandshylse}). En krage ligger an mot innerringen i lageret, som roterer med akselen, så hylsene gir ingen ny friksjon. Lengden velges i trinn på \SI{0,5}{mm}, slik at akselen får 0,1 til \SI{0,3}{mm} klaring.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Images/Prototyper/avstandshylse.png}
-    \caption[Avstandshylsene]{Avstandshylse sett ovenfra, og snitt av settet med lengder fra 1,0 til \SI{7,0}{mm}.}
-    \label{fig:avstandshylse}
-\end{figure}
-
-\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen sto for en stor del av tapet. De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett. Til slutt ble lagrene på svinghjulsakselen byttet til åpne SKF Explorer 626, som ga omtrent en åttendedel av tapet med fett (seksjon~\ref{sec:res-lager}).
+\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen sto for en stor del av tapet. De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.
