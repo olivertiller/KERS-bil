@@ -185,6 +185,16 @@ def fig_maalegeometri():
     plt.close(fig)
 
 
+def tab_dv_versjoner():
+    """Simulert distanse for drivverkversjonene i tab:dv-samlet, med dagens modell: kjøretestbilen (tørre
+    626 2RS, 0,6 mNm per hjulaksel), 0,27 kg, 2700 o/min. Hjulenes treghetsmoment skaleres med r^3."""
+    p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(TORR2, ())], ks.Bil().I)
+    for v, z, r_h in ((1, 68, 0.032), (2, 68, 0.034), (4, 73, 0.034)):
+        b = ks.Bil(r_h=r_h, J_hjul=2.9e-5 * (r_h / 0.034) ** 3, c0=p[0], c1=p[1], c2=p[2])
+        b = replace(b, C_rr=b.C_rr + 1.2e-3 / r_h / (b.m * ks.g))
+        print(f"Drivverk versjon {v}: i = {z}/17, r_h = {r_h * 1e3:.0f} mm: {ks.simuler(b, z / 17, 2700)['distanse']:.2f} m")
+
+
 def tab_tapsledd():
     """Energiregnskap for simulert kjøring med kjøretestkonfigurasjonen (tab:tapsledd), og følsomhet for mu."""
     b0 = ks.Bil(r_h=0.034, J_hjul=2.9e-5)
@@ -286,6 +296,7 @@ def main():
     tab_lagerplan(p)
     fig_sim_kjoring()
     fig_maalegeometri()
+    tab_dv_versjoner()
     tab_tapsledd()
     fig_lager()
     print("Skrevet til", UT)
