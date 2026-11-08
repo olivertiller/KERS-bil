@@ -2,12 +2,9 @@
 \label{sec:ki}
 Claude (Anthropic) er brukt som programmeringsassistent i Claude Code. Verktøyet er brukt til:
 \begin{itemize}
-    \item Simuleringen av bilen (\texttt{Code/kers\_sim.py}), inkludert tilpasningen av tapsmodellen til målt utsnurring.
+    \item Simuleringen av bilen, inkludert tilpasningen av tapsmodellen til målt utsnurring.
     \item Programmene for ESP32-en som logger Hall-sensoren, både loggeren og diagnoseversjonen, og skriptene som leser dataene over USB.
-    \item Skript som lager geometrien til delene som 3MF-filer: snortrommelen, pinjongen, hjulene, firkanttesten, avstandshylsene og drillhjulet, og den laserkuttede kroppen.
-    \item Oppsettet for generativ design og drivverket i Fusion, som Python-skript.
-    \item Analysen av måledataene og figurene i resultatkapittelet (\texttt{Code/rapportfigurer.py}).
-    \item Konseptskissene, utkast til tekst og omstrukturering av rapportens disposisjon.
+    \item Hjelp med oppsettet for generativ design og drivverket i Fusion.
+    \item Finne skrivefeil, lage forbedrede tekstformuleringer og omstrukturering av rapportens disposisjon.
 \end{itemize}
 
-Resultatene er kontrollert på flere måter. Delene er printet og prøvd på bilen, og mål som påvirker pasning, som lagersetet og firkanthullet, er bestemt med prøvebiter og ikke tatt fra tegningen. Hvert geometriskript lager en forhåndsvisning og regner ut masse og treghetsmoment, som er sjekket mot overslag. Feilen med for mange flanker fra Hall-sensoren ble funnet ved å måle begge flankene og sammenligne mønsteret med en kjent drillhastighet, og rettingen ble bekreftet med nye målinger. Tilpasningen av tapsmodellen er kontrollert visuelt mot målepunktene, og en tilpasning som satt fast i en dårlig løsning ble oppdaget og rettet på den måten. Forslag fra verktøyet som bygde på feil antakelser om den fysiske prototypen, for eksempel hvor magnetene satt, ble rettet underveis.
