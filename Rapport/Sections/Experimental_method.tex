@@ -3,7 +3,7 @@
 \subsection{Måling av tap i lagrene}
 \label{sec:ml-serien}
 \label{sec:utsnurring-behandling}
-For å velge lagre ble tapet på svinghjulsakselen målt med utsnurring (seksjon~\ref{sec:teori-friksjon}). Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen. En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned med likning~\eqref{eq:snittmoment}, med $I = \SI{6,0e-5}{kg.m^2}$ for svinghjulet og akselen. Opptrekk med ulikt toppturtall sammenlignes med tiden fra 1000 til \SI{300}{o/min}. De fleste seriene er tatt med tannhjulet frakoblet, så de viser bare tapet i lagrene på svinghjulsakselen. Måleoppsettet, behandlingen av dataene og tilpasningen av en tapsmodell for simuleringen er beskrevet i arbeidet for MAST2007, der målingene brukes videre.
+For å velge lagre ble tapet på svinghjulsakselen målt med utsnurring. Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen. En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned, som $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$ for svinghjulet og akselen. Opptrekk med ulikt toppturtall sammenlignes med tiden fra 1000 til \SI{300}{o/min}. De fleste seriene er tatt med tannhjulet frakoblet, så de viser bare tapet i lagrene på svinghjulsakselen. Måleoppsettet, behandlingen av dataene og tilpasningen av en tapsmodell for simuleringen er beskrevet i arbeidet for MAST2007, der målingene brukes videre.
 
 \subsection{Første kjøretest}
 \label{sec:metode-kjoretest}
