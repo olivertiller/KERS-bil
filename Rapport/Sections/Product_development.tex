@@ -4,7 +4,7 @@
 % Vis gjerne prosessen som en figur, med faser fra behov og krav via konsepter til prototype og testing.
 \subsection{Iterativ prototyping}
 \label{sec:iterativ-prototyping}
-Etter at konseptet er valgt, utvikles bilen gjennom iterativ prototyping. En prototype er en representasjon før produksjon av et aspekt ved et konsept eller et endelig design \parencite{camburn_2017}. Den trenger ikke være fysisk eller omfatte hele produktet. En CAD-modell, en simulering eller en prøvebit som bare tester én pasning regnes også som en prototype.
+Etter at konseptet er valgt, utvikles bilen gjennom iterativ prototyping. Ifølge \textcite{camburn_2017} er en prototype en foreløpig modell som brukes før produksjon for å undersøke én eller flere sider ved et konsept eller design. Den trenger ikke være fysisk eller omfatte hele produktet. En CAD-modell, en simulering eller en prøvebit som bare tester én pasning regnes også som en prototype.
 
 Fremgangsmåten følger \textcite{espedal_2024}. Hver del utvikles i versjoner, der den første er utgangspunktet. Hver versjon har én hovedtest som avgjør om endringen er en forbedring, og noen tilleggstester. Testene vurderes som vellykket, delvis vellykket eller mislykket og kobles til kravene i seksjon~\ref{sec:produktkrav}. Den beste versjonen så langt er gjeldende beste versjon og grunnlaget for neste iterasjon. Der det er praktisk, endres bare én parameter om gangen, slik at virkningen av endringen kan skilles fra andre forhold. Til slutt sammenlignes alle versjonene av en del i en samlet tabell.
 
@@ -38,9 +38,9 @@ Tabell~\ref{tab:iterasjonsserier} viser delene som utvikles på denne måten.
 
 \subsubsection{Simulering som digital prototype}
 \label{sec:simulering-verktoy}
-Simuleringen er et supplement til de fysiske testene. Den kobler tapsleddene som måles på bilen sammen til en kjøredistanse, slik at det kan regnes ut hvor mye hvert ledd koster, og den brukes til å sammenligne alternativer før de bygges, som versjonene av drivverket i CAD (seksjon~\ref{sec:dv-serien}). Den regner ut kjøredistansen for én kjøring og følger startprosedyren i konkurransen: bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang. Kjøringen deles i to faser.
+Simuleringen er et supplement til de fysiske testene. Den kobler tapsleddene som måles på bilen sammen til en kjøredistanse, slik at det kan regnes ut hvor mye hvert ledd koster, og den brukes til å sammenligne alternativer før de bygges, som versjonene av drivverket i CAD (seksjon~\ref{sec:dv-serien}). Den regner ut kjøredistansen for én kjøring etter startprosedyren i konkurransen, der bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang. Kjøringen deles i to faser.
 
-\paragraph{Slur ved nedsetting.} Rett etter nedsettingen går drivhjulene fortere rundt enn bilen kjører, og de slurer mot underlaget. Drivkraften er da begrenset av friksjonen, $F_d = \mu N_d$, der $N_d$ er normalkraften på drivhjulene. Svinghjulet bremses og bilen akselereres:
+\paragraph{Sluring ved nedsetting.} Rett etter nedsettingen går drivhjulene fortere rundt enn bilen kjører, og de slurer mot underlaget. Drivkraften er da begrenset av friksjonen, $F_d = \mu N_d$, der $N_d$ er normalkraften på drivhjulene. Svinghjulet bremses og bilen akselereres:
 \begin{equation}
     I\dot\omega = -T_\text{tap}(\omega) - \frac{F_d\,r_h}{\eta\,i}, \qquad m_e\dot v = F_d - F_{rr}.
     \label{eq:sim-slur}
@@ -80,7 +80,7 @@ Her er $T_\text{tap}$ tapsmomentet i lagrene på svinghjulsakselen, $m_e$ bilens
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{Images/Simulering/sim_kjoring.pdf}
-    \caption[Simulert kjøring]{Simulert kjøring for bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Det grå feltet er sluret ved nedsetting.}
+    \caption[Simulert kjøring]{Simulert kjøring for bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Det grå feltet viser sluringen ved nedsetting.}
     \label{fig:sim-kjoring}
 \end{figure}
 

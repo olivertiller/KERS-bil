@@ -4,7 +4,7 @@
 \label{sec:metode-tap}
 \label{sec:ml-serien}
 \label{sec:utsnurring-behandling}
-Energien i svinghjulet går tapt på flere måter: i sluret ved nedsetting, i lagrene på svinghjulsakselen og på hjulakslene, i tannhjulsinngrepet og som rullemotstand mellom dekk og underlag. Simuleringen trenger en verdi for hvert av dem (tabell~\ref{tab:sim-parametre}).
+Energien i svinghjulet går tapt til sluring ved nedsetting, friksjon i lagrene på svinghjulsakselen og hjulakslene, tap i tannhjulsinngrepet og rullemotstand mellom dekk og underlag. Simuleringen trenger en verdi for hvert av dem (tabell~\ref{tab:sim-parametre}).
 
 \paragraph{Lagrene på svinghjulsakselen} er målt med utsnurring. Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen (figur~\ref{fig:esp-oppsett}). En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned, $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$. Opptrekkene sammenlignes med tiden fra 1000 til \SI{300}{o/min}, med tannhjulet frakoblet. En tapsmodell $T_\text{tap} = c_0 + c_1\omega + c_2\omega^2$ er tilpasset hver serie. Detaljene er beskrevet i arbeidet for MAST2007.
 
@@ -21,7 +21,7 @@ Energien i svinghjulet går tapt på flere måter: i sluret ved nedsetting, i la
 
 \paragraph{Friksjon mot underlaget.} \textbf{PLASSHOLDER: beskriv målingen av rullemotstanden, for eksempel at bilen uten svinghjul trilles ned et skråplan eller slippes med kjent fart, og av friksjonen mellom dekk og underlag, for eksempel helningsvinkelen der bilen med låste hjul begynner å skli.}
 
-\paragraph{Slur ved nedsetting} er ikke målt, men regnet ut med simuleringen. Det krever en sensor på drivakselen og er utsatt til MAST2007.
+\paragraph{Sluring ved nedsetting} er ikke målt direkte, men beregnet i simuleringen. Direkte måling krever en sensor på drivakselen og er utsatt til MAST2007.
 
 \subsection{Kjøretest}
 \label{sec:metode-kjoretest}

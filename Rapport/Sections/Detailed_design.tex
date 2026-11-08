@@ -16,7 +16,7 @@
 
 \subsection{Iterasjoner av drivverket}
 \label{sec:dv-serien}
-Før noe ble produsert, ble drivverket justert i CAD i fire versjoner. I hver versjon ble det kontrollert at svinghjulet går klar av akslene med minst \SI{3}{mm} og av underlaget, og at bilen holder seg innenfor \SI{140}{mm} (R1). Simuleringen fra seksjon~\ref{sec:simulering-verktoy} ble brukt for å se at endringene ikke kostet kjøredistanse. Distansene er regnet med modellen for den ferdige bilen, fra \SI{2700}{o/min} og med de tørre lagrene fra kjøretesten. Figur~\ref{fig:dv-versjoner} viser versjonene, og tabell~\ref{tab:dv-samlet} oppsummerer dem.
+Før noe ble produsert, ble drivverket justert i CAD i fire versjoner. I hver versjon ble det kontrollert at svinghjulet går klar av akslene med minst \SI{3}{mm} og av underlaget, og at bilen holder seg innenfor \SI{140}{mm} (R1). Simuleringen fra seksjon~\ref{sec:simulering-verktoy} ble brukt for å se at endringene ikke kostet kjøredistanse. Distansene er regnet med modellen for den ferdige bilen, fra \SI{2700}{o/min} og med de tørre lagrene fra kjøretesten. Versjonene er vist i figur~\ref{fig:dv-versjoner} og oppsummert i tabell~\ref{tab:dv-samlet}.
 
 \begin{figure}[H]
     \centering
@@ -25,14 +25,14 @@ Før noe ble produsert, ble drivverket justert i CAD i fire versjoner. I hver ve
     \label{fig:dv-versjoner}
 \end{figure}
 
-Utgangspunktet, versjon 1, var konsept 3: et pinjong med 17 tenner som driver et tannhjul med 68 tenner, modul 0,8, som gir akseavstanden $a = 0{,}8 \cdot (17 + 68)/2 = \SI{34}{mm}$. Drivhjulene var Ø64, og hjulakslene var Ø3 sveisetråd. Svinghjulsakselen lå \SI{36}{mm} over underlaget og hjulakslene \SI{32}{mm}, så de tre akslene lå ikke i samme høyde.
+Utgangspunktet i versjon 1 var konsept 3, med en pinjong med 17 tenner og et tannhjul med 68 tenner (modul 0,8), som gir akseavstanden $a = 0{,}8 \cdot (17 + 68)/2 = \SI{34}{mm}$. Drivhjulene var Ø64, og hjulakslene var Ø3 sveisetråd. Svinghjulsakselen lå \SI{36}{mm} over underlaget og hjulakslene \SI{32}{mm}, slik at de tre akslene ikke lå på linje.
 
 I versjon 2 ble alle akslene lagt \SI{34}{mm} over underlaget. Da ligger alle lagersetene på én linje i rammen, og drivhjulene ble Ø68. % Sjekk: var dette grunnen til at akslene ble lagt i samme høyde?
 Større hjul med samme utveksling gjør bilen litt raskere ved samme turtall på svinghjulet, men den simulerte distansen ble nesten den samme, \SI{9,2}{m} mot \SI{9,3}{m}. Klaringen mellom svinghjulet og hjulakselen var \SI{2,5}{mm}, litt under målet. Et større problem var at Ø3-akslene trengte en hylse for å passe i 626-lagrene, som har \SI{6}{mm} innvendig diameter.
 
 Derfor ble alle hjulakslene byttet til 3D-printet Ø6 i versjon 3, slik at lagrene kan sitte rett på akselen. Med den tykkere akselen og uendret akseavstand ble klaringen til svinghjulet bare $34 - 30 - 3 = \SI{1}{mm}$, og versjonen ble forkastet.
 
-For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3 = \SI{36}{mm}$. Versjon 4 har derfor 73 tenner på tannhjulet med samme pinjong, siden $0{,}8 \cdot (17 + 73)/2 = \SI{36}{mm}$, og utvekslingen blir $i = 73/17 \approx 4{,}29$. Forholdet $r_h/i$, som bestemmer hvor fort bilen kjører ved et gitt turtall, blir \SI{7,9}{mm}, nesten som \SI{8,0}{mm} i utgangspunktet, og den simulerte distansen ble \SI{9,4}{m}, litt lengre enn i versjon 1 og 2. Akslene ligger 34, 70 og \SI{106}{mm} fra bakkant, og med Ø68-hjul blir bilen nøyaktig \SI{140}{mm} lang. Det er denne versjonen resten av bilen er bygd rundt.
+For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3 = \SI{36}{mm}$. Versjon 4 har derfor 73 tenner på tannhjulet med samme pinjong, siden $0{,}8 \cdot (17 + 73)/2 = \SI{36}{mm}$, og utvekslingen blir $i = 73/17 \approx 4{,}29$. Forholdet $r_h/i$, som bestemmer hvor fort bilen kjører ved et gitt turtall, blir \SI{7,9}{mm}, nesten som \SI{8,0}{mm} i utgangspunktet, og den simulerte distansen ble \SI{9,4}{m}, litt lengre enn i versjon 1 og 2. Akslene ligger 34, 70 og \SI{106}{mm} fra bakkant, og med Ø68-hjul blir bilen nøyaktig \SI{140}{mm} lang. Resten av bilen er bygd rundt denne versjonen.
 
 \begin{table}[H]
     \centering
@@ -63,7 +63,7 @@ For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3
 Rammen bærer de seks lagrene, må holde de tre akslene parallelle og skal tåle at bilen holdes i hånda mens snora trekkes. I stedet for sideplatene fra konseptene, eller en laserkuttet MDF-kropp der hver vegg måtte limes av to lag, er rammen laget med generativ design i Fusion og 3D-printet i PLA i ett stykke. Ved generativ design angir man geometri som må være med, områder uten materiale, laster og mål, og programmet genererer former som oppfyller dette \parencite{autodesk_gd}.
 
 \subsubsection{Oppsett av studien}
-Oppsettet bygges med målene fra drivverket, så det kan bygges på nytt hvis drivverket endres (figur~\ref{fig:fusion-oppsett}). Bevart geometri er fire lukkede lagerhus for bak- og forakselen, to U-seter for svinghjulslagrene og en tverrbjelke foran og bak. Hindringer er alle roterende deler, snorbanen og baner for montering og skrutrekker. Grensen er $140 \times 85 \times 70$ mm (R1). Svinghjulet er sveiset fast på akselen og kan ikke tres inn i lukkede lagerhus. Det senkes derfor ned ovenfra, og to lagerlokk skrus over U-setene.
+Oppsettet er styrt av målene fra drivverket og oppdateres dersom drivverket endres (figur~\ref{fig:fusion-oppsett}). Geometri som skal bevares, er fire lukkede lagerhus for bak- og forakselen, to U-seter for svinghjulslagrene og en tverrbjelke foran og bak. Som hindringer er det lagt inn frirom for alle roterende deler, snorbanen og tilkomst for montering og skrutrekker, innenfor yttergrensen på $140 \times 85 \times 70$ mm (R1). Svinghjulet er sveiset fast på akselen og kan ikke tres inn i lukkede lagerhus. Det senkes derfor ned ovenfra, og to lagerlokk skrus over U-setene.
 
 \begin{figure}[H]
     \centering
@@ -94,7 +94,7 @@ Lasttilfellene står i tabell~\ref{tab:gd-lasttilfeller}. Snorkraften er satt ti
 \end{table}
 
 \subsubsection{To studier}
-Den første studien hadde bare lasttilfelle 1--3, og resultatet ble en åpen U der den bakre tverrbjelken hang på en tynn stilk (figur~\ref{fig:gd-utfall}a). Grunnen var innspenningen: i tilfelle 2 og 3 er begge de bakre lagerhusene låst, og det virker som en uendelig stiv bjelke mellom dem. En åpen U gir etter når bilen holdes under opptrekk, og lagrene bak kan vris i forhold til hverandre. Den andre studien fikk derfor også tilfelle 4 og 5, der bare den fremre tverrbjelken holdes fast, så rammen selv må ta klem og vridning bak. Da ble rammen lukket (figur~\ref{fig:gd-utfall}b). Tabell~\ref{tab:gd} sammenligner de to studiene.
+Den første studien hadde bare lasttilfelle 1--3 og ga en åpen U-form der den bakre tverrbjelken bare hang i et tynt stag (figur~\ref{fig:gd-utfall}a). Årsaken var at begge de bakre lagerhusene var låst i tilfelle 2 og 3, noe som virker som en uendelig stiv bjelke mellom dem. En åpen U-ramme gir etter når bilen holdes under opptrekk, og lagrene bak kan vris i forhold til hverandre. I den andre studien ble derfor også tilfelle 4 og 5 lagt til, med bare den fremre tverrbjelken låst, slik at rammen selv må ta opp klem og vridning bak. Det ga en lukket ramme (figur~\ref{fig:gd-utfall}b og tabell~\ref{tab:gd}).
 
 \begin{figure}[H]
     \centering
@@ -136,7 +136,7 @@ Den første studien hadde bare lasttilfelle 1--3, og resultatet ble en åpen U d
     \end{tabular}
 \end{table}
 
-Sikkerhetsfaktoren i den andre studien er langt over kravet, så det er stivheten og minste godstykkelse som bestemmer formen, ikke styrken. Forskyvningene kan ikke sammenlignes direkte, fordi studiene har ulike lasttilfeller.
+Sikkerhetsfaktoren i den andre studien ligger langt over kravet. Formen styres derfor av stivheten og minste godstykkelse, ikke av styrken. Forskyvningene kan ikke sammenlignes direkte, fordi studiene har ulike lasttilfeller.
 
 \subsubsection{Fra resultat til printet ramme}
 Lagerboringene er utvidet fra Ø19,0 til Ø19,1 etter prøveringene (seksjon~\ref{sec:ls-serien}), og rammen er kontrollert mot drivverket med en kollisjonstest i Fusion. Den er printet liggende på siden med \SI{20}{\percent} fyll og veier \SI{23}{g}. Den trengte likevel support, trolig fordi overhengsbegrensningen bare gjelder materialet studien legger til, ikke den bevarte geometrien. Lagerlokkene festes med M3-skruer rett i PLA, fordi gjengeinnsatser ikke fikk plass. Figur~\ref{fig:ferdig-bil} viser rammen montert.
