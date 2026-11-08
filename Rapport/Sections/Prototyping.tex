@@ -24,7 +24,7 @@ De fysiske delene utvikles etter metoden i seksjon~\ref{sec:iterativ-prototyping
 \label{sec:ls-serien}
 De seks 626-lagrene har ytterdiameter \SI{19}{mm} og sitter i rammen. Setet må holde lageret fast uten å klemme det så hardt at det går tungt. \textcite{espedal_2024} fant at hull fra 3D-printer ble 0,5--\SI{0,8}{mm} mindre enn tegnet, så målene på tegningen kan ikke brukes direkte. Det ble derfor først laget en prøvebit med lagerseter fra Ø18,8 til Ø19,4 mm i trinn på \SI{0,1}{mm}. Prøvebiten har også glidehull for forakselen fra Ø6,1 til Ø6,5 mm. Den lages med samme produksjonsmetode og innstillinger som sideplatene. Hullene måles med skyvelære, og lageret og akselen prøves i hvert hull. Det hullet som gir best pasning, bestemmer målet på setet i selve rammen.
 
-Hovedtesten er at lageret sitter fast og går lett (R13). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R10), og at akslene blir parallelle i rammen.
+Hovedtesten er at lageret sitter fast og går lett (R8). Tilleggstester er at lageret kan tas ut og settes inn igjen uten at setet blir slakt (R7), og at akslene blir parallelle i rammen.
 
 Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett til fem hakk og printet i samme retning som rammen (figur~\ref{fig:lager-proevering}). Ø19,0 gikk inn, men stramt, og Ø19,1 var litt romslig. Ø19,1 er brukt i rammen (seksjon~\ref{sec:gd-ramme}).
 
@@ -65,9 +65,9 @@ Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett ti
 
 \begin{versjonstabell}{lagersetet}{tab:ls1}
     \hovedtest
-    Lageret sitter fast og går lett (R13) & \\
+    Lageret sitter fast og går lett (R8) & \\
     \tilleggstester
-    Lageret kan tas ut og settes inn igjen (R10) & \\
+    Lageret kan tas ut og settes inn igjen (R7) & \\
     Akslene er parallelle etter montering & \\
 \end{versjonstabell}
 \end{comment}
@@ -76,7 +76,7 @@ Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett ti
 \label{sec:nv-serien}
 Pinjongen, tannhjulet, trommelen og hjulene festes til Ø6-akslene. Delene kan ikke ha D-hull, fordi de må tres forbi de runde lagersetene på akselen. Opprinnelig var planen runde Ø6,2-hull med en M3-madenskrue mot en frest flate. Madenskruer var ikke tilgjengelig, mens vanlige M3-skruer og muttere var det, og det ble i stedet laget to andre festemåter:
 \begin{description}
-    \item[Klemnav.] Brukes på trommelen og pinjongen. Navet er Ø20 med Ø6,2-hull og to slisser på \SI{1}{mm}. To M3 × 12-skruer går på tvers av slissene og strammes mot muttere i sekskantlommer. Skruene står 180° fra hverandre, så navet er balansert. Navet kan løsnes og skyves langs akselen, noe som gjør det mulig å justere delene sideveis (R10).
+    \item[Klemnav.] Brukes på trommelen og pinjongen. Navet er Ø20 med Ø6,2-hull og to slisser på \SI{1}{mm}. To M3 × 12-skruer går på tvers av slissene og strammes mot muttere i sekskantlommer. Skruene står 180° fra hverandre, så navet er balansert. Navet kan løsnes og skyves langs akselen, noe som gjør det mulig å justere delene sideveis (R7).
     \item[Firkantnav.] Brukes på hjulene. Akselendene freses til en 4 × 4 mm firkant, med diagonal \SI{5,66}{mm}, mindre enn Ø6. Hjulet tres på firkanten og kan ikke slure.
 \end{description}
 
@@ -89,24 +89,24 @@ Firkanthullet ble bestemt med en prøvebit på samme måte som lagersetet, med f
     \label{fig:firkanttest}
 \end{figure}
 
-Hovedtesten er at navet ikke slurer på akselen under opptrekk eller når svinghjulet stoppes brått (R9). Tilleggstester er at navet kan demonteres og monteres flere ganger uten at festet blir dårligere (R10), og at skruene ikke løsner i løpet av en testserie.
+Hovedtesten er at navet ikke slurer på akselen under opptrekk eller når svinghjulet stoppes brått (R6). Tilleggstester er at navet kan demonteres og monteres flere ganger uten at festet blir dårligere (R7), og at skruene ikke løsner i løpet av en testserie.
 
 Under den første utsnurringsserien løsnet klemnavet på trommelen. Trommelen sklei på akselen under opptrekket, og toppturtallet falt fra omtrent 1500 til \SI{1000}{o/min}. Mutterne ble kontrollert og skruene strammet jevnt, og etter det holdt navet gjennom 14 opptrekk i de to neste seriene. Pinjongnavet ble løsnet og flyttet da tannhjulet ble koblet fra (seksjon~\ref{sec:res-utsnurring}), uten at festet ble dårligere.
 
 \begin{versjonstabell}{klemnavet}{tab:nv1}
     \hovedtest
-    Trommelnavet slurer ikke under opptrekk (R9) & Delvis vellykket, løsnet i første serie, holdt etter ny stramming \\
+    Trommelnavet slurer ikke under opptrekk (R6) & Delvis vellykket, løsnet i første serie, holdt etter ny stramming \\
     \tilleggstester
-    Kan demonteres, flyttes og monteres igjen (R10) & Vellykket \\
+    Kan demonteres, flyttes og monteres igjen (R7) & Vellykket \\
     Skruene løsner ikke i løpet av en testserie & Delvis vellykket \\
 \end{versjonstabell}
 
 \begin{comment}
 \begin{versjonstabell}{firkantnavet}{tab:nv2}
     \hovedtest
-    Hjulet slurer ikke på akselen (R9) & \\
+    Hjulet slurer ikke på akselen (R6) & \\
     \tilleggstester
-    Kan demonteres og monteres flere ganger (R10) & \\
+    Kan demonteres og monteres flere ganger (R7) & \\
 \end{versjonstabell}
 \end{comment}
 
@@ -116,7 +116,7 @@ Svinghjulet spinnes opp med \SI{20}{cm} snor rundt en trommel på svinghjulsakse
 
 Det er tegnet tre tromler med kjerne Ø12, Ø14 og Ø18, ellers like. Maskintegningen av Ø12-trommelen står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:snortrommel}). Snora festes med en løkke på en krok midt i kjernen, utformet som en knaggkrok: en stilk med en finger som peker mot rotasjonsretningen under opptrekket (detalj E). Så lenge snora trekker, holder fingeren løkka på plass. Når snora er trukket helt ut og trommelen spinner videre, snur trekket, og løkka glir av over fingertuppen av seg selv. Undersiden av kroken skrår 45°, så den printes uten support. Den indre flensen har en utsparing for sveisekransen mellom svinghjulet og akselen. Innsiden av den ytre flensen har 45° helning, så trommelen kan printes uten support. Trommelen festes med klemnavet fra seksjon~\ref{sec:nv-serien}. Trommelen veier 3,7 til \SI{6,3}{g}.
 
-Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R6) og repeterbarhet (R7). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen.
+Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R3) og repeterbarhet (R4). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen.
 
 \begin{figure}[H]
     \centering
@@ -146,7 +146,7 @@ Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} r
 
 \begin{versjonstabell}{Ø12-trommelen}{tab:tr1}
     \hovedtest
-    Turtall etter opptrekk, \SI[separate-uncertainty=true]{2700 \pm 390}{o/min}, 6 opptrekk (R6, R7) & Delvis vellykket, under antatt \SI{4000}{o/min} \\
+    Turtall etter opptrekk, \SI[separate-uncertainty=true]{2700 \pm 390}{o/min}, 6 opptrekk (R3, R4) & Delvis vellykket, under antatt \SI{4000}{o/min} \\
     \tilleggstester
     Snora løsner av seg selv & Delvis vellykket, hang seg opp i 1 av 8 \\
     Snora sklir ikke av trommelen & Vellykket \\
@@ -181,14 +181,14 @@ Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,
     \label{fig:felg-foto}
 \end{figure}
 
-Hovedtesten er kjøredistanse med minst 10 kjøringer per dekk (R6, R7). Tilleggstester er sideavvik (R8), at dekket sitter på hjulet gjennom hele testserien, og hvor lenge hjulene slurer ved nedsetting. Resultatene brukes også til å kontrollere rullemotstanden som er antatt i simuleringen.
+Hovedtesten er kjøredistanse med minst 10 kjøringer per dekk (R3, R4). Tilleggstester er sideavvik (R5), at dekket sitter på hjulet gjennom hele testserien, og hvor lenge hjulene slurer ved nedsetting. Resultatene brukes også til å kontrollere rullemotstanden som er antatt i simuleringen.
 
 \begin{comment}
 \begin{versjonstabell}{det bare hjulet}{tab:dh1}
     \hovedtest
-    Kjøredistanse, snitt og standardavvik av 10 kjøringer (R6, R7) & \\
+    Kjøredistanse, snitt og standardavvik av 10 kjøringer (R3, R4) & \\
     \tilleggstester
-    Sideavvik (R8) & \\
+    Sideavvik (R5) & \\
     Dekket sitter gjennom testserien & \\
     Slur ved nedsetting & \\
 \end{versjonstabell}
