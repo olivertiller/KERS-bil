@@ -155,29 +155,37 @@ Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} r
 
 \subsubsection{Drivhjul og dekk}
 \label{sec:dh-serien}
-Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i drivverket. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. Halveres rullemotstandskoeffisienten fra 0,03 til 0,015, øker simulert distanse fra 38 til \SI{61}{m}, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{5}{\percent} lengre distanse. Et dekk bør derfor ha lav rullemotstand, og nok grep til at bilen går rett.
+Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i drivverket. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. Halveres rullemotstandskoeffisienten fra 0,03 til 0,015, øker simulert distanse fra 38 til \SI{61}{m}, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{5}{\percent} lengre distanse. Under omtrent 0,3 faller distansen derimot raskt, fordi hjulene slurer lenge ved nedsettingen. Et dekk bør derfor ha lav rullemotstand, og nok grep til at hjulene får tak og bilen går rett.
 
 Alle hjulene har samme nav. Maskintegningen av hjulet med TPU-dekk står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:hjul}). Navet har firkanthullet fra seksjon~\ref{sec:nv-serien} og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned.
 \begin{description}
     \item[Bart hjul.] Hjulet i PLA uten dekk, med ytre diameter \SI{68}{mm}. Veier \SI{9,4}{g}.
-    \item[TPU-dekk.] En PLA-felg med sete på Ø65 og skuldre på begge sider, og et \SI{1,5}{mm} tykt dekk printet i TPU. Dekket har \SI{0,6}{mm} mindre indre diameter enn setet og strekkes over felgen. Ferdig diameter er \SI{68}{mm}, og felg og dekk veier til sammen \SI{8,8}{g}.
+    \item[TPU-dekk.] En PLA-felg med sete på Ø65 og skuldre på begge sider, og et \SI{1,5}{mm} tykt dekk printet i TPU. Dekket har \SI{0,6}{mm} mindre indre diameter enn setet og strekkes over felgen. Ferdig diameter er \SI{68}{mm}, og felg og dekk veier til sammen \SI{8,8}{g} (figur~\ref{fig:felg-foto}c).
 \end{description}
+Det bare PLA-hjulet ble prøvd først, men det hadde for lite grep mot gulvet. Ved nedsettingen snurret drivhjulene lenge, og det meste av energien i svinghjulet gikk tapt i slur før bilen fikk fart. Simuleringen viser det samme: med friksjonskoeffisient 0,1 går halvparten av energien til slur, og bilen kjører under \SI{3}{m}, mot \SI{9,4}{m} med 0,6. Derfor er TPU-dekket brukt på alle hjulene.
+
 Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,6e-5}{kg.m^2}$ med Ø66-dekk, regnet fra CAD-geometrien. Det er omtrent halvparten av svinghjulets, men hjulene går $i$ ganger saktere, så bidraget til bilens effektive masse er lite.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.36\textwidth}
+    \begin{subfigure}[b]{0.27\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Images/Foto/felg_utside.jpg}
-        \caption{Utsiden}
+        \includegraphics[height=5cm]{Images/Foto/felg_utside.jpg}
+        \caption{Felgen, utsiden}
     \end{subfigure}
-    \hspace{1.5em}
-    \begin{subfigure}[b]{0.36\textwidth}
+    \hfill
+    \begin{subfigure}[b]{0.27\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Images/Foto/felg_innside.jpg}
-        \caption{Innsiden, med navet og kragen}
+        \includegraphics[height=5cm]{Images/Foto/felg_innside.jpg}
+        \caption{Felgen, innsiden med navet og kragen}
     \end{subfigure}
-    \caption[Printet felg]{Printet felg, uten TPU-dekk.}
+    \hfill
+    \begin{subfigure}[b]{0.38\textwidth}
+        \centering
+        \includegraphics[height=5cm]{Images/Foto/Ferdig/hjul_tpu.jpg}
+        \caption{Med TPU-dekk}
+    \end{subfigure}
+    \caption[Printet hjul]{Printet hjul. (a) og (b) felgen uten dekk, (c) ferdig hjul med TPU-dekket strukket over felgen.}
     \label{fig:felg-foto}
 \end{figure}
 
