@@ -1,0 +1,10 @@
+{
+	"autodeskProduct": "Fusion",
+	"type": "script",
+	"author": "",
+	"description": {
+		"": "Bygger de fire CAD-versjonene av drivverket og lagrer f3d og bilder"
+	},
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}

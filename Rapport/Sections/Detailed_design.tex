@@ -16,7 +16,14 @@
 
 \subsection{Iterasjoner av drivverket}
 \label{sec:dv-serien}
-Før noe ble produsert, ble drivverket justert i CAD i fire versjoner. I hver versjon ble det kontrollert at svinghjulet går klar av akslene med minst \SI{3}{mm} og av underlaget, og at bilen holder seg innenfor \SI{140}{mm} (R1). Simuleringen fra seksjon~\ref{sec:simulering-verktoy} ble brukt for å se at endringene ikke kostet kjøredistanse. Tabell~\ref{tab:dv-samlet} oppsummerer dem.
+Før noe ble produsert, ble drivverket justert i CAD i fire versjoner. I hver versjon ble det kontrollert at svinghjulet går klar av akslene med minst \SI{3}{mm} og av underlaget, og at bilen holder seg innenfor \SI{140}{mm} (R1). Simuleringen fra seksjon~\ref{sec:simulering-verktoy} ble brukt for å se at endringene ikke kostet kjøredistanse. Figur~\ref{fig:dv-versjoner} viser versjonene, og tabell~\ref{tab:dv-samlet} oppsummerer dem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/Drivverk/drivverk_versjoner.pdf}
+    \caption[Versjonene av drivverket i CAD]{Versjonene av drivverket i CAD, sett fra tannhjulssiden med de nærmeste hjulene og lagrene skjult. Sirkelen viser klaringen mellom svinghjulet og forakselen. Rødt markerer det som er endret fra forrige versjon.}
+    \label{fig:dv-versjoner}
+\end{figure}
 
 Utgangspunktet, versjon 1, var konsept 3: et pinjong med 17 tenner som driver et tannhjul med 68 tenner, modul 0,8, som gir akseavstanden $a = 0{,}8 \cdot (17 + 68)/2 = \SI{34}{mm}$. Drivhjulene var Ø64, og hjulakslene var Ø3 sveisetråd. Svinghjulsakselen lå \SI{36}{mm} over underlaget og hjulakslene \SI{32}{mm}, så de tre akslene lå ikke i samme høyde.
 
@@ -40,7 +47,7 @@ For å få \SI{3}{mm} klaring med Ø6-aksler må akseavstanden være $30 + 3 + 3
         Endring & Konsept 3 & Aksler i lik høyde & Ø6-aksler & $a = \SI{36}{mm}$ \\
         Utveksling & 17\,:\,68 & 17\,:\,68 & 17\,:\,68 & 17\,:\,73 \\
         Hjuldiameter [mm] & 64 & 68 & 68 & 68 \\
-        Hjulaksler & Ø3 sveisetråd & Ø3 sveisetråd & Ø6 stål & Ø6 stål \\
+        Hjulaksler & Ø3 sveisetråd & Ø3 sveisetråd & Ø6 printet & Ø6 printet \\
         Klaring svinghjul--aksel [mm] & 2,5 & 2,5 & 1 & 3 \\
         Bakkeklaring svinghjul [mm] & 6 & 4 & 4 & 4 \\
         Lengde [mm] & 132 & 136 & 136 & 140 \\
