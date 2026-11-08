@@ -38,7 +38,7 @@ Tabell~\ref{tab:iterasjonsserier} viser delene som utvikles på denne måten.
 
 \subsubsection{Simulering som digital prototype}
 \label{sec:simulering-verktoy}
-Der et valg ikke kan prøves fysisk i tide, brukes en enkel numerisk simulering av bilen som digital prototype. Den regner ut kjøredistansen for én kjøring og følger startprosedyren i konkurransen: bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang. Kjøringen deles i to faser.
+Simuleringen er et supplement til de fysiske testene. Den kobler tapsleddene som måles på bilen sammen til en kjøredistanse, slik at det kan regnes ut hvor mye hvert ledd koster, og den brukes til å sammenligne alternativer før de bygges, som versjonene av drivverket i CAD (seksjon~\ref{sec:dv-serien}). Den regner ut kjøredistansen for én kjøring og følger startprosedyren i konkurransen: bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang. Kjøringen deles i to faser.
 
 \paragraph{Slur ved nedsetting.} Rett etter nedsettingen går drivhjulene fortere rundt enn bilen kjører, og de slurer mot underlaget. Drivkraften er da begrenset av friksjonen, $F_d = \mu N_d$, der $N_d$ er normalkraften på drivhjulene. Svinghjulet bremses og bilen akselereres:
 \begin{equation}
@@ -54,7 +54,7 @@ Her er $T_\text{tap}$ tapsmomentet i lagrene på svinghjulsakselen, $m_e$ bilens
 
 \begin{table}[H]
     \centering
-    \caption[Parametere i simuleringen]{Parametere i simuleringen for den ferdige bilen. Antatte verdier er markert.}
+    \caption[Parametere i simuleringen]{Parametere i simuleringen for den ferdige bilen. Verdier merket med * er foreløpige til målingene i seksjon~\ref{sec:metode-tap} er gjort.}
     \label{tab:sim-parametre}
     \small
     \renewcommand{\arraystretch}{1.2}
@@ -69,10 +69,10 @@ Her er $T_\text{tap}$ tapsmomentet i lagrene på svinghjulsakselen, $m_e$ bilens
         Hjulenes treghetsmoment $J_h$ & \SI{2,9e-5}{kg.m^2} & CAD \\
         Bilens masse $m$ & \SI{0,27}{kg} & Veid, ferdig bil som testet \\
         Tapsmoment i lagrene $T_\text{tap}(\omega)$ & $c_0 + c_1\omega + c_2\omega^2$ & Målt (seksjon~\ref{sec:metode-tap}) \\
-        Rullemotstandskoeffisient $C_{rr}$ & 0,03 & Antatt \\
-        Virkningsgrad i tannhjulsinngrepet $\eta$ & 0,95 & Antatt \\
-        Friksjon dekk mot underlag $\mu$ & 0,6 & Antatt \\
-        Andel av vekten på drivhjulene & 0,5 & Antatt \\
+        Rullemotstandskoeffisient $C_{rr}$ & 0,03* & Måles (seksjon~\ref{sec:metode-tap}) \\
+        Virkningsgrad i tannhjulsinngrepet $\eta$ & 0,95* & Måles (seksjon~\ref{sec:metode-tap}) \\
+        Friksjon dekk mot underlag $\mu$ & 0,6* & Måles (seksjon~\ref{sec:metode-tap}) \\
+        Andel av vekten på drivhjulene & 0,5 & Svinghjulet midt mellom akslene \\
         \hline
     \end{tabular}
 \end{table}
@@ -84,4 +84,4 @@ Her er $T_\text{tap}$ tapsmomentet i lagrene på svinghjulsakselen, $m_e$ bilens
     \label{fig:sim-kjoring}
 \end{figure}
 
-Flere av parameterne er antatt, så de absolutte distansene er usikre. Simuleringen brukes derfor til å sammenligne alternativer med de samme antakelsene, og det er rekkefølgen mellom dem som brukes til å velge. I konseptfasen var også massen (\SI{0,25}{kg}) og lagertapet antatt.
+Parameterne er målt eller beregnet på bilen og delene der det er mulig. Simuleringen brukes mest til å sammenligne alternativer, og rekkefølgen mellom dem er mindre følsom for usikkerheten i parameterne enn de absolutte distansene. I konseptfasen, før bilen og lagrene kunne måles, ble massen satt til \SI{0,25}{kg} og lagertapet anslått.
