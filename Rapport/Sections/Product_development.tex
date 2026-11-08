@@ -38,7 +38,50 @@ Tabell~\ref{tab:iterasjonsserier} viser delene som utvikles på denne måten.
 
 \subsubsection{Simulering som digital prototype}
 \label{sec:simulering-verktoy}
-Der et valg ikke kan prøves fysisk i tide, brukes en enkel numerisk simulering av bilen som digital prototype. Den regner kjøredistansen for én kjøring ut fra svinghjulets treghetsmoment og startturtall, utvekslingen, hjulradien, bilens masse, rullemotstanden, virkningsgraden i tannhjulsinngrepet og tapsmomentet i lagrene. Simuleringen følger startprosedyren i konkurransen: bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang, og drivhjulene slurer til farten til bil og svinghjul er lik. Grunnlaget er det samme som i seksjon~\ref{sec:teori}, men regnet trinn for trinn i tid, slik at sluret ved nedsetting og tap som avhenger av turtallet kommer med.
+Der et valg ikke kan prøves fysisk i tide, brukes en enkel numerisk simulering av bilen som digital prototype. Den regner ut kjøredistansen for én kjøring og følger startprosedyren i konkurransen: bilen holdes løftet under opptrekk og settes ned med svinghjulet i gang. Kjøringen deles i to faser.
 
-Bilens masse (\SI{0,25}{kg}), rullemotstandskoeffisienten (0,03) og virkningsgraden (0,95 per tannhjulstrinn) er antatt. Tapsmomentet i lagrene er først antatt og senere målt (seksjon~\ref{sec:res-utsnurring}). De absolutte distansene er derfor usikre. Simuleringen brukes bare til å sammenligne alternativer med de samme antakelsene, og det er rekkefølgen mellom dem som brukes til å velge. Utledning av modellen og validering mot kjøretester gjøres i MAST2007.
+\paragraph{Slur ved nedsetting.} Rett etter nedsettingen går drivhjulene fortere rundt enn bilen kjører, og de slurer mot underlaget. Drivkraften er da begrenset av friksjonen, $F_d = \mu N_d$, der $N_d$ er normalkraften på drivhjulene. Svinghjulet bremses og bilen akselereres:
+\begin{equation}
+    I\dot\omega = -T_\text{tap}(\omega) - \frac{F_d\,r_h}{\eta\,i}, \qquad m_e\dot v = F_d - F_{rr}.
+    \label{eq:sim-slur}
+\end{equation}
+\paragraph{Rulling.} Når hjulenes periferifart har nådd bilens fart, ruller hjulene uten å slure, og $v = \omega r_h / i$ fra likning~\eqref{eq:hastighet}. Svinghjulet og bilen blir da ett system:
+\begin{equation}
+    \left(I + \frac{m_e r_h^2}{\eta\,i^2}\right)\dot\omega = -T_\text{tap}(\omega) - \frac{F_{rr}\,r_h}{\eta\,i}, \qquad m_e = m + \frac{J_h}{r_h^2}.
+    \label{eq:sim-rulling}
+\end{equation}
+Her er $T_\text{tap}$ tapsmomentet i lagrene på svinghjulsakselen, $m_e$ bilens effektive masse med hjulenes treghetsmoment $J_h$, og $F_{rr} = C_{rr} m g$ som i seksjon~\ref{sec:teori}. Likningene løses med Eulers metode med tidssteg \SI{1}{ms} til bilen står. Parameterne står i tabell~\ref{tab:sim-parametre}, og figur~\ref{fig:sim-kjoring} viser en simulert kjøring.
 
+\begin{table}[H]
+    \centering
+    \caption[Parametere i simuleringen]{Parametere i simuleringen for den ferdige bilen. Antatte verdier er markert.}
+    \label{tab:sim-parametre}
+    \small
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Verdi} & \textbf{Grunnlag} \\
+        \hline
+        Svinghjulets treghetsmoment $I$ & \SI{6,0e-5}{kg.m^2} & Beregnet, likning~\eqref{eq:treghetsmoment} \\
+        Startturtall & \SI{2700}{o/min} & Målt, snitt for opptrekk med snor \\
+        Utveksling $i$ & $73/17 = 4{,}29$ & Design \\
+        Hjulradius $r_h$ & \SI{34}{mm} & Design \\
+        Hjulenes treghetsmoment $J_h$ & \SI{2,9e-5}{kg.m^2} & CAD \\
+        Bilens masse $m$ & \SI{0,27}{kg} & Veid, ferdig bil som testet \\
+        Tapsmoment i lagrene $T_\text{tap}(\omega)$ & $c_0 + c_1\omega + c_2\omega^2$ & Målt (seksjon~\ref{sec:metode-tap}) \\
+        Rullemotstandskoeffisient $C_{rr}$ & 0,03 & Antatt \\
+        Virkningsgrad i tannhjulsinngrepet $\eta$ & 0,95 & Antatt \\
+        Friksjon dekk mot underlag $\mu$ & 0,6 & Antatt \\
+        Andel av vekten på drivhjulene & 0,5 & Antatt \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/Simulering/sim_kjoring.pdf}
+    \caption[Simulert kjøring]{Simulert kjøring for bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Det grå feltet er sluret ved nedsetting.}
+    \label{fig:sim-kjoring}
+\end{figure}
+
+Flere av parameterne er antatt, så de absolutte distansene er usikre. Simuleringen brukes derfor til å sammenligne alternativer med de samme antakelsene, og det er rekkefølgen mellom dem som brukes til å velge. I konseptfasen var også massen (\SI{0,25}{kg}) og lagertapet antatt. Koden ligger i \nolinkurl{Code/kers_sim.py}. Utledning av modellen og validering mot kjøretester gjøres i MAST2007.

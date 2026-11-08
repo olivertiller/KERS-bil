@@ -77,17 +77,29 @@ Prøvebiten ble laget som fem ringer fra Ø18,9 til Ø19,3 mm, merket med ett ti
 Pinjongen, tannhjulet, trommelen og hjulene festes til Ø6-akslene. Delene kan ikke ha D-hull, fordi de må tres forbi de runde lagersetene på akselen.
 
 \begin{description}
-    \item[Klemnav.] Brukes på trommelen og pinjongen. Navet er Ø20 med Ø6,2-hull og to slisser på \SI{1}{mm}. To M3 × 12-skruer går på tvers av slissene og strammes mot muttere i sekskantlommer. Skruene står 180° fra hverandre, så navet er balansert. Navet kan løsnes og skyves langs akselen, noe som gjør det mulig å justere delene sideveis (R7).
+    \item[Klemnav.] Brukes på trommelen og pinjongen (figur~\ref{fig:klemnav}). Navet er Ø20 med Ø6,2-hull og to slisser på \SI{1}{mm}. To M3 × 12-skruer går på tvers av slissene og strammes mot muttere i sekskantlommer. Skruene står 180° fra hverandre, så navet er balansert. Navet kan løsnes og skyves langs akselen, noe som gjør det mulig å justere delene sideveis (R7).
     \item[Firkantnav.] Brukes på hjulene. Hjulakslene er 3D-printet med Ø6 og har en firkant på 4 × 4 × \SI{10}{mm} i hver ende. Diagonalen er \SI{5,66}{mm}, mindre enn Ø6. Hjulet tres på firkanten og kan ikke slure.
 \end{description}
 
-Firkanthullet ble bestemt med en prøvebit på samme måte som lagersetet, med fire hull fra \SI{4,0}{mm} til \SI{4,3}{mm} i trinn på \SI{0,1}{mm}, merket med én til fire streker. Hullet på \SI{4,3}{mm} ga best pasning på den freste akselenden og er brukt i hjulene. Hullene har små avlastningssirkler i hjørnene, så de skarpe hjørnene på den freste firkanten går inn.
+Firkanthullet ble bestemt med en prøvebit på samme måte som lagersetet, med fire hull fra \SI{4,0}{mm} til \SI{4,3}{mm} i trinn på \SI{0,1}{mm}, merket med én til fire streker. Hullet på \SI{4,3}{mm} ga best pasning på den printede akselenden og er brukt i hjulene. Hullene har små avlastningssirkler i hjørnene, så hjørnene på firkanten går inn.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.36\textwidth]{Images/Foto/firkanttest.jpg}
-    \caption[Prøvebiten for firkanthullet]{Prøvebiten for firkanthullet. Strekene ved hullene viser størrelsen, fra én strek for \SI{4,0}{mm} til fire for \SI{4,3}{mm}.}
-    \label{fig:firkanttest}
+    \begin{subfigure}[b]{0.42\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/klemnav.jpg}
+        \caption{Klemnav på snortrommelen}
+        \label{fig:klemnav}
+    \end{subfigure}
+    \hspace{1.5em}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/firkanttest.jpg}
+        \caption{Prøvebit for firkanthullet}
+        \label{fig:firkanttest}
+    \end{subfigure}
+    \caption[Klemnav og prøvebiten for firkanthullet]{(a) Klemnavet med to slisser og to M3-skruer på tvers. (b) Prøvebiten for firkanthullet. Strekene viser størrelsen, fra én strek for \SI{4,0}{mm} til fire for \SI{4,3}{mm}.}
+    \label{fig:nav}
 \end{figure}
 
 \begin{comment}
@@ -183,12 +195,52 @@ Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,
 % Samlet evaluering som tabell~\ref{tab:dv-samlet}, én tabell per serie når testene er gjort
 \end{comment}
 
-\begin{comment}
-\subsubsection{Produksjonsmetoder og prosessvalg}
-\subsubsection{Fremstilling og montering}
-\subsubsection{Ferdig prototype og kontroll av dimensjoner}
-% Beskriv materialer, produksjonsinnstillinger, monteringsprosedyre og kontrollmetoder. Vis bilder av den fremstilte prototypen. Skill mellom planlagt og utført arbeid.
-\end{comment}
+\subsubsection{Ferdig bil}
+\label{sec:ferdig-bil}
+Figur~\ref{fig:ferdig-bil} viser bilen slik den ble kjøretestet. Rammen er printet i PLA i ett stykke, og hjulene, tannhjulene, trommelen og hjulakslene er printet. Svinghjulet og akselen er de utdelte delene. Den ferdige bilen veier \SI{270}{g}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.52\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/bil_skraatt.jpg}
+        \caption{Skrått forfra, fra tannhjulssiden}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/bil_ovenfra.jpg}
+        \caption{Ovenfra}
+    \end{subfigure}
+    \caption[Den ferdige bilen]{Den ferdige bilen med generativ ramme, tannhjulspar 17\,:\,73 og Ø68-hjul med TPU-dekk.}
+    \label{fig:ferdig-bil}
+\end{figure}
+
+Svinghjulet er sveiset fast på akselen, så alle delene på svinghjulsakselen tres på fra endene og monteres som én enhet (figur~\ref{fig:svinghjulsaksel}). Enheten senkes ned i U-setene i rammen, og lagerlokkene skrus over.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/svinghjulsaksel.jpg}
+        \caption{Montert}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/u_sete.jpg}
+        \caption{Rammen fra siden, med lagrene i lagerhuset og U-setet}
+    \end{subfigure}
+
+    \vspace{0.6em}
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/svinghjulsaksel_demontert.jpg}
+        \caption{Demontert. Fra venstre: lager, avstandshylser, pinjong, magnetskive, svinghjulet med akselen, snortrommel, avstandshylse og lager.}
+    \end{subfigure}
+    \caption[Svinghjulsakselen]{Svinghjulsakselen.}
+    \label{fig:svinghjulsaksel}
+\end{figure}
 
 \subsection{Problemløsning}
 \label{sec:problemlosning}
@@ -196,6 +248,6 @@ Testingen av den første prototypen avdekket tre problemer. Hvert av dem førte 
 
 \paragraph{Trommelen løsnet.} Klemnavet på trommelen sklei på akselen under den første serien. Det ble løst ved å kontrollere mutterne og stramme skruene jevnt (seksjon~\ref{sec:nv-serien}).
 
-\paragraph{Svinghjulsakselen glir sideveis.} Med tannhjulet frakoblet varierte tapet mye fra opptrekk til opptrekk, og hvert opptrekk holdt et jevnt nivå hele veien ned. Det tydet på at noe gnisset med ulik kraft fra gang til gang. Akselen hadde for mye klaring sideveis, og avhengig av hvilken vei snora trakk, kom trommelen eller pinjongen borti noe. Tiltaket er to C-formede avstandshylser som klikkes på akselen uten at den tas ut av lagrene (figur~\ref{fig:avstandshylse}). En krage ligger an mot innerringen i lageret, som roterer med akselen, så hylsene gir ingen ny friksjon. Lengden velges i trinn på \SI{0,5}{mm}, slik at akselen får 0,1 til \SI{0,3}{mm} klaring.
+\paragraph{Svinghjulsakselen glir sideveis.} Med tannhjulet frakoblet varierte tapet mye fra opptrekk til opptrekk, og hvert opptrekk holdt et jevnt nivå hele veien ned. Det tydet på at noe gnisset med ulik kraft fra gang til gang. Akselen hadde for mye klaring sideveis, og avhengig av hvilken vei snora trakk, kom trommelen eller pinjongen borti noe. Tiltaket er to C-formede avstandshylser som klikkes på akselen uten at den tas ut av lagrene (figur~\ref{fig:svinghjulsaksel}c). En krage ligger an mot innerringen i lageret, som roterer med akselen, så hylsene gir ingen ny friksjon. Lengden velges i trinn på \SI{0,5}{mm}, slik at akselen får 0,1 til \SI{0,3}{mm} klaring.
 
-\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen sto for en stor del av tapet. De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.
+\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen var et av de største tapsleddene (seksjon~\ref{sec:res-tapsledd}). De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.

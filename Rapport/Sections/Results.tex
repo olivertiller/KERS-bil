@@ -1,56 +1,42 @@
 \section{Resultater og analyser}
 \label{sec:resultater}
 
-\subsection{Tap i lagrene}
+\subsection{Tapsledd}
+\label{sec:res-tapsledd}
 \label{sec:res-utsnurring}
 \label{sec:res-lager}
-Tapet i lagrene på svinghjulsakselen ble målt for fire lagervarianter 6. og 7.~november 2026, med tannhjulet frakoblet og Ø12-trommelen (tabell~\ref{tab:lagervarianter}). Varianten med fett er de opprinnelige 626 2RS-lagrene slik de ble levert. I varianten med olje er tetningene tatt ut, fettet vasket ut med isopropanol og lagrene smurt med Bambu Lab sin smøreolje for 3D-printere. Den tørre varianten er de samme lagrene uten olje, slik de ble brukt i kjøretesten. Den siste er åpne SKF Explorer 626 uten tetning eller skjold. Alle seriene unntatt den med fett er tatt med avstandshylsene montert (seksjon~\ref{sec:problemlosning}). Rådata ligger i \nolinkurl{Code/utsnurring_diagnose/data/}.
-
-\begin{table}[H]
-    \centering
-    \caption[Tap for fire lagervarianter på svinghjulsakselen]{Utsnurring med tannhjulet frakoblet for fire lagervarianter på svinghjulsakselen. Snitt med standardavvik.}
-    \label{tab:lagervarianter}
-    \small
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Lager} & \textbf{Opptrekk} & \textbf{1000 til 300 o/min [s]} & \textbf{Snittmoment [mN\,m]} \\
-        \hline
-        626 2RS med fett & 5 & 2,93 ± 0,73 & 1,50 \\
-        626 2RS uten tetninger, olje & 8 & 1,07 ± 0,09 & 4,11 \\
-        626 2RS uten tetninger, tørt & 6 & 6,17 ± 1,18 & 0,71 \\
-        SKF Explorer 626, åpent & 5 & 23,8 ± 4,7 & 0,19 \\
-        \hline
-    \end{tabular}
-\end{table}
-
-Med olje ble tapet nesten tre ganger så stort som med fett, selv om lagrene gikk lettere for hånd uten tetninger. De tørre lagrene gikk seg til gjennom to serier, fra \SI{1,53}{mN.m} i første opptrekk til \SI{0,61}{mN.m} i de to siste, og tabellen viser den andre serien. SKF-lagrene ga omtrent en åttendedel av tapet med fett, og svinghjulet snurret i halvannet til nesten to minutter etter hvert opptrekk. Med tannhjulet koblet og de opprinnelige lagrene var snittmomentet \SI{2,68}{mN.m}, så tannhjulsinngrepet og drivakselen sto for omtrent \SI{1,2}{mN.m} av dette.
-
 \label{sec:res-sim-lager}
-Tapsmodeller tilpasset seriene er satt inn i simuleringen (seksjon~\ref{sec:simulering-verktoy}) for å sammenligne lagerkombinasjoner (tabell~\ref{tab:lagerplan}). Alle tallene er regnet fra \SI{2700}{o/min}, som er snittet for opptrekk med snor. Lagrene på hjulakslene er regnet om til ekstra rullemotstand $T/r_h$, med \SI{1,3}{mN.m} per par for 626 2RS med fett, \SI{0,6}{mN.m} for tørre 626 2RS og \SI{0,14}{mN.m} for SKF. SKF-lagre på drivakselen er regnet uten tap, og tannhjulsinngrepet er bare med gjennom en antatt virkningsgrad. Tallene er derfor en øvre grense og brukes bare til å sammenligne alternativene.
+Tabell~\ref{tab:tapsledd} viser hvor energien i svinghjulet går i en simulert kjøring med bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Svinghjulet har da \SI{2,4}{J}, og bilen kjører \SI{9,4}{m} (figur~\ref{fig:sim-kjoring}). Andelene for tannhjulsinngrepet og rullemotstanden bygger på antatte verdier.
 
 \begin{table}[H]
     \centering
-    \caption[Simulert kjøredistanse for ulike lagerkombinasjoner]{Simulert kjøredistanse fra \SI{2700}{o/min} med $i = 4{,}29$ for ulike lagerkombinasjoner.}
-    \label{tab:lagerplan}
+    \caption[Tapsledd i en simulert kjøring]{Tapsledd i en simulert kjøring fra \SI{2700}{o/min} med bilen slik den ble kjøretestet. Andel av energien i svinghjulet ved start.}
+    \label{tab:tapsledd}
     \small
-    \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{|l|r|}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|l|l|l|r|}
         \hline
-        \textbf{Lager} & \textbf{Distanse [m]} \\
+        \textbf{Tapsledd} & \textbf{Grunnlag} & \textbf{Verdi} & \textbf{Andel} \\
         \hline
-        Opprinnelige 626 2RS med fett (målt med tannhjulet koblet) & 3,1 \\
-        Tørre 626 2RS på alle akslene (kjøretesten) & 7,3--9,9 \\
-        SKF på svinghjulsakselen, tørre 626 2RS på hjulakslene & 13,2 \\
-        SKF på svinghjuls- og drivakselen, 626 2RS med fett foran & 12,8 \\
-        SKF på svinghjuls- og drivakselen, tørre 626 2RS foran & 15,4 \\
-        SKF på alle akslene & 17,7 \\
+        Slur ved nedsetting & Simulert & -- & \SI{26}{\percent} \\
+        Lagre på svinghjulsakselen & Målt, utsnurring & \SI{0,71}{mN.m} & \SI{26}{\percent} \\
+        Lagre på hjulakslene & Antatt som svinghjulsakselen & \SI{0,6}{mN.m} per par & \SI{14}{\percent} \\
+        Tannhjulsinngrepet & Antatt & $\eta = 0{,}95$ & \SI{4}{\percent} \\
+        Rullemotstand dekk mot underlag & Antatt & $C_{rr} = 0{,}03$ & \SI{31}{\percent} \\
         \hline
     \end{tabular}
 \end{table}
+
+\textbf{PLASSHOLDER: målt virkningsgrad i drivverket og målt rullemotstand og friksjon mot underlaget settes inn i tabellen og i simuleringen. En tidligere utsnurring med tannhjulet koblet og bilen løftet ga \SI{1,2}{mN.m} mer enn med tannhjulet frakoblet.}
+
+\paragraph{Slur ved nedsetting.} Under sluret faller turtallet fra 2700 til omtrent \SI{1900}{o/min} på \SI{0,7}{s}, og omtrent en firedel av energien går tapt. Andelen er nesten uavhengig av friksjonen mot underlaget: med $\mu$ fra 0,3 til 1,0 blir den 25 til \SI{28}{\percent}. Med lav friksjon slurer hjulene lenger, men med lavere kraft.
+
+\paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026. Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretesten. Med SKF-lagre på svinghjulsakselen øker den simulerte distansen fra 9,4 til \SI{12,4}{m}, og med SKF på alle akslene til \SI{16,3}{m}. Rådata ligger i \nolinkurl{Code/utsnurring_diagnose/data/}.
 
 \subsection{Første kjøretest}
 \label{sec:res-kjoretest}
+Den første kjøretesten ble gjort 7.~november 2026 med hele bilen (figur~\ref{fig:testoppsett}): den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre på alle tre akslene, med tetningene tatt ut og uten olje. Bilen veide \SI{270}{g}. Opptrekket ble gjort med Ø12-trommelen, og turtallet etter opptrekk ble ikke målt. Målet var å se om bilen fungerer som helhet, og å få et første tall for lengde og sideavvik.
+
 Bilen ble kjørt fem ganger etter prosedyren i seksjon~\ref{sec:metode-kjoretest}. Tabell~\ref{tab:kjoretest1} viser alle forsøkene, og ingen er utelatt. Lengden var \SI[separate-uncertainty=true]{5,48 \pm 1,36}{m} (snitt og standardavvik), som er en spredning på \SI{25}{\percent}. Forsøk 2 endte i et bord, så lengden der er en nedre grense.
 
 \begin{table}[H]
@@ -83,11 +69,16 @@ Ved nedsettingen slurte ofte høyre drivhjul så mye at det bare spant rundt, og
     \item Drivhjulene har samme diameter.
 \end{itemize}
 
-Etterpå ble det gjort en papirtest: bilen ble satt på et plant underlag, og en papirlapp ble trukket ut under hvert drivhjul. Lappen gled tydelig lettere under venstre drivhjul enn under høyre, så venstre drivhjul har mindre last enn høyre. Med et lodd på \SI{34}{g} over venstre drivhjul var lasten fortsatt størst på høyre. Papirtesten på alle fire hjulene viste at diagonalen høyre bakhjul og venstre forhjul bærer det meste av vekten.
+Etterpå ble det gjort en papirtest (figur~\ref{fig:papirtest}): bilen ble satt på et plant underlag, og en papirlapp ble trukket ut under hvert drivhjul. Lappen gled tydelig lettere under venstre drivhjul enn under høyre, så venstre drivhjul har mindre last enn høyre. Med et lodd på \SI{34}{g} over venstre drivhjul var lasten fortsatt størst på høyre. Papirtesten på alle fire hjulene viste at diagonalen høyre bakhjul og venstre forhjul bærer det meste av vekten.
 
-\textbf{BILDE AV PAPIRTEST}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.38\textwidth]{Images/Foto/Ferdig/papirtest.jpg}
+    \caption[Papirtesten]{Papirtesten. Et papirark trekkes ut under ett hjul om gangen, og jo tyngre det går, jo mer last har hjulet.}
+    \label{fig:papirtest}
+\end{figure}
 
-For å sammenligne med simuleringen er tapsmodellen for de tørre lagrene brukt på svinghjulsakselen. Lagrene på drivakselen og forakselen er regnet om til ekstra rullemotstand, med mellom 0,6 og \SI{1,5}{mN.m} per par. Det er nivået de tørre lagrene hadde etter og før innkjøringen, og det er ikke kjent hvor godt lagrene på hjulakslene hadde gått seg til. Da gir simuleringen 7,3 til \SI{9,9}{m} fra \SI{2700}{o/min} (tabell~\ref{tab:lagerplan}). Over området som opptrekk med snor gir, 1700 til \SI{2850}{o/min}, gir den 3,0 til \SI{11,0}{m}.
+For å sammenligne med simuleringen er tapsmodellen for de tørre lagrene brukt på svinghjulsakselen, og lagrene på hjulakslene er regnet om til ekstra rullemotstand med mellom 0,6 og \SI{1,5}{mN.m} per par. Det er nivået de tørre lagrene hadde etter og før innkjøringen. Da gir simuleringen 7,0 til \SI{9,4}{m} fra \SI{2700}{o/min}. Over området som opptrekk med snor gir, 1700 til \SI{2850}{o/min}, gir den 2,8 til \SI{10,4}{m}.
 
 \subsection{Oppsummering av kravoppfyllelse}
 \label{sec:res-kravstatus}

@@ -41,7 +41,7 @@ g = 9.81
 @dataclass
 class Bil:
     I: float = 6.0e-5 + 6.5e-8  # svinghjul + aksel [kg m^2]
-    m: float = 0.25  # bilens totale masse [kg] (antatt)
+    m: float = 0.27  # bilens totale masse [kg], veid ferdig bil som testet 2026-11-08 (var antatt 0,25)
     r_h: float = 0.030  # drivhjulradius [m]
     J_hjul: float = 0.0  # samlet treghetsmoment for alle hjul [kg m^2]
     C_rr: float = 0.03  # rullemotstandskoeffisient (antatt)
@@ -78,6 +78,9 @@ def simuler(bil, i, rpm0, dt=1e-3, t_maks=900.0):
     E0 = 0.5 * bil.I * w**2
     logg = [(t, w, v, s)]
     n = 0
+    # Energiregnskap [J]: lagre på svinghjulsakselen, rullemotstand (inkl. tillegg for hjulaksellagre),
+    # tannhjulsinngrepet, slur mellom drivhjul og underlag, og tapet når hjul og bil låses sammen.
+    E = dict(lager=0.0, rull=0.0, tannhjul=0.0, slur=0.0, las=0.0)
     while t < t_maks:
         T_tap = tapsmoment(bil, w)
         slipp = k * w - v  # drivhjulenes periferihastighet minus bilens fart
@@ -101,6 +104,12 @@ def simuler(bil, i, rpm0, dt=1e-3, t_maks=900.0):
         if not ruller:
             T_g = F_d * k / eta if F_d > 0 else F_d * k * eta
             w_dot = -(T_tap + T_g) / bil.I
+            E["tannhjul"] += (T_g * w - F_d * k * w) * dt
+            E["slur"] += F_d * (k * w - v) * dt
+        else:
+            E["tannhjul"] += (F_d * v * (1 / eta - 1) if F_d > 0 else -F_d * v * (1 - eta)) * dt
+        E["lager"] += T_tap * w * dt
+        E["rull"] += F_rr_t * v * dt
         v_dot = (F_d - F_rr_t) / m_eff
 
         w_ny = max(w + w_dot * dt, 0.0)
@@ -108,8 +117,10 @@ def simuler(bil, i, rpm0, dt=1e-3, t_maks=900.0):
         # Slipp som skifter fortegn betyr at hjul og bil har nådd samme fart:
         # lås dem sammen med bevart (redusert) bevegelsesmengde, som et uelastisk støt.
         if (k * w - v) * (k * w_ny - v_ny) < 0 and not (bil.frihjul and k * w_ny < v_ny):
+            E_for = 0.5 * m_eff * v_ny**2 + 0.5 * bil.I * w_ny**2
             v_ny = (m_eff * v_ny + bil.I * w_ny / k) / (m_eff + bil.I / k**2)
             w_ny = v_ny / k
+            E["las"] += E_for - 0.5 * m_eff * v_ny**2 - 0.5 * bil.I * w_ny**2
         w, v = w_ny, v_ny
         s += v * dt
         t += dt
@@ -122,7 +133,7 @@ def simuler(bil, i, rpm0, dt=1e-3, t_maks=900.0):
     logg.append((t, w, v, s))
     t_a, w_a, v_a, s_a = map(np.array, zip(*logg))
     return {"t": t_a, "w": w_a, "v": v_a, "s": s_a, "distanse": s, "tid": t,
-            "v_maks": v_a.max(), "E0": E0}
+            "v_maks": v_a.max(), "E0": E0, "E": E}
 
 
 def les_utsnurring(fil):

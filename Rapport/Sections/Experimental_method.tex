@@ -1,26 +1,61 @@
 \section{Testmetode}
 \label{sec:metode}
-\subsection{Måling av tap i lagrene}
+\subsection{Måling av tapsledd}
+\label{sec:metode-tap}
 \label{sec:ml-serien}
 \label{sec:utsnurring-behandling}
-For å kunne beregne en teoretisk distanse ble tapet på svinghjulsakselen målt med utsnurring. Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen. En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned, som $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$ for svinghjulet og akselen. Opptrekk med ulikt toppturtall sammenlignes med tiden fra 1000 til \SI{300}{o/min}. De fleste seriene er tatt med tannhjulet frakoblet, så de viser bare tapet i lagrene på svinghjulsakselen. Måleoppsettet, behandlingen av dataene og tilpasningen av en tapsmodell for simuleringen er beskrevet i arbeidet for MAST2007, der målingene brukes videre.
+Energien i svinghjulet går tapt på flere måter: i sluret ved nedsetting, i lagrene på svinghjulsakselen og på hjulakslene, i tannhjulsinngrepet og som rullemotstand mellom dekk og underlag. Simuleringen trenger en verdi for hvert av dem (tabell~\ref{tab:sim-parametre}).
 
-\textbf{Figur av ESP-oppsett}
+\paragraph{Lagrene på svinghjulsakselen} er målt med utsnurring. Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen (figur~\ref{fig:esp-oppsett}). En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned, $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$. Opptrekkene sammenlignes med tiden fra 1000 til \SI{300}{o/min}, med tannhjulet frakoblet. En tapsmodell $T_\text{tap} = c_0 + c_1\omega + c_2\omega^2$ er tilpasset hver serie. Detaljene er beskrevet i arbeidet for MAST2007.
 
-\subsection{Første kjøretest}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.42\textwidth]{Images/Foto/Ferdig/esp_oppsett.jpg}
+    \caption[Måleoppsettet for utsnurring]{Måleoppsettet for utsnurring: ESP32 med Hall-sensor ved magnetskiva på svinghjulsakselen.}
+    \label{fig:esp-oppsett}
+\end{figure}
+
+\paragraph{Lagrene på hjulakslene} er ikke målt hver for seg. De er antatt å ha samme tap per par som lagrene på svinghjulsakselen, og regnes om til en ekstra rullemotstand $T/r_h$.
+
+\paragraph{Virkningsgraden i drivverket.} \textbf{PLASSHOLDER: beskriv målingen av virkningsgraden i tannhjulsinngrepet, for eksempel utsnurring med tannhjulet koblet og bilen løftet, sammenlignet med frakoblet.}
+
+\paragraph{Friksjon mot underlaget.} \textbf{PLASSHOLDER: beskriv målingen av rullemotstanden, for eksempel at bilen uten svinghjul trilles ned et skråplan eller slippes med kjent fart, og av friksjonen mellom dekk og underlag, for eksempel helningsvinkelen der bilen med låste hjul begynner å skli.}
+
+\paragraph{Slur ved nedsetting} er ikke målt, men regnet ut med simuleringen. Det krever en sensor på drivakselen og er utsatt til MAST2007.
+
+\subsection{Kjøretest}
 \label{sec:metode-kjoretest}
+Kjøretestene gjøres med hele bilen på et parkett- eller laminatgulv (figur~\ref{fig:testoppsett}). Svinghjulet trekkes opp med snor på trommelen mens bilen holdes løftet, og bilen settes ned med svinghjulet i gang, slik konkurransereglene krever. Startlinja er startretningen forlenget. Lengden $L$ måles med målebånd som rett linje fra startpunktet til der bilen stopper, og sideavviket $y$ som den vinkelrette avstanden fra stoppunktet til startlinja, positivt mot høyre og negativt mot venstre (figur~\ref{fig:testoppsett}c). Alle forsøk registreres, også mislykkede.
 
-\textbf{Figur med oversiktsbilde av bilen, og testoppsettet}
-
-Den første kjøretesten ble gjort 7.~november 2026 med hele bilen: den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre på alle tre akslene, med tetningene tatt ut og uten olje. Målet var å se om bilen fungerer som helhet, og å få et første tall for kjøredistanse og sideavvik før testserien planlegges i detalj.
-
-Svinghjulet ble trukket opp med snor på Ø12-trommelen mens bilen ble holdt løftet, og bilen ble satt ned på et parkett- eller laminatgulv med svinghjulet i gang, slik konkurransereglene krever. Lengden er målt som rett linje fra startpunktet til der bilen stoppet. \textbf{BYTT UT DENNE TEKSTEN MED EN ILLUSTRERENDE FIGUR. STREK RETT FREM; STREK TIL VENSTRE, BUEN MELLOM DE TO PUNKTENE: Sideavviket er den vinkelrette avstanden fra stoppunktet til startlinja, altså startretningen forlenget, positivt mot høyre og negativt mot venstre. Turtallet etter opptrekk ble ikke målt, fordi Hall-sensoren bare sitter på teststasjonen.}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.36\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/bil_skraatt_bak.jpg}
+        \caption{Bilen som testet}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Foto/Ferdig/testoppsett.jpg}
+        \caption{Testoppsett}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Images/Kjoretest/maalegeometri.pdf}
+        \caption{Lengde og sideavvik}
+    \end{subfigure}
+    \caption[Kjøretesten]{Kjøretesten. (a) Bilen slik den ble kjøretestet, \SI{270}{g}. (b) Gulvet med målebånd. (c) Lengden måles som rett linje fra start til stopp, og sideavviket vinkelrett på startlinja. Banen er forsøk 4 i den første kjøretesten.}
+    \label{fig:testoppsett}
+\end{figure}
 
 Hvis bilen kjører i en sirkelbue som starter langs startlinja, gir lengden $L$ og sideavviket $y$ svingradiusen
 \begin{equation}
     R = \frac{L^2}{2\,|y|}.
     \label{eq:svingradius}
 \end{equation}
+Repeterbarheten (R4) vurderes med standardavviket av lengden i prosent av snittet, og retningsstabiliteten (R5) med snittet av $|y|/L$.
 
 \begin{comment}
 \subsection{Mål for testen}

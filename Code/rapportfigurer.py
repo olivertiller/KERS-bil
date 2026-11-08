@@ -146,6 +146,94 @@ def tab_lagerplan(p_ref):
     print(f"Lagerplan, {rpm} o/min, i = 4,29:")
     for navn, b in rader:
         print(f"  {navn:60s} {ks.simuler(b, i, rpm)['distanse']:5.1f} m")
+    print("Kjøretesten over turtallsområdet for snoropptrekk (1700 og 2850 o/min):")
+    for navn, b in rader[7::2]:
+        print(f"  {navn:60s} " + "  ".join(f"{ks.simuler(b, i, r)['distanse']:5.1f}" for r in (1700, 2850)) + " m")
+
+
+def fig_maalegeometri():
+    """Skisse av hvordan lengde og sideavvik måles i kjøretesten, med forsøk 4 som eksempel
+    (L = 6,14 m, y = -2,80 m, R = L^2 / (2|y|))."""
+    L, y = 6.14, -2.80
+    R = L**2 / (2 * abs(y))
+    phi_s = math.acos(1 - abs(y) / R)
+    phi = np.linspace(0, phi_s, 100)
+    x_b, y_b = -R * (1 - np.cos(phi)), R * np.sin(phi)  # x mot høyre, y fremover
+    xs, ys = x_b[-1], y_b[-1]
+    fig, ax = plt.subplots(figsize=(2.6, 3.2))
+    ax.plot([0, 0], [-0.3, ys + 0.6], color="0.4", ls="--", lw=1)
+    ax.text(0.12, ys + 0.45, "startlinje", fontsize=7, color="0.3")
+    ax.plot(x_b, y_b, color="C0", lw=2)
+    phi_t = math.asin(3.6 / R)
+    ax.annotate("bilens\nbane", xy=(-R * (1 - math.cos(phi_t)), 3.6), xytext=(0.15, 2.6), fontsize=7, color="C0",
+                arrowprops=dict(arrowstyle="->", color="C0", lw=0.8))
+    ax.plot([0, xs], [0, ys], color="C3", lw=1.2)
+    ax.text(xs / 2 - 0.95, ys / 2 - 0.3, "lengde $L$", fontsize=7, color="C3", rotation=63)
+    ax.annotate("", xy=(xs, ys), xytext=(0, ys), arrowprops=dict(arrowstyle="<->", color="C1", lw=1.2))
+    ax.text(xs / 2, ys + 0.18, "sideavvik $y$", fontsize=7, color="C1", ha="center")
+    ax.plot(0, 0, "ks", ms=5)
+    ax.text(0.15, -0.15, "start", fontsize=7, va="center")
+    ax.plot(xs, ys, "ko", ms=4)
+    ax.text(xs - 0.15, ys - 0.35, "stopp", fontsize=7, ha="center")
+    ax.set_aspect("equal")
+    ax.set_xlim(xs - 0.7, 1.3)
+    ax.axis("off")
+    fig.tight_layout(pad=0.1)
+    ut = ROT / "Rapport" / "Images" / "Kjoretest"
+    ut.mkdir(parents=True, exist_ok=True)
+    fig.savefig(ut / "maalegeometri.pdf")
+    plt.close(fig)
+
+
+def tab_tapsledd():
+    """Energiregnskap for simulert kjøring med kjøretestkonfigurasjonen (tab:tapsledd), og følsomhet for mu."""
+    b0 = ks.Bil(r_h=0.034, J_hjul=2.9e-5)
+    p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(TORR2, ())], ks.Bil().I)
+    torr = replace(b0, c0=p[0], c1=p[1], c2=p[2])
+    for mu in (0.6, 0.3, 1.0):
+        bil = replace(torr, mu=mu, C_rr=torr.C_rr + 1.2e-3 / torr.r_h / (torr.m * ks.g))
+        r = ks.simuler(bil, 73 / 17, 2700)
+        E, E0 = r["E"], r["E0"]
+        hjul = 1 - b0.C_rr / bil.C_rr  # andel av rullemotstanden som er hjulaksellagrene
+        print(f"Tapsledd, mu = {mu}: E0 = {E0:.2f} J, {r['distanse']:.1f} m")
+        for navn, e in (("Slur ved nedsetting", E["slur"] + E["las"]), ("Lagre svinghjulsaksel", E["lager"]),
+                        ("Lagre hjulaksler", E["rull"] * hjul), ("Tannhjulsinngrep", E["tannhjul"]),
+                        ("Rullemotstand dekk", E["rull"] * (1 - hjul))):
+            print(f"  {navn:24s} {e:5.2f} J  {e / E0 * 100:4.0f} %")
+
+
+def fig_sim_kjoring():
+    """Simulert kjøring for kjøretestkonfigurasjonen (tørre 626 2RS, 0,6 mNm per hjulaksel), 2700 o/min.
+    Viser svinghjulets turtall og bilens fart mot tid, med slurfasen ved nedsetting markert."""
+    b0 = ks.Bil(r_h=0.034, J_hjul=2.9e-5)
+    p, _ = ks.tilpass_utsnurring([sn for _, sn in trekk(TORR2, ())], ks.Bil().I)
+    torr = replace(b0, c0=p[0], c1=p[1], c2=p[2])
+    bil = replace(torr, C_rr=torr.C_rr + 1.2e-3 / torr.r_h / (torr.m * ks.g))
+    i = 73 / 17
+    r = ks.simuler(bil, i, 2700)
+    k = bil.r_h / i
+    slur = np.abs(k * r["w"] - r["v"]) > 1e-3
+    t_slur = r["t"][slur].max() if slur.any() else 0.0
+    fig, ax = plt.subplots(figsize=(6.3, 2.4))
+    ax.plot(r["t"], r["w"] * 30 / math.pi, color="C0", lw=1.4)
+    ax.set(xlabel="Tid [s]", ylabel="Svinghjul [o/min]", xlim=(0, r["tid"]), ylim=(0, 2900))
+    ax.tick_params(axis="y", colors="C0")
+    ax.yaxis.label.set_color("C0")
+    ax2 = ax.twinx()
+    ax2.plot(r["t"], r["v"], color="C1", lw=1.4)
+    ax2.set_ylabel("Bilens fart [m/s]", color="C1")
+    ax2.tick_params(axis="y", colors="C1")
+    ax2.set_ylim(0, r["v"].max() * 1.1)
+    ax.axvspan(0, t_slur, color="0.85", lw=0)
+    ax.annotate(f"slur, {t_slur:.2f} s", xy=(t_slur, 2600), xytext=(t_slur + 0.4, 2600), fontsize=8,
+                va="center", arrowprops=dict(arrowstyle="->", lw=0.8))
+    ax.text(0.98, 0.9, f"{r['distanse']:.1f} m på {r['tid']:.1f} s", transform=ax.transAxes, ha="right", fontsize=8)
+    fig.tight_layout()
+    ut = ROT / "Rapport" / "Images" / "Simulering"
+    ut.mkdir(parents=True, exist_ok=True)
+    fig.savefig(ut / "sim_kjoring.pdf")
+    plt.close(fig)
+    print(f"Simulert kjøring: {r['distanse']:.2f} m, {r['tid']:.1f} s, v_maks {r['v_maks']:.2f} m/s, slur {t_slur:.3f} s")
 
 
 def fig_lager():
@@ -196,6 +284,9 @@ def main():
               f"topp {topp.mean():.0f} ± {topp.std(ddof=1):.0f} o/min")
     fig_moment()
     tab_lagerplan(p)
+    fig_sim_kjoring()
+    fig_maalegeometri()
+    tab_tapsledd()
     fig_lager()
     print("Skrevet til", UT)
 
