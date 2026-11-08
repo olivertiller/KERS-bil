@@ -12,9 +12,7 @@ Energien kan lagres elektrisk eller mekanisk. I et elektrisk system bremser en g
 Prinsippet om å lagre energi i bevegelse og hente den ut igjen når det trengs, brukes både i racerbiler og i vanlige personbiler. Eksemplene under viser hvor teknologien brukes i dag, og hvilke avveininger som avgjør om energien lagres elektrisk eller i et svinghjul.
 
 \subsubsection{Formel 1}
-Formel 1 gjorde KERS kjent for et bredt publikum. Systemet ble tillatt fra 2009-sesongen, med mål om at teknologien etter hvert også skulle komme vanlige kjøretøy til gode \parencite{batalha_kers}. Reglene begrenset effekten til \SI{60}{kW} og den frigjorte energien til \SI{400}{kJ} per runde, noe som ga føreren et ekstra effekttilskudd i underkant av sju sekunder per runde \parencite{f1technical_kers}. Både elektriske systemer og svinghjulssystemer ble utviklet, men de fleste lagene valgte batterier, som var enklere å plassere i bilen. KERS var lite utbredt den første sesongen, ble ikke brukt i 2010 etter en avtale mellom lagene, og kom tilbake i 2011.
-
-Fra 2014 ble KERS erstattet av et større hybridsystem, der en motorgenerator på bakakselen (MGU-K) gjenvinner bremseenergi, og en motorgenerator på turboen (MGU-H) gjenvinner energi fra eksosen. Med reglene for 2026 er MGU-H fjernet, mens effekten til MGU-K er økt fra \SI{120}{kW} til \SI{350}{kW}. I teorien kommer da omtrent halvparten av effekten fra det elektriske systemet \parencite{therace_2026}. Utviklingen viser at gjenvinning av bremseenergi har gått fra å være et valgfritt tillegg til å bli en sentral del av drivlinjen.
+Formel 1 gjorde KERS kjent for et bredt publikum. Systemet ble tillatt fra 2009-sesongen, med mål om at teknologien etter hvert også skulle komme vanlige kjøretøy til gode \parencite{batalha_kers}. Reglene begrenset effekten til \SI{60}{kW} og den frigjorte energien til \SI{400}{kJ} per runde, noe som ga føreren et ekstra effekttilskudd i underkant av sju sekunder per runde \parencite{f1technical_kers}. Både elektriske systemer og svinghjulssystemer ble utviklet.
 
 \subsubsection{Produksjonsbiler}
 I personbiler er elektrisk KERS i dag vanlig, selv om det sjelden kalles det. Alle hybrid- og elbiler bruker regenerativ bremsing, der elmotoren fungerer som generator og lader batteriet når bilen bremser. Få produksjonsbiler bruker selve KERS-navnet. Det mest kjente eksempelet er Ferrari LaFerrari fra 2013, Ferraris første hybridbil, der systemet \emph{HY-KERS} er utviklet med erfaring fra Formel 1. En elmotor på \SI{120}{kW} samarbeider med en V12-motor og kan også fungere som generator \parencite{marelli_hykers}.
@@ -52,6 +50,8 @@ Rullemotstanden er $F_{rr} = C_{rr} m_b g$, der $m_b$ er bilens masse og $C_{rr}
 \end{equation}
 Likning~\eqref{eq:kjoredistanse} viser at lang kjøredistanse krever at mest mulig energi lagres, at tapene i lagre og utveksling holdes lave, og at bilen er lett og ruller lett. Utvekslingen avgjør hvor raskt energien tas ut: en høy utveksling gir lav hastighet og jevn energiavgivelse, mens en lav utveksling gir høyere fart, men større tap og fare for hjulspinn. Hvordan utvekslingen påvirker distansen i denne bilen, er vurdert med simuleringen i seksjon~\ref{sec:simulering-verktoy}. En utledning av bevegelseslikningene hører til MAST2007.
 
+
+\begin{comment}
 \subsection{Friksjon i lagre og rullemotstand}
 \label{sec:teori-friksjon}
 Likning~\eqref{eq:kjoredistanse} tar bare med rullemotstanden, men energien i svinghjulet tappes også av friksjon i lagrene mens bilen står løftet og under kjøring. SKF deler friksjonsmomentet i et rullelager i fire bidrag \parencite{skf_friksjon}:
@@ -67,3 +67,4 @@ Tapsmomentet i lagrene på svinghjulsakselen kan måles ved å la svinghjulet sn
     \label{eq:snittmoment}
 \end{equation}
 Et tapsmoment $T$ i lagrene på en hjulaksel virker på bilen som en ekstra rullemotstand $T/r_h$. Et lager på svinghjulsakselen går $i$ ganger så mange omdreininger som et lager på hjulakselen, og koster derfor energi $i$ ganger så fort ved samme moment.
+\end{comment}
