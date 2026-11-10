@@ -32,11 +32,13 @@ BAMBU = DATA / "diagnose_20261106_161745.csv"  # samme 626 2RS-lagre, tetningene
 SKF = DATA / "diagnose_20261106_163914.csv"  # SKF Explorer 626, åpne lagre
 TORR1 = DATA / "diagnose_20261107_001343.csv"  # 626 2RS uten tetninger og uten olje, første serie (innkjøring)
 TORR2 = DATA / "diagnose_20261107_002109.csv"  # samme lagre, andre serie rett etter
+TORR3 = DATA / "diagnose_20261110_005159.csv"  # samme lagre 10. nov., innkjørt fra snurr 3
 # diagnose_20261107_000144.csv er en prøvekjøring med samme lagre og lave opptrekk, og brukes ikke.
 UTELAT_REF, UTELAT_FRA = (1, 5), (1,)
 LAGERVARIANTER = (("626 2RS med fett", FRA, UTELAT_FRA), ("626 2RS uten tetninger, olje", BAMBU, ()),
-                  ("626 2RS uten tetninger, tørt", TORR2, ()),
-                  ("SKF Explorer 626, åpent", SKF, ()))
+                  ("626 2RS uten tetninger, tørt (7. nov.)", TORR2, ()),
+                  ("SKF Explorer 626, åpent", SKF, ()),
+                  ("626 2RS uten tetninger, tørt, innkjørt (10. nov.)", TORR3, (1, 2)))
 plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3})
 
 
