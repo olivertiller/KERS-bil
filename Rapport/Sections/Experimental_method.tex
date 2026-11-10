@@ -4,7 +4,7 @@
 \label{sec:metode-tap}
 \label{sec:ml-serien}
 \label{sec:utsnurring-behandling}
-Som hjelpeverktøy under prototypingen ble det laget en enkel turtallsmåler. En Hall-sensor registrerer to magneter på svinghjulsakselen, og en ESP32 logger tidspunktet for hver halve omdreining (figur~\ref{fig:esp-oppsett}). Måleren er brukt til å måle turtallet etter opptrekk, for å sammenligne trommelene, og til utsnurring, der svinghjulet trekkes opp med bilen løftet og får snurre fritt til det stopper. Hvor fort svinghjulet bremser ned, gir tapsmomentet $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$. Lagervariantene på svinghjulsakselen er sammenlignet med snittmomentet fra 1000 til \SI{300}{o/min} med tannhjulet frakoblet, og tapet i drivverket med utsnurring med tannhjulet koblet og frakoblet.
+Som hjelpeverktøy under prototypingen ble det laget en enkel turtallsmåler. En Hall-sensor registrerer to magneter på svinghjulsakselen, og en ESP32 logger tidspunktet for hver halve omdreining (figur~\ref{fig:esp-oppsett}). Måleren er brukt til å måle turtallet etter opptrekk, for å sammenligne trommelene, og til utsnurring, der svinghjulet trekkes opp med bilen løftet og får snurre fritt til det stopper. Hvor fort svinghjulet bremser ned, gir tapsmomentet etter likning~\eqref{eq:snittmoment}, med $I = \SI{6,0e-5}{kg.m^2}$. Lagervariantene på svinghjulsakselen er sammenlignet med snittmomentet fra 1000 til \SI{300}{o/min} med tannhjulet frakoblet, og tapet i drivverket med utsnurring med tannhjulet koblet og frakoblet.
 
 \begin{figure}[H]
     \centering
@@ -46,6 +46,17 @@ Hvis bilen kjører i en sirkelbue som starter langs startlinja, gir lengden $L$ 
     \label{eq:svingradius}
 \end{equation}
 Repeterbarheten (R4) vurderes med standardavviket av lengden i prosent av snittet, og retningsstabiliteten (R5) med snittet av $|y|/L$.
+
+\subsection{Papirtest av hjullasten}
+\label{sec:metode-papirtest}
+Lasten på hjulene sammenlignes med en papirtest på plant underlag (figur~\ref{fig:papirtest}). En papirlapp trekkes ut under ett hjul om gangen, og jo tyngre lappen går, jo mer last bærer hjulet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.38\textwidth]{Images/Foto/Ferdig/papirtest.jpg}
+    \caption[Papirtesten]{Papirtesten. Et papirark trekkes ut under ett hjul om gangen, og jo tyngre det går, jo mer last har hjulet.}
+    \label{fig:papirtest}
+\end{figure}
 
 \begin{comment}
 \subsection{Mål for testen}

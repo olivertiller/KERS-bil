@@ -117,7 +117,9 @@ Svinghjulet spinnes opp med \SI{20}{cm} snor rundt en trommel på svinghjulsakse
 
 Det er tegnet tre tromler med kjerne Ø12, Ø14 og Ø18, ellers like. Maskintegningen av Ø12-trommelen står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:snortrommel}). Snora festes med en løkke på en liten krok midt i kjernen som peker mot rotasjonsretningen under opptrekket (detalj E), slik at kroken holder løkka på plass så lenge snora strammes. Både undersiden av kroken og innsiden av den ytre flensen har 45° helning for at trommelen skal kunne printes uten support. Den indre flensen har en utsparing som gir plass til sveisekransen mellom svinghjulet og akselen. Trommelen festes med klemnavet fra seksjon~\ref{sec:nv-serien} og veier \SI{3,7}{g}.
 
-Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R3) og repeterbarhet (R4). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen.
+For å se om en mindre trommel gir høyere turtall, ble det også laget en trommel med Ø8-kjerne, den minste boringen tillater. Den har et V-formet spor, siden snora legger seg i flere lag, og en skrå tapp i stedet for kroken. Med samme trekkhastighet skulle Ø8 gitt 1,5 ganger turtallet med Ø12.
+
+Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref{sec:ml-serien}, med minst fem opptrekk per trommel. Snitt og standardavvik viser både turtall (R3) og repeterbarhet (R4). Tilleggstester er at snora løsner av seg selv fra trommelen ved enden av opptrekket, og at den ikke sklir av trommelen. Resultatene står i seksjon~\ref{sec:res-opptrekk}.
 
 \begin{figure}[H]
     \centering
@@ -141,17 +143,6 @@ Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref
     \caption[Ø12-trommelen på svinghjulsakselen]{Ø12-trommelen montert på svinghjulsakselen. Senkningen i den indre flensen gir plass til sveisekransen.}
     \label{fig:tr1-foto}
 \end{figure}
-
-De første opptrekkene er gjort med Ø12-trommelen, som har den minste kjernen, $r_t = \SI{6}{mm}$.
-Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} rett etter at løkka slapp, med variasjonskoeffisient \SI{15}{\percent}. Det tilsvarer omtrent \SI{2,4}{J}, under halvparten av de \SI{5,3}{J} som var antatt. I ett av åtte opptrekk hang løkka seg opp, og svinghjulet stoppet på under ett sekund. Rett etter at løkka slipper, bremses svinghjulet ekstra i omtrent \SI{0,3}{s}, som tyder på at løkka eller snora drar litt i trommelen før den er helt fri.
-
-\begin{versjonstabell}{Ø12-trommelen}{tab:tr1}
-    \hovedtest
-    Turtall etter opptrekk, \SI[separate-uncertainty=true]{2700 \pm 390}{o/min}, 6 opptrekk (R3, R4) & Delvis vellykket, under antatt \SI{4000}{o/min} \\
-    \tilleggstester
-    Snora løsner av seg selv & Delvis vellykket, hang seg opp i 1 av 8 \\
-    Snora sklir ikke av trommelen & Vellykket \\
-\end{versjonstabell}
 
 \subsubsection{Drivhjul og dekk}
 \label{sec:dh-serien}
@@ -258,4 +249,4 @@ Under testingen av den første prototypen dukket det opp tre problemer som krevd
 
 \paragraph{Svinghjulsakselen glir sideveis.} Med tannhjulet frakoblet varierte tapet mye fra opptrekk til opptrekk, og hvert opptrekk holdt et jevnt nivå hele veien ned. Det tydet på at noe gnisset med ulik kraft fra gang til gang. Akselen hadde for mye klaring sideveis, og avhengig av hvilken vei snora trakk, kom trommelen eller pinjongen borti noe. Tiltaket er to C-formede avstandshylser som klikkes på akselen uten at den tas ut av lagrene (figur~\ref{fig:svinghjulsaksel}c). En krage ligger an mot innerringen i lageret, som følger akselen rundt og dermed ikke gir ekstra friksjon. Lengden velges i trinn på \SI{0,5}{mm}, slik at akselen får 0,1 til \SI{0,3}{mm} klaring.
 
-\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen bremset svinghjulet merkbart (seksjon~\ref{sec:res-tapsledd}). De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.
+\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen bremset svinghjulet merkbart. De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Derfor ble tre varianter til prøvd: de samme lagrene med tetningene tatt ut, fettet vasket ut og en tynn olje, de samme lagrene uten olje, og åpne SKF Explorer 626. Målingene står i seksjon~\ref{sec:res-tapsledd}.

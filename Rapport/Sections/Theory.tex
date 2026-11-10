@@ -50,6 +50,23 @@ Rullemotstanden er $F_{rr} = C_{rr} m_b g$, der $m_b$ er bilens masse og $C_{rr}
 \end{equation}
 Likning~\eqref{eq:kjoredistanse} viser at lang kjøredistanse krever at mest mulig energi lagres, at tapene i lagre og utveksling holdes lave, og at bilen er lett og ruller lett. Utvekslingen avgjør hvor raskt energien tas ut. Høy utveksling gir lav hastighet og jevn energiavgivelse, mens lav utveksling gir høyere fart, men større tap til hjulspinn ved start. Hvordan utvekslingen påvirker distansen i denne bilen, er vurdert med simuleringen i seksjon~\ref{sec:simulering-verktoy}. En utledning av bevegelseslikningene hører til MAST2007.
 
+\subsection{Sluring ved nedsetting}
+\label{sec:teori-slur}
+Bilen settes ned med svinghjulet i gang, og drivhjulene slurer til farten passer med svinghjulet. Sluringen virker som en clutch som kobler et snurrende svinghjul til en bil i ro. Bevegelsesmengden er bevart, men energi går tapt. Andelen av rotasjonsenergien som går tapt, er
+\begin{equation}
+    \frac{\Delta E}{E_k} = \frac{m_e r_h^2}{I i^2 + m_e r_h^2} ,
+    \label{eq:sluretap}
+\end{equation}
+der $m_e$ er bilens masse pluss treghetsmomentet til hjulene regnet om til masse, $I_h/r_h^2$. Så lenge dekkene har godt grep, avhenger andelen lite av friksjonen mellom hjul og underlag.
+
+\subsection{Tapsmoment ved utsnurring}
+\label{sec:teori-utsnurring}
+Tapsmomentet i lagrene og drivverket kan måles ved å la svinghjulet snurre fritt og registrere hvor fort det bremser ned (utsnurring). Med treghetsmoment $I$ er snittmomentet mellom to turtall
+\begin{equation}
+    T = I \frac{\Delta \omega}{\Delta t} .
+    \label{eq:snittmoment}
+\end{equation}
+
 
 \begin{comment}
 \subsection{Friksjon i lagre og rullemotstand}
