@@ -1,61 +1,38 @@
 \section{Resultater og analyser}
 \label{sec:resultater}
 
-\subsection{Tapsledd}
+\subsection{Lagre og drivverk}
 \label{sec:res-tapsledd}
 \label{sec:res-utsnurring}
 \label{sec:res-lager}
 \label{sec:res-sim-lager}
-Tabell~\ref{tab:tapsledd} viser hvor energien i svinghjulet går i en simulert kjøring med bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Svinghjulet har da \SI{2,4}{J}, og bilen kjører \SI{9,4}{m} (figur~\ref{fig:sim-kjoring}). Andelene for tannhjulsinngrepet og rullemotstanden bygger på foreløpige verdier. Den målte virkningsgraden i drivverket (avsnittet om drivverket nedenfor) er lavere enn den som er brukt, så andelen for tannhjulsinngrepet er trolig for lav.
+Turtallsmåleren fra seksjon~\ref{sec:metode-tap} er brukt til å sammenligne lagrene på svinghjulsakselen og til å måle tapet i drivverket.
 
-\begin{table}[H]
-    \centering
-    \caption[Tapsledd i en simulert kjøring]{Tapsledd i en simulert kjøring fra \SI{2700}{o/min} med bilen slik den ble kjøretestet. Andel av energien i svinghjulet ved start. * Foreløpig verdi.}
-    \label{tab:tapsledd}
-    \small
-    \renewcommand{\arraystretch}{1.25}
-    \begin{tabular}{|l|l|l|r|}
-        \hline
-        \textbf{Tapsledd} & \textbf{Grunnlag} & \textbf{Verdi} & \textbf{Andel} \\
-        \hline
-        Sluring ved nedsetting & Simulert & -- & \SI{26}{\percent} \\
-        Lagre på svinghjulsakselen & Målt, utsnurring & \SI{0,71}{mN.m} & \SI{26}{\percent} \\
-        Lagre på hjulakslene & Samme lagre som svinghjulsakselen & \SI{0,6}{mN.m} per par & \SI{14}{\percent} \\
-        Tannhjulsinngrepet & Antatt, målt ca. 0,85 & $\eta = 0{,}95$* & \SI{4}{\percent} \\
-        Rullemotstand dekk mot underlag & Måles & $C_{rr} = 0{,}03$* & \SI{31}{\percent} \\
-        \hline
-    \end{tabular}
-\end{table}
-
-\textbf{PLASSHOLDER: målt rullemotstand og friksjon mot underlaget settes inn i tabellen og i simuleringen. Simuleringen bruker fortsatt $\eta = 0{,}95$, ikke den målte virkningsgraden. Den målte $T_\text{dv}$ inneholder også lagrene på drivakselen, som simuleringen regner som et eget tapsledd, så de må ikke telles to ganger.}
-
-\paragraph{Sluring ved nedsetting.} Mens hjulene slurer etter nedsetting, faller turtallet fra 2700 til omtrent \SI{1900}{o/min} i løpet av \SI{0,7}{s}, og omtrent en firedel av energien går tapt. Andelen varierer bare fra 25 til \SI{28}{\percent} når friksjonskoeffisienten $\mu$ endres fra 0,3 til 1,0, fordi lavere friksjon gir lavere bremsekraft over lengre tid.
-
-\paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026. Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretesten. Med SKF-lagre på svinghjulsakselen øker den simulerte distansen fra 9,4 til \SI{12,4}{m}, og med SKF på alle akslene til \SI{16,3}{m}.
+\paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026. Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretestene. Ifølge simuleringen ville SKF-lagre på svinghjulsakselen gitt omtrent \SI{30}{\percent} lengre distanse.
 
 \paragraph{Drivverket.}
 \label{sec:res-drivverk}
-Virkningsgraden i drivverket ble målt 10.~november 2026 etter metoden i seksjon~\ref{sec:metode-tap}, med Ø8-trommelen og de tørre 626 2RS-lagrene. Tabell~\ref{tab:drivverk} viser resultatet.
+Tapet i drivverket ble målt 10.~november 2026 med Ø8-trommelen og de tørre 626 2RS-lagrene. Tabell~\ref{tab:drivverk} viser resultatet.
 
 \begin{table}[H]
     \centering
-    \caption[Tapet i drivverket]{Tapsmoment ved svinghjulsakselen med tannhjulet koblet og frakoblet, 10.~november 2026, snitt og standardavvik mellom opptrekkene. $T_\text{dv}$ er differansen, og $\eta$ er regnet med likning~\eqref{eq:eta-drivverk} og $C_{rr} = 0{,}03$*. * Foreløpig verdi.}
+    \caption[Tapet i drivverket]{Tapsmoment ved svinghjulsakselen med tannhjulet koblet og frakoblet, 10.~november 2026, snitt og standardavvik mellom opptrekkene. $T_\text{dv}$ er differansen.}
     \label{tab:drivverk}
     \small
     \renewcommand{\arraystretch}{1.25}
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{Turtall [o/min]} & \textbf{Koblet [\si{mN.m}]} & \textbf{Frakoblet [\si{mN.m}]} & \textbf{$T_\text{dv}$ [\si{mN.m}]} & \textbf{$\eta$} \\
+        \textbf{Turtall [o/min]} & \textbf{Koblet [\si{mN.m}]} & \textbf{Frakoblet [\si{mN.m}]} & \textbf{$T_\text{dv}$ [\si{mN.m}]} \\
         \hline
-        500 & 0,31 ± 0,01 & 0,19 ± 0,01 & 0,12 & 0,84 \\
-        1000 & 0,29 ± 0,01 & 0,22 ± 0,09 & 0,07 & 0,90 \\
-        1500 & 0,28 ± 0,02 & 0,18 ± 0,04 & 0,10 & 0,87 \\
-        2000 & 0,30 ± 0,02 & 0,19 ± 0,02 & 0,11 & 0,85 \\
+        500 & 0,31 ± 0,01 & 0,19 ± 0,01 & 0,12 \\
+        1000 & 0,29 ± 0,01 & 0,22 ± 0,09 & 0,07 \\
+        1500 & 0,28 ± 0,02 & 0,18 ± 0,04 & 0,10 \\
+        2000 & 0,30 ± 0,02 & 0,19 ± 0,02 & 0,11 \\
         \hline
     \end{tabular}
 \end{table}
 
-Tapet i drivverket er rundt \SI{0,1}{mN.m} og nesten uavhengig av turtallet, slik at det oppfører seg som en konstant friksjon. Med $T_\text{last} = \SI{0,63}{mN.m}$ gir det $\eta = 0{,}84$ til $0{,}90$. Virkningsgraden i drivverket er derfor omtrent 0,85, lavere enn de 0,95 som er antatt i simuleringen. Tallet avhenger av $C_{rr}$, som ennå ikke er målt, og lavere rullemotstand gir lavere $\eta$. En tidligere utsnurring 6.~november, med fett i lagrene, ga \SI{1,2}{mN.m} mer med tannhjulet koblet enn frakoblet, som tilsvarer $\eta \approx 0{,}3$. Forskjellen kommer trolig mest fra lagrene på drivakselen, som da hadde fett og ikke var kjørt inn.
+Å koble inn drivverket øker tapsmomentet med rundt \SI{0,1}{mN.m}, nesten uavhengig av turtallet, slik at det oppfører seg som en konstant friksjon. Tapet omfatter tannhjulsinngrepet, lagrene på drivakselen og luftmotstanden på hjulene. En tidligere utsnurring 6.~november, med fett i lagrene, ga \SI{1,2}{mN.m} mer med tannhjulet koblet enn frakoblet, altså omtrent ti ganger så mye. Forskjellen kommer trolig mest fra lagrene på drivakselen, som da hadde fett og ikke var kjørt inn.
 
 \subsection{Første kjøretest}
 \label{sec:res-kjoretest}
@@ -102,8 +79,6 @@ Deretter ble hjullasten sjekket med en papirtest på plant underlag (figur~\ref{
     \label{fig:papirtest}
 \end{figure}
 
-For å sammenligne med simuleringen er tapsmodellen for de tørre lagrene brukt på svinghjulsakselen, og lagrene på hjulakslene er regnet om til ekstra rullemotstand med mellom 0,6 og \SI{1,5}{mN.m} per par. Det er nivået de tørre lagrene hadde etter og før innkjøringen. Da gir simuleringen 7,0 til \SI{9,4}{m} fra \SI{2700}{o/min}. Over området som opptrekk med snor gir, 1700 til \SI{2850}{o/min}, gir den 2,8 til \SI{10,4}{m}.
-
 \subsection{Andre kjøretest}
 \label{sec:res-kjoretest2}
 Etter papirtesten ble lagersetet for høyre drivhjul filt, slik at marktrykket fra de to drivhjulene ble mer likt. Samtidig ble Ø12-trommelen byttet med Ø8-trommelen (seksjon~\ref{sec:disk-trommel}). Ellers var bilen som i den første kjøretesten. Den andre kjøretesten ble gjort 9.~november 2026 på samme gulv og etter samme prosedyre, med ti forsøk. Turtallet etter opptrekk ble ikke målt. Tabell~\ref{tab:kjoretest2} viser alle forsøkene, og figur~\ref{fig:kjoretester} viser banene i begge kjøretestene.
@@ -134,7 +109,7 @@ Etter papirtesten ble lagersetet for høyre drivhjul filt, slik at marktrykket f
     \end{tabular}
 \end{table}
 
-Lengden var \SI[separate-uncertainty=true]{8,81 \pm 1,85}{m}, som tilsvarer en spredning på \SI{21}{\percent}. Det er \SI{61}{\percent} lengre enn i den første kjøretesten, og alle ti forsøkene var over \SI{5}{m}. Bilen kjørte av seg selv i alle ti forsøkene og traff ikke noe. Tre forsøk, med 10,5 til \SI{11,9}{m}, var lengre enn de \SI{10,4}{m} simuleringen gir ved det høyeste turtallet opptrekk med snor ga.
+Lengden var \SI[separate-uncertainty=true]{8,81 \pm 1,85}{m}, som tilsvarer en spredning på \SI{21}{\percent}. Det er \SI{61}{\percent} lengre enn i den første kjøretesten, og alle ti forsøkene var over \SI{5}{m}. Bilen kjørte av seg selv i alle ti forsøkene og traff ikke noe.
 
 Bilen dro fortsatt til venstre i alle ti forsøkene, men buene var slakere (figur~\ref{fig:kjoretester}). Svingradiusen var 8,5 til \SI{39}{m}, med median \SI{19}{m} mot \SI{9}{m} i den første kjøretesten, og forsøk 6 gikk nesten rett. Sideavviket var i snitt \SI{24}{\percent} av lengden, mot \SI{31}{\percent}. Siden bilen kjørte lenger, ble sideavviket i meter likevel omtrent det samme, i snitt \SI{-2,18}{m} mot \SI{-1,84}{m}.
 

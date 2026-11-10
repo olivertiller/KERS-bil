@@ -1,34 +1,17 @@
 \section{Testmetode}
 \label{sec:metode}
-\subsection{Måling av tapsledd}
+\subsection{Måling av turtall}
 \label{sec:metode-tap}
 \label{sec:ml-serien}
 \label{sec:utsnurring-behandling}
-Energien i svinghjulet går tapt til sluring ved nedsetting, friksjon i lagrene på svinghjulsakselen og hjulakslene, tap i tannhjulsinngrepet og rullemotstand mellom dekk og underlag. Simuleringen trenger en verdi for hvert av dem (tabell~\ref{tab:sim-parametre}).
-
-\paragraph{Lagrene på svinghjulsakselen} er målt med utsnurring. Bilen holdes løftet, svinghjulet trekkes opp med snor, og en Hall-sensor registrerer to magneter på akselen (figur~\ref{fig:esp-oppsett}). En ESP32 logger tidspunktet for hver halve omdreining. Tapsmomentet regnes fra hvor fort svinghjulet bremser ned, $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$. Opptrekkene sammenlignes med tiden fra 1000 til \SI{300}{o/min}, med tannhjulet frakoblet. En tapsmodell $T_\text{tap} = c_0 + c_1\omega + c_2\omega^2$ er tilpasset hver serie. Detaljene er beskrevet i arbeidet for MAST2007.
+Som hjelpeverktøy under prototypingen ble det laget en enkel turtallsmåler. En Hall-sensor registrerer to magneter på svinghjulsakselen, og en ESP32 logger tidspunktet for hver halve omdreining (figur~\ref{fig:esp-oppsett}). Måleren er brukt til å måle turtallet etter opptrekk, for å sammenligne trommelene, og til utsnurring, der svinghjulet trekkes opp med bilen løftet og får snurre fritt til det stopper. Hvor fort svinghjulet bremser ned, gir tapsmomentet $T = I\,\Delta\omega/\Delta t$, med $I = \SI{6,0e-5}{kg.m^2}$. Lagervariantene på svinghjulsakselen er sammenlignet med snittmomentet fra 1000 til \SI{300}{o/min} med tannhjulet frakoblet, og tapet i drivverket med utsnurring med tannhjulet koblet og frakoblet.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.42\textwidth]{Images/Foto/Ferdig/esp_oppsett.jpg}
-    \caption[Måleoppsettet for utsnurring]{Måleoppsettet for utsnurring: ESP32 med Hall-sensor ved magnetskiva på svinghjulsakselen.}
+    \caption[Turtallsmåleren]{Turtallsmåleren: ESP32 med Hall-sensor ved magnetskiva på svinghjulsakselen.}
     \label{fig:esp-oppsett}
 \end{figure}
-
-\paragraph{Lagrene på hjulakslene} er ikke målt hver for seg. De er av samme type som lagrene på svinghjulsakselen og regnes med samme tap per par, omregnet til en ekstra rullemotstand $T/r_h$.
-
-\paragraph{Virkningsgraden i drivverket} er målt med utsnurring med bilen løftet, først med tannhjulet frakoblet og deretter koblet, med samme lagre og trommel. Med tannhjulet koblet snurrer også drivakselen med hjulene og det store tannhjulet, og treghetsmomentet øker med deres treghetsmoment delt på $i^2$, omtrent \SI{1,8}{\percent}. Forskjellen i tapsmoment ved samme turtall er tapet i drivverket redusert til svinghjulsakselen, $T_\text{dv}$. Det omfatter tannhjulsinngrepet, lagrene på drivakselen og luftmotstanden på hjulene.
-
-Utsnurringen måler tapet uten last. Under kjøring overfører drivverket i tillegg momentet som holder bilen i gang, $T_\text{last} = C_{rr} m_b g r_h / i$ ved svinghjulsakselen. Den ekvivalente virkningsgraden ved kjøring er da
-\begin{equation}
-    \eta = \frac{T_\text{last}}{T_\text{last} + T_\text{dv}} .
-    \label{eq:eta-drivverk}
-\end{equation}
-Det forutsetter at tapet i inngrepet øker lite med lasten, noe som er rimelig ved så små momenter.
-
-\paragraph{Friksjon mot underlaget.} \textbf{PLASSHOLDER: beskriv målingen av rullemotstanden, for eksempel at bilen uten svinghjul trilles ned et skråplan eller slippes med kjent fart, og av friksjonen mellom dekk og underlag, for eksempel helningsvinkelen der bilen med låste hjul begynner å skli.}
-
-\paragraph{Sluring ved nedsetting} er ikke målt direkte, men beregnet i simuleringen. Direkte måling krever en sensor på drivakselen og er utsatt til MAST2007.
 
 \subsection{Kjøretest}
 \label{sec:metode-kjoretest}

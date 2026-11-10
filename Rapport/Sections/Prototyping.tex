@@ -143,7 +143,7 @@ Hovedtesten er turtallet etter opptrekk, målt med måleoppsettet i seksjon~\ref
 \end{figure}
 
 De første opptrekkene er gjort med Ø12-trommelen, som har den minste kjernen, $r_t = \SI{6}{mm}$.
-Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} rett etter at løkka slapp, med variasjonskoeffisient \SI{15}{\percent}. Det tilsvarer omtrent \SI{2,4}{J}, under halvparten av de \SI{5,3}{J} som simuleringen antok. I ett av åtte opptrekk hang løkka seg opp, og svinghjulet stoppet på under ett sekund. Rett etter at løkka slipper, bremses svinghjulet ekstra i omtrent \SI{0,3}{s}, som tyder på at løkka eller snora drar litt i trommelen før den er helt fri.
+Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} rett etter at løkka slapp, med variasjonskoeffisient \SI{15}{\percent}. Det tilsvarer omtrent \SI{2,4}{J}, under halvparten av de \SI{5,3}{J} som var antatt. I ett av åtte opptrekk hang løkka seg opp, og svinghjulet stoppet på under ett sekund. Rett etter at løkka slipper, bremses svinghjulet ekstra i omtrent \SI{0,3}{s}, som tyder på at løkka eller snora drar litt i trommelen før den er helt fri.
 
 \begin{versjonstabell}{Ø12-trommelen}{tab:tr1}
     \hovedtest
@@ -155,14 +155,14 @@ Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} r
 
 \subsubsection{Drivhjul og dekk}
 \label{sec:dh-serien}
-Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i drivverket. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Simuleringen viser at dekket påvirker distansen mest gjennom rullemotstanden. For bilen slik den ble kjøretestet, fra \SI{2700}{o/min}, øker simulert distanse fra 9,4 til \SI{12,4}{m} når rullemotstandskoeffisienten halveres fra 0,03 til 0,015, mens tre ganger så høy friksjonskoeffisient mot underlaget, fra 0,3 til 0,9, bare gir omtrent \SI{10}{\percent} lengre distanse. Under omtrent 0,3 faller distansen derimot raskt, fordi hjulene slurer lenge ved nedsettingen. Et dekk bør derfor ha lav rullemotstand, og nok grep til at hjulene får tak og bilen går rett.
+Drivhjulene har ytre diameter \SI{68}{mm}, fastlagt i drivverket. Når bilen settes ned med svinghjulet i gang, slurer hjulene til farten passer med svinghjulet. Dekket bør derfor ha nok grep til at hjulene får tak raskt og bilen går rett, og samtidig lav rullemotstand.
 
 Alle hjulene har samme nav. Maskintegningen av hjulet med TPU-dekk står i vedlegg~\ref{app:tegninger} (figur~\ref{fig:hjul}). Navet har firkanthullet fra seksjon~\ref{sec:nv-serien} og en krage med diameter \SI{7,8}{mm} på innsiden. Kragen ligger an mot innerringen i lageret, aldri mot ytterringen, og holder akselen på plass sideveis. Seks eiker i en \SI{2}{mm} skive på utsiden holder massen og treghetsmomentet nede, og hjulet printes liggende med utsiden ned.
 \begin{description}
     \item[PLA-hjul uten dekk.] Hjul printet i ett stykke i PLA, med ytre diameter \SI{68}{mm}. Veier \SI{9,4}{g}.
     \item[TPU-dekk.] En PLA-felg med sete på Ø65 og skuldre på begge sider, og et \SI{1,5}{mm} tykt dekk printet i TPU. Dekket har \SI{0,6}{mm} mindre indre diameter enn setet og strekkes over felgen. Ferdig diameter er \SI{68}{mm}, og felg og dekk veier til sammen \SI{8,8}{g} (figur~\ref{fig:felg-foto}c).
 \end{description}
-PLA-hjulet uten dekk ble prøvd først, men hadde for lite grep mot gulvet. Ved nedsettingen spant drivhjulene lenge, og det meste av energien i svinghjulet gikk tapt til sluring før bilen fikk fart. Simuleringen viser det samme: med friksjonskoeffisient 0,1 går halvparten av energien til sluring, og bilen kjører under \SI{3}{m}, mot \SI{9,4}{m} med 0,6. Derfor brukes TPU-dekket på alle hjulene.
+PLA-hjulet uten dekk ble prøvd først, men hadde for lite grep mot gulvet. Ved nedsettingen spant drivhjulene lenge, og det meste av energien i svinghjulet gikk tapt til sluring før bilen fikk fart. Derfor brukes TPU-dekket på alle hjulene.
 
 Treghetsmomentet for fire hjul er $\SI{2,9e-5}{kg.m^2}$ med Ø68-dekk og $\SI{2,6e-5}{kg.m^2}$ med Ø66-dekk, regnet fra CAD-geometrien. Det tilsvarer omtrent halvparten av svinghjulets treghetsmoment, men siden hjulene roterer $i$ ganger saktere, utgjør de en liten del av bilens effektive masse.
 
@@ -258,4 +258,4 @@ Under testingen av den første prototypen dukket det opp tre problemer som krevd
 
 \paragraph{Svinghjulsakselen glir sideveis.} Med tannhjulet frakoblet varierte tapet mye fra opptrekk til opptrekk, og hvert opptrekk holdt et jevnt nivå hele veien ned. Det tydet på at noe gnisset med ulik kraft fra gang til gang. Akselen hadde for mye klaring sideveis, og avhengig av hvilken vei snora trakk, kom trommelen eller pinjongen borti noe. Tiltaket er to C-formede avstandshylser som klikkes på akselen uten at den tas ut av lagrene (figur~\ref{fig:svinghjulsaksel}c). En krage ligger an mot innerringen i lageret, som følger akselen rundt og dermed ikke gir ekstra friksjon. Lengden velges i trinn på \SI{0,5}{mm}, slik at akselen får 0,1 til \SI{0,3}{mm} klaring.
 
-\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen var et av de største tapsleddene (seksjon~\ref{sec:res-tapsledd}). De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.
+\paragraph{Tap i lagrene.} Utsnurringen viste at lagrene på svinghjulsakselen bremset svinghjulet merkbart (seksjon~\ref{sec:res-tapsledd}). De opprinnelige 626 2RS-lagrene har kontakttetninger og fett. Først ble tetningene tatt ut, fettet vasket ut og lagrene smurt med en tynn olje, men tapet ble nesten tre ganger så stort. Uten olje ble det under halvparten av tapet med fett.
