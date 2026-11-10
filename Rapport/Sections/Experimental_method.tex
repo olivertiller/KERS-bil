@@ -17,7 +17,14 @@ Energien i svinghjulet går tapt til sluring ved nedsetting, friksjon i lagrene 
 
 \paragraph{Lagrene på hjulakslene} er ikke målt hver for seg. De er av samme type som lagrene på svinghjulsakselen og regnes med samme tap per par, omregnet til en ekstra rullemotstand $T/r_h$.
 
-\paragraph{Virkningsgraden i drivverket.} \textbf{PLASSHOLDER: beskriv målingen av virkningsgraden i tannhjulsinngrepet, for eksempel utsnurring med tannhjulet koblet og bilen løftet, sammenlignet med frakoblet.}
+\paragraph{Virkningsgraden i drivverket} er målt med utsnurring med bilen løftet, først med tannhjulet frakoblet og deretter koblet, med samme lagre og trommel. Med tannhjulet koblet snurrer også drivakselen med hjulene og det store tannhjulet, og treghetsmomentet øker med deres treghetsmoment delt på $i^2$, omtrent \SI{1,8}{\percent}. Forskjellen i tapsmoment ved samme turtall er tapet i drivverket redusert til svinghjulsakselen, $T_\text{dv}$. Det omfatter tannhjulsinngrepet, lagrene på drivakselen og luftmotstanden på hjulene.
+
+Utsnurringen måler tapet uten last. Under kjøring overfører drivverket i tillegg momentet som holder bilen i gang, $T_\text{last} = C_{rr} m_b g r_h / i$ ved svinghjulsakselen. Den ekvivalente virkningsgraden ved kjøring er da
+\begin{equation}
+    \eta = \frac{T_\text{last}}{T_\text{last} + T_\text{dv}} .
+    \label{eq:eta-drivverk}
+\end{equation}
+Det forutsetter at tapet i inngrepet øker lite med lasten, noe som er rimelig ved så små momenter.
 
 \paragraph{Friksjon mot underlaget.} \textbf{PLASSHOLDER: beskriv målingen av rullemotstanden, for eksempel at bilen uten svinghjul trilles ned et skråplan eller slippes med kjent fart, og av friksjonen mellom dekk og underlag, for eksempel helningsvinkelen der bilen med låste hjul begynner å skli.}
 

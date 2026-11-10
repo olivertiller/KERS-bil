@@ -6,7 +6,7 @@
 \label{sec:res-utsnurring}
 \label{sec:res-lager}
 \label{sec:res-sim-lager}
-Tabell~\ref{tab:tapsledd} viser hvor energien i svinghjulet går i en simulert kjøring med bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Svinghjulet har da \SI{2,4}{J}, og bilen kjører \SI{9,4}{m} (figur~\ref{fig:sim-kjoring}). Andelene for tannhjulsinngrepet og rullemotstanden bygger på foreløpige verdier til målingene i seksjon~\ref{sec:metode-tap} er gjort.
+Tabell~\ref{tab:tapsledd} viser hvor energien i svinghjulet går i en simulert kjøring med bilen slik den ble kjøretestet, fra \SI{2700}{o/min}. Svinghjulet har da \SI{2,4}{J}, og bilen kjører \SI{9,4}{m} (figur~\ref{fig:sim-kjoring}). Andelene for tannhjulsinngrepet og rullemotstanden bygger på foreløpige verdier. Den målte virkningsgraden i drivverket (avsnittet om drivverket nedenfor) er lavere enn den som er brukt, så andelen for tannhjulsinngrepet er trolig for lav.
 
 \begin{table}[H]
     \centering
@@ -21,17 +21,41 @@ Tabell~\ref{tab:tapsledd} viser hvor energien i svinghjulet går i en simulert k
         Sluring ved nedsetting & Simulert & -- & \SI{26}{\percent} \\
         Lagre på svinghjulsakselen & Målt, utsnurring & \SI{0,71}{mN.m} & \SI{26}{\percent} \\
         Lagre på hjulakslene & Samme lagre som svinghjulsakselen & \SI{0,6}{mN.m} per par & \SI{14}{\percent} \\
-        Tannhjulsinngrepet & Måles & $\eta = 0{,}95$* & \SI{4}{\percent} \\
+        Tannhjulsinngrepet & Antatt, målt ca. 0,85 & $\eta = 0{,}95$* & \SI{4}{\percent} \\
         Rullemotstand dekk mot underlag & Måles & $C_{rr} = 0{,}03$* & \SI{31}{\percent} \\
         \hline
     \end{tabular}
 \end{table}
 
-\textbf{PLASSHOLDER: målt virkningsgrad i drivverket og målt rullemotstand og friksjon mot underlaget settes inn i tabellen og i simuleringen. En tidligere utsnurring med tannhjulet koblet og bilen løftet ga \SI{1,2}{mN.m} mer enn med tannhjulet frakoblet.}
+\textbf{PLASSHOLDER: målt rullemotstand og friksjon mot underlaget settes inn i tabellen og i simuleringen. Simuleringen bruker fortsatt $\eta = 0{,}95$, ikke den målte virkningsgraden. Den målte $T_\text{dv}$ inneholder også lagrene på drivakselen, som simuleringen regner som et eget tapsledd, så de må ikke telles to ganger.}
 
 \paragraph{Sluring ved nedsetting.} Mens hjulene slurer etter nedsetting, faller turtallet fra 2700 til omtrent \SI{1900}{o/min} i løpet av \SI{0,7}{s}, og omtrent en firedel av energien går tapt. Andelen varierer bare fra 25 til \SI{28}{\percent} når friksjonskoeffisienten $\mu$ endres fra 0,3 til 1,0, fordi lavere friksjon gir lavere bremsekraft over lengre tid.
 
 \paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026. Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretesten. Med SKF-lagre på svinghjulsakselen øker den simulerte distansen fra 9,4 til \SI{12,4}{m}, og med SKF på alle akslene til \SI{16,3}{m}.
+
+\paragraph{Drivverket.}
+\label{sec:res-drivverk}
+Virkningsgraden i drivverket ble målt 10.~november 2026 etter metoden i seksjon~\ref{sec:metode-tap}, med Ø8-trommelen og de tørre 626 2RS-lagrene. Tabell~\ref{tab:drivverk} viser resultatet.
+
+\begin{table}[H]
+    \centering
+    \caption[Tapet i drivverket]{Tapsmoment ved svinghjulsakselen med tannhjulet koblet og frakoblet, 10.~november 2026, snitt og standardavvik mellom opptrekkene. $T_\text{dv}$ er differansen, og $\eta$ er regnet med likning~\eqref{eq:eta-drivverk} og $C_{rr} = 0{,}03$*. * Foreløpig verdi.}
+    \label{tab:drivverk}
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Turtall [o/min]} & \textbf{Koblet [\si{mN.m}]} & \textbf{Frakoblet [\si{mN.m}]} & \textbf{$T_\text{dv}$ [\si{mN.m}]} & \textbf{$\eta$} \\
+        \hline
+        500 & 0,31 ± 0,01 & 0,19 ± 0,01 & 0,12 & 0,84 \\
+        1000 & 0,29 ± 0,01 & 0,22 ± 0,09 & 0,07 & 0,90 \\
+        1500 & 0,28 ± 0,02 & 0,18 ± 0,04 & 0,10 & 0,87 \\
+        2000 & 0,30 ± 0,02 & 0,19 ± 0,02 & 0,11 & 0,85 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Tapet i drivverket er rundt \SI{0,1}{mN.m} og nesten uavhengig av turtallet, slik at det oppfører seg som en konstant friksjon. Med $T_\text{last} = \SI{0,63}{mN.m}$ gir det $\eta = 0{,}84$ til $0{,}90$. Virkningsgraden i drivverket er derfor omtrent 0,85, lavere enn de 0,95 som er antatt i simuleringen. Tallet avhenger av $C_{rr}$, som ennå ikke er målt, og lavere rullemotstand gir lavere $\eta$. En tidligere utsnurring 6.~november, med fett i lagrene, ga \SI{1,2}{mN.m} mer med tannhjulet koblet enn frakoblet, som tilsvarer $\eta \approx 0{,}3$. Forskjellen kommer trolig mest fra lagrene på drivakselen, som da hadde fett og ikke var kjørt inn.
 
 \subsection{Første kjøretest}
 \label{sec:res-kjoretest}
@@ -80,31 +104,72 @@ Deretter ble hjullasten sjekket med en papirtest på plant underlag (figur~\ref{
 
 For å sammenligne med simuleringen er tapsmodellen for de tørre lagrene brukt på svinghjulsakselen, og lagrene på hjulakslene er regnet om til ekstra rullemotstand med mellom 0,6 og \SI{1,5}{mN.m} per par. Det er nivået de tørre lagrene hadde etter og før innkjøringen. Da gir simuleringen 7,0 til \SI{9,4}{m} fra \SI{2700}{o/min}. Over området som opptrekk med snor gir, 1700 til \SI{2850}{o/min}, gir den 2,8 til \SI{10,4}{m}.
 
-\subsection{Oppsummering av kravoppfyllelse}
-\label{sec:res-kravstatus}
-Tabell~\ref{tab:kravstatus} viser status for kravene i seksjon~\ref{sec:produktkrav} etter den første kjøretesten.
+\subsection{Andre kjøretest}
+\label{sec:res-kjoretest2}
+Etter papirtesten ble lagersetet for høyre drivhjul filt, slik at marktrykket fra de to drivhjulene ble mer likt. Samtidig ble Ø12-trommelen byttet med Ø8-trommelen (seksjon~\ref{sec:disk-trommel}). Ellers var bilen som i den første kjøretesten. Den andre kjøretesten ble gjort 9.~november 2026 på samme gulv og etter samme prosedyre, med ti forsøk. Turtallet etter opptrekk ble ikke målt. Tabell~\ref{tab:kjoretest2} viser alle forsøkene, og figur~\ref{fig:kjoretester} viser banene i begge kjøretestene.
 
 \begin{table}[H]
     \centering
-    \caption[Status for kravene]{Status for kravene etter den første kjøretesten, 7.~november 2026.}
+    \caption[Andre kjøretest]{Andre kjøretest, 9.~november 2026, etter at lagersetet for høyre drivhjul er filt. Svingradiusen er regnet med likning~\eqref{eq:svingradius}.}
+    \label{tab:kjoretest2}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Forsøk} & \textbf{Lengde [m]} & \textbf{Sideavvik [m]} & \textbf{$|y|/L$ [\%]} & \textbf{Svingradius [m]} \\
+        \hline
+        1 & 8,47 & $-2{,}47$ & 29 & 14,5 \\
+        2 & 8,09 & $-0{,}83$ & 10 & 39,4 \\
+        3 & 10,93 & $-3{,}91$ & 36 & 15,3 \\
+        4 & 8,34 & $-1{,}56$ & 19 & 22,3 \\
+        5 & 11,86 & $-3{,}24$ & 27 & 21,7 \\
+        6 & 7,08 & $-0{,}19$ & 3 & 132 \\
+        7 & 9,25 & $-2{,}78$ & 30 & 15,4 \\
+        8 & 7,63 & $-1{,}12$ & 15 & 26,0 \\
+        9 & 10,54 & $-3{,}65$ & 35 & 15,2 \\
+        10 & 5,89 & $-2{,}04$ & 35 & 8,5 \\
+        \hline
+        Snitt & 8,81 ± 1,85 & $-2{,}18$ & 24 & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Lengden var \SI[separate-uncertainty=true]{8,81 \pm 1,85}{m}, som tilsvarer en spredning på \SI{21}{\percent}. Det er \SI{61}{\percent} lengre enn i den første kjøretesten, og alle ti forsøkene var over \SI{5}{m}. Bilen kjørte av seg selv i alle ti forsøkene og traff ikke noe. Tre forsøk, med 10,5 til \SI{11,9}{m}, var lengre enn de \SI{10,4}{m} simuleringen gir ved det høyeste turtallet opptrekk med snor ga.
+
+Bilen dro fortsatt til venstre i alle ti forsøkene, men buene var slakere (figur~\ref{fig:kjoretester}). Svingradiusen var 8,5 til \SI{39}{m}, med median \SI{19}{m} mot \SI{9}{m} i den første kjøretesten, og forsøk 6 gikk nesten rett. Sideavviket var i snitt \SI{24}{\percent} av lengden, mot \SI{31}{\percent}. Siden bilen kjørte lenger, ble sideavviket i meter likevel omtrent det samme, i snitt \SI{-2,18}{m} mot \SI{-1,84}{m}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Images/Kjoretest/kjoretester.pdf}
+    \caption[Banene i kjøretestene]{Banene i de to kjøretestene, tegnet som sirkelbuer fra start (firkant) til stopp (punkt) ut fra målt lengde og sideavvik. Bilen starter rett oppover. Stoppunktet må ligge i det grå feltet for at sideavviket skal være under \SI{10}{\percent} av lengden (R5).}
+    \label{fig:kjoretester}
+\end{figure}
+
+\subsection{Oppsummering av kravoppfyllelse}
+\label{sec:res-kravstatus}
+Tabell~\ref{tab:kravstatus} viser status for kravene i seksjon~\ref{sec:produktkrav} etter den andre kjøretesten.
+
+\begin{table}[H]
+    \centering
+    \caption[Status for kravene]{Status for kravene etter den andre kjøretesten, 9.~november 2026. Tallene i parentes er fra den første kjøretesten.}
     \label{tab:kravstatus}
     \small
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|l|p{4.3cm}|p{5.2cm}|l|}
+    \begin{tabular}{|l|p{3.9cm}|p{5.1cm}|l|}
         \hline
         \textbf{Krav} & \textbf{Grense} & \textbf{Resultat} & \textbf{Status} \\
         \hline
         R1 & $140 \times 85 \times 70$ mm, utdelt svinghjul og aksel, 20 cm snor & $140 \times 83$ mm i CAD, høyden under 70. Lengden er på grensen og er ikke målt på bilen. Svinghjul, aksel og snor brukt som utdelt & Oppfylt i CAD \\
         \hline
-        R2 & Kjører av seg selv & 5 av 5 forsøk & Oppfylt \\
+        R2 & Kjører av seg selv & 10 av 10 forsøk (5 av 5) & Oppfylt \\
         \hline
-        R3 & Minst \SI{5}{m} i snitt, 10 kjøringer & \SI{5,48}{m} i snitt, 5 kjøringer & Delvis \\
+        R3 & Minst \SI{5}{m} i snitt, 10 kjøringer & \SI{8,81}{m} i snitt, 10 kjøringer (\SI{5,48}{m}, 5 kjøringer) & Oppfylt \\
         \hline
-        R4 & Standardavvik under \SI{15}{\percent} & \SI{25}{\percent} & Ikke oppfylt \\
+        R4 & Standardavvik under \SI{15}{\percent} & \SI{21}{\percent} (\SI{25}{\percent}) & Ikke oppfylt \\
         \hline
-        R5 & Sideavvik under \SI{10}{\percent} av lengden & \SI{31}{\percent} i snitt, til venstre i 4 av 5 & Ikke oppfylt \\
+        R5 & Sideavvik under \SI{10}{\percent} av lengden & \SI{24}{\percent} i snitt, til venstre i 10 av 10 (\SI{31}{\percent}, 4 av 5) & Ikke oppfylt \\
         \hline
-        R6 & Minst 9 av 10 vellykkede & 4 av 5 (forsøk 2 traff et bord) & Ikke prøvd fullt \\
+        R6 & Minst 9 av 10 vellykkede & 10 av 10 (4 av 5, forsøk 2 traff et bord) & Oppfylt \\
         \hline
         R7 & Kan demonteres og justeres & Klemnav og firkantnav kan løsnes. Andre utvekslinger med samme akseavstand, som 18\,:\,72, kan printes & Oppfylt ved inspeksjon \\
         \hline

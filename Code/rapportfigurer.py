@@ -185,6 +185,43 @@ def fig_maalegeometri():
     plt.close(fig)
 
 
+KJORETEST1 = ((3.29, -0.50), (6.12, -4.15), (6.76, -1.75), (6.14, -2.80), (5.09, 0.0))  # 7. nov, (L, y) [m]
+KJORETEST2 = ((8.47, -2.47), (8.09, -0.83), (10.93, -3.91), (8.34, -1.56), (11.86, -3.24),
+              (7.08, -0.19), (9.25, -2.78), (7.63, -1.12), (10.54, -3.65), (5.89, -2.04))  # 9. nov
+
+
+def fig_kjoretester():
+    """Banene i de to kjøretestene, tegnet som sirkelbuer fra start til stopp med R = L^2 / (2|y|).
+    Det skyggelagte feltet er der |y|/L < 10 % (R5). Data fra Bygg/Testing/Testing.xlsx."""
+    fig, ax = plt.subplots(figsize=(3.2, 4.6))
+    vinkel = math.asin(0.10)
+    yy = np.array([0, 12.5])
+    ax.fill_betweenx(yy, -yy * math.tan(vinkel), yy * math.tan(vinkel), color="0.85", lw=0, zorder=0,
+                     label="R5: $|y|/L$ < 10 %")
+    for data, farge, navn in ((KJORETEST1, "C1", "Første kjøretest"), (KJORETEST2, "C0", "Andre kjøretest")):
+        for k, (L, y) in enumerate(data):
+            if y == 0:
+                xb, yb = np.array([0, 0]), np.array([0, L])
+            else:
+                R = L**2 / (2 * abs(y))
+                phi = np.linspace(0, math.acos(1 - abs(y) / R), 100)
+                xb, yb = -R * (1 - np.cos(phi)), R * np.sin(phi)  # x mot høyre, y fremover
+            ax.plot(xb, yb, color=farge, lw=1.5, label=navn if k == 0 else None)
+            ax.plot(xb[-1], yb[-1], "o", color=farge, ms=4, mec="white", mew=0.8)
+    ax.plot(0, 0, "ks", ms=5)
+    ax.set_aspect("equal")
+    ax.set_xlim(-4.6, 1.6)
+    ax.set_ylim(-0.3, 12.5)
+    ax.set_xlabel("Sideavvik $y$ [m]")
+    ax.set_ylabel("Fremover [m]")
+    ax.legend(loc="lower left", fontsize=7, framealpha=1)
+    fig.tight_layout(pad=0.2)
+    ut = ROT / "Rapport" / "Images" / "Kjoretest"
+    ut.mkdir(parents=True, exist_ok=True)
+    fig.savefig(ut / "kjoretester.pdf")
+    plt.close(fig)
+
+
 def tab_dv_versjoner():
     """Simulert distanse for drivverkversjonene i tab:dv-samlet, med dagens modell: kjøretestbilen (tørre
     626 2RS, 0,6 mNm per hjulaksel), 0,27 kg, 2700 o/min. Hjulenes treghetsmoment skaleres med r^3."""
@@ -296,6 +333,7 @@ def main():
     tab_lagerplan(p)
     fig_sim_kjoring()
     fig_maalegeometri()
+    fig_kjoretester()
     tab_dv_versjoner()
     tab_tapsledd()
     fig_lager()
