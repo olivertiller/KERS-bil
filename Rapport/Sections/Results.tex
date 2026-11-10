@@ -1,5 +1,6 @@
 \section{Resultater og analyser}
 \label{sec:resultater}
+Først kommer målingene med turtallsmåleren, av opptrekket og av tapene i lagre og drivverk. Deretter følger de to kjøretestene, og til slutt en oppsummering av delene og kravene.
 
 \subsection{Opptrekk}
 \label{sec:res-opptrekk}
@@ -7,14 +8,6 @@ Turtallet etter opptrekk er målt for de to tromlene med turtallsmåleren fra se
 
 De første opptrekkene er gjort med Ø12-trommelen, $r_t = \SI{6}{mm}$.
 Seks godkjente opptrekk ga \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} rett etter at løkka slapp, med variasjonskoeffisient \SI{15}{\percent}. Det tilsvarer omtrent \SI{2,4}{J}, under halvparten av de \SI{5,3}{J} som var antatt. I ett av åtte opptrekk hang løkka seg opp, og svinghjulet stoppet på under ett sekund. Rett etter at løkka slipper, bremses svinghjulet ekstra i omtrent \SI{0,3}{s}, som tyder på at løkka eller snora drar litt i trommelen før den er helt fri.
-
-\begin{versjonstabell}{Ø12-trommelen}{tab:tr1}
-    \hovedtest
-    Turtall etter opptrekk, \SI[separate-uncertainty=true]{2700 \pm 390}{o/min}, 6 opptrekk (R3, R4) & Delvis vellykket, under antatt \SI{4000}{o/min} \\
-    \tilleggstester
-    Snora løsner av seg selv & Delvis vellykket, hang seg opp i 1 av 8 \\
-    Snora sklir ikke av trommelen & Vellykket \\
-\end{versjonstabell}
 
 Tolv opptrekk med Ø8-trommelen 10.~november 2026 ga \SI[separate-uncertainty=true]{2670 \pm 290}{o/min}. Forskjellen fra Ø12 er mye mindre enn spredningen, og energien i svinghjulet er omtrent den samme, \SI{2,3}{J} mot \SI{2,4}{J}. Tappen på Ø8-trommelen slapp løkka av seg selv i alle de tolv opptrekkene.
 
@@ -53,7 +46,7 @@ Tapet i drivverket ble målt 10.~november 2026 med Ø8-trommelen og de tørre 62
 
 \subsection{Første kjøretest}
 \label{sec:res-kjoretest}
-Den første kjøretesten ble gjort 7.~november 2026 med den ferdig monterte bilen (figur~\ref{fig:testoppsett}), bestående av den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre uten tetninger og olje på alle tre akslene. Bilen veide \SI{270}{g}. Opptrekket ble gjort med Ø12-trommelen, og turtallet etter opptrekk ble ikke målt. Målet var å se om bilen fungerer som helhet, og å få et første tall for lengde og sideavvik.
+Den første kjøretesten ble gjort 7.~november 2026 med den ferdig monterte bilen (figur~\ref{fig:testoppsett}), bestående av den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre uten tetninger og olje på alle tre akslene. Bilen veide \SI{270}{g}. Opptrekket ble gjort med Ø12-trommelen, og turtallet etter opptrekk ble ikke målt. Målet var å se om bilen fungerer som helhet, og å få et første tall for lengde og sideavvik. Testen er referansemålingen som grensene i R3--R6 ble satt etter.
 
 Bilen ble kjørt fem ganger etter prosedyren i seksjon~\ref{sec:metode-kjoretest}. Tabell~\ref{tab:kjoretest1} viser alle forsøkene, og ingen er utelatt. Lengden var \SI[separate-uncertainty=true]{5,48 \pm 1,36}{m} (snitt og standardavvik), som tilsvarer en spredning på \SI{25}{\percent}. I forsøk 2 traff bilen et bord, slik at den målte lengden der er en nedre grense.
 
@@ -130,8 +123,33 @@ Bilen dro fortsatt til venstre i alle ti forsøkene, men buene var slakere (figu
     \label{fig:kjoretester}
 \end{figure}
 
-\subsection{Oppsummering av kravoppfyllelse}
+\subsection{Oppsummering av deler og krav}
 \label{sec:res-kravstatus}
+Tabell~\ref{tab:deler-samlet} oppsummerer versjonene av de fysiske delene og hvilken som er brukt i den ferdige bilen.
+
+\begin{table}[H]
+    \centering
+    \caption[Versjonene av de fysiske delene]{Versjonene av de fysiske delene, med hovedtesten fra tabell~\ref{tab:iterasjonsserier}.}
+    \label{tab:deler-samlet}
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|p{2.1cm}|p{2.9cm}|p{6.3cm}|p{1.8cm}|}
+        \hline
+        \textbf{Del} & \textbf{Versjoner} & \textbf{Resultat av hovedtesten} & \textbf{Valgt} \\
+        \hline
+        Lagersete & Prøveringer Ø18,9--Ø19,3 & Ø19,0 gikk stramt inn, Ø19,1 var passe romslig & Ø19,1 \\
+        \hline
+        Firkantnav & Hull 4,0--\SI{4,3}{mm} & \SI{4,3}{mm} ga best pasning. Ingen av drivhjulene slurte på akselen ved kontrollen etter den første kjøretesten & \SI{4,3}{mm} \\
+        \hline
+        Klemnav & Én versjon & Sklei på akselen i den første serien, holdt etter at skruene ble strammet jevnt & Beholdt \\
+        \hline
+        Snortrommel & Ø12 med krok, Ø8 med tapp & \SI[separate-uncertainty=true]{2700 \pm 390}{o/min} og \SI[separate-uncertainty=true]{2670 \pm 290}{o/min}. Kroken hang seg opp i 1 av 8 opptrekk, tappen slapp i 12 av 12 & Ø8 \\
+        \hline
+        Drivhjul & PLA uten dekk, PLA-felg med TPU-dekk & Uten dekk spant drivhjulene lenge ved nedsetting. Med TPU-dekk kjørte bilen \SI{8,81}{m} i snitt & TPU-dekk \\
+        \hline
+    \end{tabular}
+\end{table}
+
 Tabell~\ref{tab:kravstatus} viser status for kravene i seksjon~\ref{sec:produktkrav} etter den andre kjøretesten.
 
 \begin{table}[H]

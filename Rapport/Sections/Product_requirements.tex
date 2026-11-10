@@ -1,7 +1,43 @@
+\section{Produktutviklingsprosessen}
+\label{sec:pu-prosess}
+Figur~\ref{fig:pu-prosess} viser gangen i prosjektet, fra krav og konsepter til prototype og to kjøretester. Dette kapittelet tar for seg kravene til bilen, metoden for iterativ prototyping og prosjektplanen.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        steg/.style = {draw = NavyBlue, fill = NavyBlue!10, rounded corners = 2pt, align = center,
+                       text width = 2.3cm, minimum height = 1.35cm, font = \footnotesize},
+        test/.style = {steg, draw = BrickRed, fill = BrickRed!10},
+        pil/.style  = {-latex', thick},
+    ]
+        \node[steg] (krav)  at (0, 0)     {Produktkrav\\(\ref{sec:produktkrav})};
+        \node[steg] (kons)  at (3.05, 0)  {Tre konsepter og konseptvalg\\(\ref{sec:konseptutvikling})};
+        \node[steg] (dv)    at (6.1, 0)   {Drivverk i CAD\\(\ref{sec:dv-serien})};
+        \node[steg] (ramme) at (9.15, 0)  {Ramme med generativ design\\(\ref{sec:gd-ramme})};
+        \node[steg] (deler) at (12.2, 0)  {Deler og prøvebiter\\(\ref{sec:prototyping})};
+        \node[test] (maal)  at (0, -2.3)    {Opptrekk og tap\\(\ref{sec:res-opptrekk}, \ref{sec:res-tapsledd})};
+        \node[test] (kt1)   at (3.05, -2.3) {Første kjøretest\\(\ref{sec:res-kjoretest})};
+        \node[test] (tiltak) at (6.1, -2.3) {Papirtest og filing av lagersete\\(\ref{sec:res-kjoretest}, \ref{sec:res-kjoretest2})};
+        \node[test] (kt2)   at (9.15, -2.3) {Andre kjøretest\\(\ref{sec:res-kjoretest2})};
+        \node[test] (status) at (12.2, -2.3) {Status for kravene\\(\ref{sec:res-kravstatus})};
+        \draw[pil] (krav) -- (kons);
+        \draw[pil] (kons) -- (dv);
+        \draw[pil] (dv) -- (ramme);
+        \draw[pil] (ramme) -- (deler);
+        \draw[pil] (deler.south) -- ++(0, -0.45) -| (maal.north);
+        \draw[pil] (maal) -- (kt1);
+        \draw[pil] (kt1) -- (tiltak);
+        \draw[pil] (tiltak) -- (kt2);
+        \draw[pil] (kt2) -- (status);
+    \end{tikzpicture}
+    \caption[Gangen i prosjektet]{Gangen i prosjektet, med seksjonen der hvert steg er beskrevet. Utviklingen er blå og testingen rød.}
+    \label{fig:pu-prosess}
+\end{figure}
+
 \subsection{Produktkrav}
 \label{sec:produktkrav}
 \subsubsection{Kravgrunnlag og prioritering}
-Kravspesifikasjonen skiller mellom rammene i oppgavebeskrivelsen (R1), som er obligatoriske, og egne mål for ytelse og konstruksjon (R2--R8). Akseptgrensene for R3--R6 ble satt etter den første kjøretesten.
+Kravspesifikasjonen skiller mellom rammene i oppgavebeskrivelsen (R1), som er obligatoriske, og egne mål for ytelse og konstruksjon (R2--R8). Akseptgrensene for R3--R6 ble satt etter den første kjøretesten, som ble brukt som referansemåling (seksjon~\ref{sec:res-kjoretest}).
 
 \subsubsection{Kravspesifikasjon}
 \begin{description}
