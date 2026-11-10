@@ -18,7 +18,14 @@ Tolv opptrekk med Ø8-trommelen 10.~november 2026 ga \SI[separate-uncertainty=tr
 \label{sec:res-sim-lager}
 Turtallsmåleren fra seksjon~\ref{sec:metode-tap} er brukt til å sammenligne lagrene på svinghjulsakselen og til å måle tapet i drivverket.
 
-\paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026. Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretestene. Ifølge simuleringen ville SKF-lagre på svinghjulsakselen gitt omtrent \SI{30}{\percent} lengre distanse.
+\paragraph{Lagrene på svinghjulsakselen.} Fire lagervarianter ble målt med utsnurring 6. og 7.~november 2026 (figur~\ref{fig:lagervarianter}). Snittmomentet fra 1000 til \SI{300}{o/min} var \SI{1,50}{mN.m} for de opprinnelige 626 2RS-lagrene med fett, \SI{4,11}{mN.m} med tetningene tatt ut og tynn olje, \SI{0,71}{mN.m} for de samme lagrene tørre og \SI{0,19}{mN.m} for åpne SKF Explorer 626. De tørre lagrene ble brukt i kjøretestene. Ifølge simuleringen ville SKF-lagre på svinghjulsakselen gitt omtrent \SI{30}{\percent} lengre distanse.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/Maling/lagervarianter.pdf}
+    \caption[Tapsmoment for lagervariantene]{Tapsmoment mot turtall for de fire lagervariantene på svinghjulsakselen, målt ved utsnurring med tannhjulet frakoblet. Aksen for tapsmomentet er logaritmisk.}
+    \label{fig:lagervarianter}
+\end{figure}
 
 \paragraph{Drivverket.}
 \label{sec:res-drivverk}
@@ -46,7 +53,7 @@ Tapet i drivverket ble målt 10.~november 2026 med Ø8-trommelen og de tørre 62
 
 \subsection{Første kjøretest}
 \label{sec:res-kjoretest}
-Den første kjøretesten ble gjort 7.~november 2026 med den ferdig monterte bilen (figur~\ref{fig:testoppsett}), bestående av den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre uten tetninger og olje på alle tre akslene. Bilen veide \SI{270}{g}. Opptrekket ble gjort med Ø12-trommelen, og turtallet etter opptrekk ble ikke målt. Målet var å se om bilen fungerer som helhet, og å få et første tall for lengde og sideavvik. Testen er referansemålingen som grensene i R3--R6 ble satt etter.
+Den første kjøretesten ble gjort 7.~november 2026 med den ferdig monterte bilen (figur~\ref{fig:testoppsett}), bestående av den 3D-printede rammen (seksjon~\ref{sec:gd-ramme}), drivverket med $i = 4{,}29$, Ø68-hjul med TPU-dekk og 626 2RS-lagre uten tetninger og uten olje på alle tre akslene. Bilen veide \SI{270}{g}. Opptrekket ble gjort med Ø12-trommelen, og turtallet etter opptrekk ble ikke målt. Målet var å se om bilen fungerer som helhet, og å få et første tall for lengde og sideavvik. Testen er referansemålingen som grensene i R3--R6 ble satt etter.
 
 Bilen ble kjørt fem ganger etter prosedyren i seksjon~\ref{sec:metode-kjoretest}. Tabell~\ref{tab:kjoretest1} viser alle forsøkene, og ingen er utelatt. Lengden var \SI[separate-uncertainty=true]{5,48 \pm 1,36}{m} (snitt og standardavvik), som tilsvarer en spredning på \SI{25}{\percent}. I forsøk 2 traff bilen et bord, slik at den målte lengden der er en nedre grense.
 
@@ -71,7 +78,7 @@ Bilen ble kjørt fem ganger etter prosedyren i seksjon~\ref{sec:metode-kjoretest
     \end{tabular}
 \end{table}
 
-Bilen dro til venstre i fire av fem forsøk, med svingradius fra 4,5 til \SI{13}{m}. Bare forsøk 5 gikk rett. Bilen kjørte i en jevn bue og fikk ikke et brått retningsskifte ved starten. I forsøk 2 og 4 hadde bilen snudd henholdsvis omtrent 85° og 54° når den stoppet. Etter en så krapp bue er veien bilen faktisk kjørte, litt lengre enn den rette linja, \SI{6,7}{m} mot \SI{6,1}{m} i forsøk 2.
+Bilen dro til venstre i fire av fem forsøk, med svingradius fra 4,5 til \SI{13}{m}. Bare forsøk 5 gikk rett. Bilen kjørte i en jevn bue og fikk ikke et brått retningsskifte ved starten. Regnet som sirkelbuer hadde bilen snudd omtrent 85° i forsøk 2 og 54° i forsøk 4 da den stoppet. Etter en så krapp bue er veien bilen faktisk kjørte, litt lengre enn den rette linja, \SI{6,7}{m} mot \SI{6,1}{m} i forsøk 2.
 
 Ved nedsettingen slurte ofte høyre drivhjul så mye at det bare spant rundt, og bilen beveget seg nesten ikke fremover før hjulet fikk tak. For å finne årsaken til sideavviket ble tre ting kontrollert etter testen:
 \begin{itemize}
@@ -84,7 +91,7 @@ Deretter ble hjullasten sjekket med papirtesten (seksjon~\ref{sec:metode-papirte
 
 \subsection{Andre kjøretest}
 \label{sec:res-kjoretest2}
-Etter papirtesten ble lagersetet for høyre drivhjul filt, slik at marktrykket fra de to drivhjulene ble mer likt. Samtidig ble Ø12-trommelen byttet med Ø8-trommelen (seksjon~\ref{sec:tr-serien}). Ellers var bilen som i den første kjøretesten. Den andre kjøretesten ble gjort 9.~november 2026 på samme gulv og etter samme prosedyre, med ti forsøk. Turtallet etter opptrekk ble ikke målt. Tabell~\ref{tab:kjoretest2} viser alle forsøkene, og figur~\ref{fig:kjoretester} viser banene i begge kjøretestene.
+Etter papirtesten ble lagersetet for høyre drivhjul filt, slik at lasten på de to drivhjulene ble mer lik. Samtidig ble Ø12-trommelen byttet med Ø8-trommelen (seksjon~\ref{sec:tr-serien}). Ellers var bilen som i den første kjøretesten. Den andre kjøretesten ble gjort 9.~november 2026 på samme gulv og etter samme prosedyre, med ti forsøk. Turtallet etter opptrekk ble ikke målt. Tabell~\ref{tab:kjoretest2} viser alle forsøkene, og figur~\ref{fig:kjoretester} viser banene i begge kjøretestene.
 
 \begin{table}[H]
     \centering

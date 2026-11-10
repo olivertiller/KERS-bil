@@ -7,26 +7,56 @@ Diskusjonen følger problemstillingen: først kjøredistansen, deretter sprednin
 \label{sec:disk-lager}
 \label{sec:disk-tapsledd}
 \label{sec:disk-trommel}
-Bilen kjørte \SI{8,8}{m} i snitt i den andre kjøretesten, og R3 er oppfylt. Distansen bestemmes av hvor mye energi opptrekket gir, og hvor mye som går tapt underveis.
+Bilen kjørte \SI{8,8}{m} i snitt i den andre kjøretesten, og R3 er oppfylt. Opptrekket ga rundt \SI{2700}{o/min} mot antatt \SI{4000}{o/min}, altså under halvparten av den antatte energien. Ø8-trommelen ga omtrent samme turtall som Ø12 (seksjon~\ref{sec:res-opptrekk}), så det er kraften hånda gir over de \SI{20}{cm}, som begrenser opptrekket. Hypotesen i seksjon~\ref{sec:tr-serien} får dermed ikke støtte.
 
-Opptrekk med snor ga rundt \SI{2700}{o/min} mot antatt \SI{4000}{o/min}, som tilsvarer bare \SI{46}{\percent} av den antatte energien. Ø8-trommelen skulle gitt rundt \SI{4000}{o/min} med samme trekkhastighet, men ga omtrent samme turtall som Ø12 (seksjon~\ref{sec:res-opptrekk}). Opptrekket begrenses altså av hvor mye kraft hånda gir over de \SI{20}{cm}, og hypotesen om at én diameter gir høyest turtall (seksjon~\ref{sec:tr-serien}), får ikke støtte. Diameteren kan derfor velges ut fra hvor godt snora festes og slipper.
-
-Sluringen ved nedsetting koster \SI{24}{\percent} av energien med $i = 4{,}29$ (likning~\eqref{eq:sluretap}), og mye mer hvis hjulene har for lite grep (seksjon~\ref{sec:dh-serien}). Med $i = 6$ faller andelen til \SI{14}{\percent}, men høyere utveksling gir lengre kjøretid, slik at lagrene får lengre tid til å tappe svinghjulet. Lagrene på svinghjulsakselen er det som lettest kan forbedres. Åpne SKF-lagre ga en firedel av tapet med de tørre lagrene som ble brukt.
-
-Fra den første til den andre kjøretesten økte distansen med \SI{61}{\percent}. Trommelen forklarer lite av dette. Økningen kommer trolig mest av jevnere last på drivhjulene. I den første kjøretesten spant høyre drivhjul ved nedsettingen, og da går mye mer energi tapt enn ventet med godt grep. Slakere buer gir også mindre tap til at hjulene på de stive akslene skrubber mot underlaget.
+Av energien går \SI{24}{\percent} tapt til sluring ved nedsetting (likning~\eqref{eq:sluretap}), og mer hvis hjulene har for lite grep. Høyere utveksling gir mindre sluretap, men lengre kjøretid og mer tap i lagrene. Lagrene på svinghjulsakselen er det som lettest kan forbedres (seksjon~\ref{sec:res-tapsledd}). At distansen økte med \SI{61}{\percent} fra den første til den andre kjøretesten, kommer trolig mest av jevnere last på drivhjulene. I den første kjøretesten spant høyre drivhjul ved nedsettingen.
 
 \subsubsection{Spredning}
 \label{sec:disk-spredning}
-Spredningen var \SI{25}{\percent} i den første kjøretesten og \SI{21}{\percent} i den andre. Turtallet etter opptrekk med Ø8-trommelen varierte med omtrent \SI{11}{\percent}, og siden energien går med kvadratet av turtallet, gir det alene rundt \SI{20}{\percent} spredning i energi. Lengden hadde heller ingen sammenheng med svingradiusen. Spredningen kan derfor forklares av opptrekket alene, og R4 kan trolig ikke nås uten et jevnere opptrekk. En av trommelseriene hadde \SI{5}{\percent} spredning i turtall, så det er mulig med et innøvd trekk.
+Spredningen var \SI{25}{\percent} og \SI{21}{\percent} i de to kjøretestene. Turtallet etter opptrekk varierte med omtrent \SI{11}{\percent}, som alene gir rundt \SI{20}{\percent} spredning i energi. Spredningen kan derfor forklares av opptrekket, og R4 kan trolig ikke nås uten et jevnere opptrekk.
 
 \subsubsection{Sideavvik}
 \label{sec:disk-kjoretest}
 \label{sec:disk-kjoretest2}
-Sideavviket er det største problemet bilen har nå, og R5 er ikke oppfylt. Kontrollene i seksjon~\ref{sec:res-kjoretest} utelukker at navet slurer, at akslene er skjeve, og at drivhjulene har ulik diameter. Siden bilen bare svinger når svinghjulet driver den, må årsaken ha med drivkraften å gjøre.
+R5 er ikke oppfylt, og sideavviket er det største problemet bilen har nå. Bilen svinger bare når svinghjulet driver den, så årsaken må ha med drivkraften å gjøre. Papirtesten viser at den printede rammen er litt vridd, slik at høyre drivhjul bærer mer last enn venstre. Drivhjulene sitter fast på samme aksel, og da tar hjulet med mest last mest av drivkraften og svinger bilen mot venstre (figur~\ref{fig:kraftskisse}).
 
-Papirtesten viser at diagonalen høyre bak og venstre foran bærer det meste av vekten, altså at den printede rammen er litt vridd. En stiv ramme på fire hjul er statisk ubestemt, så det skal lite til. Begge drivhjulene sitter fast på samme aksel, og da tar hjulet med mest last også mest av drivkraften. Forskjellen gir et moment som svinger bilen mot siden med minst last. Det stemmer med at høyre drivhjul ble sett spinne ved nedsettingen, og at bilen dro til venstre.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        hjul/.style = {draw, rounded corners = 1.5pt, minimum width = 0.36cm, minimum height = 1.15cm, inner sep = 0pt},
+        tung/.style = {hjul, fill = black!65},
+        lett/.style = {hjul, fill = black!10},
+        kraft/.style = {-latex', line width = 1.2pt, BrickRed},
+    ]
+        % ramme og aksler
+        \draw[thick] (-1.27, -1.1) -- (1.27, -1.1);
+        \draw[thick] (-1.27, 1.1) -- (1.27, 1.1);
+        \draw[rounded corners = 3pt, fill = NavyBlue!8] (-0.95, -1.55) rectangle (0.95, 1.55);
+        \node[font = \footnotesize, align = center] at (0, 0.95) {foran};
+        \node[font = \footnotesize, align = center] at (0, -0.95) {drivaksel};
+        % hjul
+        \node[lett] (vb) at (-1.45, -1.1) {};
+        \node[tung] (hb) at (1.45, -1.1) {};
+        \node[tung] (vf) at (-1.45, 1.1) {};
+        \node[lett] (hf) at (1.45, 1.1) {};
+        % drivkrefter
+        \draw[kraft] (2.0, -1.65) -- (2.0, 0.15) node[right, black] {$F_h$};
+        \draw[kraft] (-2.0, -1.65) -- (-2.0, -1.0) node[left, black] {$F_v$};
+        % moment og bane
+        \draw[-latex', thick] (-50:0.5) arc (-50:230:0.5);
+        \node at (0, 0) {$M$};
+        \draw[dashed, -latex', thick] (0, 1.75) .. controls (0, 2.6) and (-0.3, 3.0) .. (-1.0, 3.4);
+        % tegnforklaring
+        \node[tung, minimum height = 0.3cm, minimum width = 0.3cm] at (3.4, 1.3) {};
+        \node[right, font = \footnotesize] at (3.6, 1.3) {mest last};
+        \node[lett, minimum height = 0.3cm, minimum width = 0.3cm] at (3.4, 0.8) {};
+        \node[right, font = \footnotesize] at (3.6, 0.8) {minst last};
+    \end{tikzpicture}
+    \caption[Skjev hjullast og sideavvik]{Bilen sett ovenfra. Diagonalen høyre bak og venstre foran bærer det meste av vekten. Høyre drivhjul tar da mest av drivkraften, og forskjellen mellom $F_h$ og $F_v$ gir et moment $M$ som svinger bilen mot venstre.}
+    \label{fig:kraftskisse}
+\end{figure}
 
-Filingen av lagersetet for høyre drivhjul gjorde buene omtrent dobbelt så slake, så lastfordelingen er en viktig del av forklaringen. Bilen dro likevel til venstre i alle ti forsøkene. R5 blir dessuten vanskeligere å nå jo lenger bilen kjører. I en jevn bue er $|y|/L = L/(2R)$, så ved \SI{8,8}{m} må svingradiusen være over \SI{44}{m}, og det klarte bare forsøk 6. Det er vanskelig å treffe nøyaktig med fil og papirtest. Den sikreste løsningen er en foraksel som kan vippe om midten, eller en trehjuling (seksjon~\ref{sec:videre-trehjul}), slik at alle hjulene får last uansett hvor vridd rammen er.
+Filingen av lagersetet gjorde buene omtrent dobbelt så slake, men bilen dro fortsatt til venstre i alle ti forsøkene. For å nå R5 ved \SI{8,8}{m} må svingradiusen være over \SI{44}{m}, og det klarte bare forsøk 6. Den sikreste løsningen er en foraksel som kan vippe om midten, eller en trehjuling (seksjon~\ref{sec:videre-trehjul}), slik at alle hjulene får last uansett hvor vridd rammen er.
 
 \subsubsection{Feilkilder}
 \label{sec:disk-feilkilder}
