@@ -112,19 +112,47 @@ Generelle tiltak som ikke knytter seg til én enkelt hendelse:
 \end{itemize}
 
 \clearpage
-\subsection{Arbeidstegninger og deleliste}
+\subsection{Arbeidstegninger og sammenstillingstegninger}
 \label{app:tegninger}
+Tegningene er A4 og står på de neste sidene i full størrelse, så målestokken i tittelfeltet gjelder når rapporten skrives ut i 100~\%. Alle er tegnet i førstevinkelprojeksjon (ISO 128 metode E) fra de samme 3D-modellene som er printet, enten fra Python-skriptene eller eksportert fra Fusion. Tegningsnummeret er det samme som i stykklisten på KERS-SM-1.
 
-\begin{sidewaysfigure}
+\begin{table}[H]
     \centering
-    \includegraphics[width=\textheight]{Images/Tegninger/TR-1.pdf}
-    \caption[Maskintegning av snortrommelen]{Maskintegning av snortrommelen med Ø12-kjerne. Snitt A--A langs aksen, C--C gjennom klemskruene, B--B gjennom kroken og detalj E av kroken.}
-    \label{fig:snortrommel}
-\end{sidewaysfigure}
+    \caption{Tegningsliste}
+    \label{tab:tegningsliste}
+    \small
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|l|l|c|c|}
+        \hline
+        \textbf{Tegningsnr.} & \textbf{Betegnelse} & \textbf{Målestokk} & \textbf{Side} \\
+        \hline
+        KERS-SM-1 & Sammenstilling av bilen med stykkliste & 1:1 & \pageref{tegn:SM-1} \\
+        KERS-SM-2 & Svinghjulsaksel, montert enhet & 2:1 & \pageref{tegn:SM-2} \\
+        KERS-RA-1 & Ramme & 1:1 & \pageref{tegn:RA-1} \\
+        KERS-LL-1 & Lagerlokk & 2:1 & \pageref{tegn:LL-1} \\
+        KERS-TR-0 & Snortrommel TR-0, kjerne Ø8 (i den ferdige bilen) & 2:1 & \pageref{tegn:TR-0} \\
+        KERS-TR-1 & Snortrommel TR-1, kjerne Ø12 & 2:1 & \pageref{tegn:TR-1} \\
+        KERS-PI-1 & Pinjong z17 & 2:1 & \pageref{tegn:PI-1} \\
+        KERS-TA-1 & Tannhjul z73 & 1:1 & \pageref{tegn:TA-1} \\
+        KERS-MH-1 & Magnetholder & 2:1 & \pageref{tegn:MH-1} \\
+        KERS-AK-1 & Hjulaksel & 2:1 & \pageref{tegn:AK-1} \\
+        KERS-FE-1 & Felg Ø65 for TPU-dekk & 1:1 & \pageref{tegn:FE-1} \\
+        KERS-DE-1 & Dekk & 1:1 & \pageref{tegn:DE-1} \\
+        KERS-AH-1 & Avstandshylse & 5:1 & \pageref{tegn:AH-1} \\
+        \hline
+    \end{tabular}
+\end{table}
 
-\begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\textheight]{Images/Tegninger/DH-2.pdf}
-    \caption[Maskintegning av drivhjulet]{Maskintegning av drivhjulet med felg (pos.~1) og TPU-dekk (pos.~2). Varianten uten dekk har samme nav og eiker, men er printet i ett stykke i PLA med ytre diameter \SI{68}{mm}.}
-    \label{fig:hjul}
-\end{sidewaysfigure}
+\includepdf[pages=1, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:SM-1}}, addtolist={1, figure, {Sammenstillingstegning KERS-SM-1: Sammenstilling av bilen med stykkliste}, fig:tegn-SM-1}]{Images/Tegninger/KERS-SM-1.pdf}
+\includepdf[pages=1, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:SM-2}}, addtolist={1, figure, {Sammenstillingstegning KERS-SM-2: Svinghjulsaksel, montert enhet}, fig:tegn-SM-2}]{Images/Tegninger/KERS-SM-2.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:RA-1}}, addtolist={1, figure, {Arbeidstegning KERS-RA-1: Ramme}, fig:tegn-RA-1}]{Images/Tegninger/KERS-RA-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:LL-1}}, addtolist={1, figure, {Arbeidstegning KERS-LL-1: Lagerlokk}, fig:tegn-LL-1}]{Images/Tegninger/KERS-LL-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:TR-0}}, addtolist={1, figure, {Arbeidstegning KERS-TR-0: Snortrommel TR-0, kjerne Ø8 (i den ferdige bilen)}, fig:tegn-TR-0}]{Images/Tegninger/KERS-TR-0.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:TR-1}}, addtolist={1, figure, {Arbeidstegning KERS-TR-1: Snortrommel TR-1, kjerne Ø12}, fig:tegn-TR-1}]{Images/Tegninger/KERS-TR-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:PI-1}}, addtolist={1, figure, {Arbeidstegning KERS-PI-1: Pinjong z17}, fig:tegn-PI-1}]{Images/Tegninger/KERS-PI-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:TA-1}}, addtolist={1, figure, {Arbeidstegning KERS-TA-1: Tannhjul z73}, fig:tegn-TA-1}]{Images/Tegninger/KERS-TA-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:MH-1}}, addtolist={1, figure, {Arbeidstegning KERS-MH-1: Magnetholder}, fig:tegn-MH-1}]{Images/Tegninger/KERS-MH-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:AK-1}}, addtolist={1, figure, {Arbeidstegning KERS-AK-1: Hjulaksel}, fig:tegn-AK-1}]{Images/Tegninger/KERS-AK-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:FE-1}}, addtolist={1, figure, {Arbeidstegning KERS-FE-1: Felg Ø65 for TPU-dekk}, fig:tegn-FE-1}]{Images/Tegninger/KERS-FE-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:DE-1}}, addtolist={1, figure, {Arbeidstegning KERS-DE-1: Dekk}, fig:tegn-DE-1}]{Images/Tegninger/KERS-DE-1.pdf}
+\includepdf[pages=1, landscape, pagecommand={\thispagestyle{empty}\phantomsection\label{tegn:AH-1}}, addtolist={1, figure, {Arbeidstegning KERS-AH-1: Avstandshylse}, fig:tegn-AH-1}]{Images/Tegninger/KERS-AH-1.pdf}

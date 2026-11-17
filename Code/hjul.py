@@ -3,12 +3,14 @@
     python3 Code/hjul.py                  # standardmål
     python3 Code/hjul.py --firkant 4.3    # firkanthull (4,3 valgt etter firkanttesten)
     python3 Code/hjul.py --diametre 68    # bare Ø68
+    python3 Code/hjul.py --diametre 64 --uten-ytre-flens   # åpen felg, se under
 
 Krever manifold3d (som snortrommel.py). Skriver til Bygg/Hjul/:
   hjul_felg_TPU.3mf   felg Ø65 for TPU-dekket (4 stk)
   dekk_TPU.3mf        dekk som strekkes over felgen, ferdig Ø68 (4 stk)
   hjul_bart_D68.3mf   hjul uten dekk, Ø68 (DH-1 i testserien)
   *_D66.3mf           samme design 2 mm mindre (felg Ø63, ferdig Ø66), som tillegg
+  *_D64_aapen.3mf     felg uten ytre skulder og dekk, ferdig Ø64 (med --uten-ytre-flens)
   firkanttest.3mf     lite stykke med firkanthull 4,0–4,3 for å finne passningen
   hjul_forhandsvisning.png
 
@@ -22,6 +24,12 @@ z = 8 innsiden mot veggen. I bilen: y = ±(41,5 - z).
     og holder akselen på plass sideveis. Kragen og 0,5 mm av navet har rundt hull Ø6,4, så
     den runde delen av akselen like ved lageret får plass. Firkanten freses fra y ±33,0 og ut.
   * Seks eiker i en 2 mm skive på utsiden holder treghetsmomentet nede.
+
+Åpen felg (--uten-ytre-flens): PLA-hjulene gled på parkett, og TPU-dekket lot seg ikke tre over
+skulderen på Ø66-felgen (dekket måtte strekkes omtrent 3,5 % for å komme over). Den åpne felgen
+har bare skulderen på innsiden, mot veggen, og en fas på utsiden. Dekket skyves på fra utsiden
+og trenger bare de 0,6 mm strekket for å sitte. Det er bredere (6,8 mm) og ligger an mot
+skulderen, så det ikke kan vandre inn mot veggen. Vandrer det utover, holder en dråpe lim.
 """
 
 import argparse
@@ -55,6 +63,9 @@ P = dict(
     d_rund=6.4,  # rundt hull i kragen for akselens runde del
     l_rund=1.5,  # fra innsiden (krage + 0,5 inn i navet)
     fas=0.5,
+    ytre_flens=True,  # False: bare skulder på innsiden, dekket tres på fra utsiden
+    b_skulder=1.0,  # skulderens bredde på den åpne felgen
+    fas_sete=0.6,  # innføringsfas på utsiden av setet på den åpne felgen
 )
 
 
@@ -85,7 +96,11 @@ def hjul(p, med_dekk=True):
     r_felg_inn = r_sete - p["t_felg"] - (0 if med_dekk else 1.5)
     fas = p["fas"]
 
-    if med_dekk:
+    if med_dekk and not p["ytre_flens"]:  # åpen på utsiden (z = 0), skulder bare mot veggen
+        kant, f = p["b_skulder"], p["fas_sete"]
+        rs = r_sete + p["skulder"]
+        felg = syl(r_sete - f, 0, f, r_sete) + syl(r_sete, f, b - kant) + syl(rs, b - kant, b)
+    elif med_dekk:
         kant = (b - p["b_dekk"]) / 2
         rs = r_sete + p["skulder"]
         felg = (syl(r_sete, 0, b) + syl(rs, 0, kant) + syl(rs, b - kant, b))
@@ -150,8 +165,12 @@ def tegn(p, deler, sti):
     for a, navn, sett in ((ax[1], "Felg + TPU-dekk", ("felg", "dekk")), (ax[2], "Bart hjul (DH-1)", ("bart",))):
         for k in sett:
             m = deler[k]
-            if k == "dekk":  # vis dekket montert midt på felgen (forenklet, ustrukket)
-                m = m.translate([0, 0, (p["bredde"] - p["b_dekk"] + 0.2) / 2])
+            if k == "dekk":  # vis dekket montert på felgen (forenklet, ustrukket)
+                if p["ytre_flens"]:
+                    z = (p["bredde"] - p["b_dekk"] + 0.2) / 2
+                else:  # ligger an mot skulderen på innsiden
+                    z = p["bredde"] - p["b_skulder"] - (p["b_dekk"] - 0.2)
+                m = m.translate([0, 0, z])
             for poly in m.rotate([90, 0, 0]).slice(0.0).to_polygons():
                 pts = np.asarray(poly) * [1, -1]
                 a.add_patch(Polygon(pts[:, [1, 0]], fc=farger[k], ec="k", lw=0.5))
@@ -186,6 +205,8 @@ def main():
     ap.add_argument("--firkant", type=float, default=P["firkant"], help="tegnet firkanthull [mm]")
     ap.add_argument("--strekk", type=float, default=P["strekk"], help="dekkets indre Ø mindre enn setet [mm]")
     ap.add_argument("--diametre", type=float, nargs="+", default=DIAMETRE, help="ferdige hjuldiametre [mm]")
+    ap.add_argument("--uten-ytre-flens", action="store_true",
+                    help="åpen felg: bare skulder på innsiden, så dekket kan tres på fra utsiden")
     a = ap.parse_args()
     UT.mkdir(parents=True, exist_ok=True)
 
@@ -194,22 +215,28 @@ def main():
     for d in a.diametre:
         p = dict(P, firkant=a.firkant, strekk=a.strekk, d_ytre=d)
         tillegg = "" if d == P["d_ytre"] else f"_D{d:g}"  # Ø68 beholder de gamle filnavnene
+        if a.uten_ytre_flens:
+            p.update(ytre_flens=False, b_dekk=p["bredde"] - p["b_skulder"])
+            tillegg = f"_D{d:g}_aapen"
         deler = {"felg": hjul(p, True), "dekk": dekk(p), "bart": hjul(p, False)}
         filer = {"felg": f"hjul_felg_TPU{tillegg}", "dekk": f"dekk_TPU{tillegg}", "bart": f"hjul_bart_D{d:g}"}
+        if a.uten_ytre_flens:  # det bare hjulet er det samme som før, lages ikke på nytt
+            del deler["bart"]
         for k, m in deler.items():
             assert m.status() == mf.Error.NoError, k
             skriv_3mf(m, UT / f"{filer[k]}.3mf", filer[k])
 
-        j_felg, j_dekk, j_bart = treghet(deler["felg"], RHO_PLA), treghet(deler["dekk"], RHO_TPU), treghet(deler["bart"], RHO_PLA)
-        print(f"--- Ø{d:g} ---")
+        bart = deler.get("bart", hjul(p, False))
+        j_felg, j_dekk, j_bart = treghet(deler["felg"], RHO_PLA), treghet(deler["dekk"], RHO_TPU), treghet(bart, RHO_PLA)
+        print(f"--- Ø{d:g}{' åpen felg' if a.uten_ytre_flens else ''} ---")
         print(f"Felg:  {deler['felg'].volume() * RHO_PLA:5.1f} g   Dekk: {deler['dekk'].volume() * RHO_TPU:4.1f} g   "
-              f"Bart hjul: {deler['bart'].volume() * RHO_PLA:5.1f} g   (100 % fyll)")
+              f"Bart hjul: {bart.volume() * RHO_PLA:5.1f} g   (100 % fyll)")
         print(f"J per hjul: felg + dekk {j_felg + j_dekk:.2e} kg m^2, bart {j_bart:.2e} kg m^2")
         print(f"J_hjul for fire hjul (til kers_sim.py): felg + dekk {4 * (j_felg + j_dekk):.2e}, bart {4 * j_bart:.2e}")
         r_sete = p["d_ytre"] / 2 - p["t_dekk"]
         print(f"Felgsete Ø{2 * r_sete:.1f}, dekk innvendig Ø{2 * r_sete - p['strekk']:.1f} "
               f"({p['strekk'] / (2 * r_sete) * 100:.1f} % strekk), ferdig Ø{p['d_ytre']:g}")
-        tegn(p, deler, UT / f"hjul_forhandsvisning{tillegg}.png")
+        tegn(p, dict(deler, bart=bart), UT / f"hjul_forhandsvisning{tillegg}.png")
     print("Skrevet til", UT)
 
 

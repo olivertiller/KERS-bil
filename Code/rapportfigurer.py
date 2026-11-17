@@ -285,17 +285,36 @@ def fig_sim_kjoring():
     print(f"Simulert kjøring: {r['distanse']:.2f} m, {r['tid']:.1f} s, v_maks {r['v_maks']:.2f} m/s, slur {t_slur:.3f} s")
 
 
+LAGER_KORTNAVN = ("Original, fett", "Olje", "Tørt, ikke innkjørt", "SKF Explorer", "Tørt, innkjørt")
+
+
 def fig_lager():
-    """Tapsmoment mot turtall for de fire lagervariantene på svinghjulsakselen, logaritmisk akse."""
-    fig, ax = plt.subplots(figsize=(6.5, 4))
-    for k, (navn, fil, utelat) in enumerate(LAGERVARIANTER):
-        for j, (n, (t, rpm)) in enumerate(trekk(fil, utelat)):
-            W, M = moment_mot_turtall(t - t[0], rpm, vindu=16, steg=8)
-            ax.plot(W, M, ".", ms=1.5, color=f"C{k}", alpha=0.5, label=navn if j == 0 else None)
-    ax.set_yscale("log")
-    ax.set(xlabel="Turtall [o/min]", ylabel="Tapsmoment $I\\,\\mathrm{d}\\omega/\\mathrm{d}t$ [mNm]",
-           title="Lagrene på svinghjulsakselen, tannhjulet frakoblet", ylim=(0.05, 10))
-    ax.legend(fontsize=7, markerscale=6, loc="center right")
+    """Lagervariantene på svinghjulsakselen, tannhjulet frakoblet.
+    Venstre: turtall mot tid fra 1000 o/min for et typisk trekk per variant (trekket med median tid 1000->300).
+    Høyre: snittlig bremsemoment fra 1000 til 300 o/min, I * delta_omega / delta_t, samme tall som i teksten."""
+    fig, (a, b) = plt.subplots(1, 2, figsize=(6.5, 3.0), gridspec_kw={"width_ratios": (1.4, 1)})
+    moment = []
+    for k, ((navn, fil, utelat), kort) in enumerate(zip(LAGERVARIANTER, LAGER_KORTNAVN)):
+        rader = tid_1000_300(fil, utelat)
+        dt = np.array([r[3] for r in rader])
+        moment.append(ks.Bil().I * 700 * math.pi / 30 / dt.mean() * 1e3)
+        n_typisk = rader[int(np.argsort(dt)[len(dt) // 2])][0]
+        t, rpm = dict(trekk(fil, utelat))[n_typisk]
+        i = int(np.argmax(rpm <= 1000))
+        t0 = np.interp(1000, rpm[i:i - 2:-1], t[i:i - 2:-1]) if i > 0 else t[0]
+        a.plot(t[i:] - t0, rpm[i:], color=f"C{k}", lw=1.4, label=kort)
+    a.set(xlabel="Tid etter 1000 o/min [s]", ylabel="Svinghjulets turtall [o/min]",
+          title="Hvor lenge svinghjulet spinner", xlim=(0, None), ylim=(0, 1050))
+    a.legend(fontsize=7, loc="upper right")
+    rekkefolge = np.argsort(moment)[::-1]
+    y = np.arange(len(moment))
+    b.barh(y, [moment[j] for j in rekkefolge], color=[f"C{j}" for j in rekkefolge], height=0.65)
+    for yy, j in zip(y, rekkefolge):
+        b.text(moment[j] + 0.08, yy, f"{moment[j]:.2f}".replace(".", ","), va="center", fontsize=7.5)
+    b.set_yticks(y, [LAGER_KORTNAVN[j] for j in rekkefolge], fontsize=8)
+    b.invert_yaxis()
+    b.set(xlabel="Bremsemoment [mNm]", title="Bremsemoment fra lagrene", xlim=(0, max(moment) * 1.22))
+    b.grid(axis="y", visible=False)
     fig.tight_layout()
     fig.savefig(UT / "lagervarianter.pdf")
     plt.close(fig)

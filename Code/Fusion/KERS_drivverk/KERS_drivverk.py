@@ -44,13 +44,17 @@ def geometri():
     k.append(kropp(G, "Svinghjul", ("+", syl_y(gd.X_SV, za, 30, -3, 3)), ("-", syl_y(gd.X_SV, za, R_AKSEL, -3, 3))))
     k.append(kropp(G, "Tannhjul z73", ("+", syl_y(gd.X_BAK, za, 30, 5, 10)), ("-", syl_y(gd.X_BAK, za, R_AKSEL, 5, 10))))
     k.append(kropp(G, "Nav tannhjul", ("+", syl_y(gd.X_BAK, za, 7, 10, 16)), ("-", syl_y(gd.X_BAK, za, R_AKSEL, 10, 16))))
-    k.append(kropp(G, "Pinjong z17", ("+", syl_y(gd.X_SV, za, 7.6, 5, 10)), ("-", syl_y(gd.X_SV, za, R_AKSEL, 5, 10))))
-    k.append(kropp(G, "Nav pinjong", ("+", syl_y(gd.X_SV, za, 7, 10, 16)), ("-", syl_y(gd.X_SV, za, R_AKSEL, 10, 16))))
-    k.append(kropp(G, "Snortrommel",
-                   ("+", syl_y(gd.X_SV, za, 11, -5, -4)),  # indre flens
-                   ("+", syl_y(gd.X_SV, za, 7, -12, -5)),  # kjerne
-                   ("+", syl_y(gd.X_SV, za, 11, -13.5, -12)),  # ytre flens
-                   ("-", syl_y(gd.X_SV, za, R_AKSEL, -13.5, -4))))
+    k.append(kropp(G, "Pinjong z17", ("+", syl_y(gd.X_SV, za, 7.6, 5, 12)), ("-", syl_y(gd.X_SV, za, R_AKSEL, 5, 12))))  # tannbredde 7
+    k.append(kropp(G, "Nav pinjong", ("+", syl_y(gd.X_SV, za, 10, 12, 19.5)), ("-", syl_y(gd.X_SV, za, R_AKSEL, 12, 19.5))))  # klemnav Ø20 x 7,5 (Code/pinjong.py)
+    # Snortrommel TR-3 (største): flenser Ø24, kjerne Ø18, klemnav Ø20 ut til y = -23,5.
+    # Ytre flens' skrå innside er forenklet til en sylinder (litt for stor, på den sikre siden).
+    yt1, yt0 = gd.Y_TROMMEL[1], gd.Y_TROMMEL[0]  # -3 og -23,5
+    k.append(kropp(G, "Snortrommel TR-3",
+                   ("+", syl_y(gd.X_SV, za, gd.R_TROMMEL, yt1 - 3.5, yt1)),  # indre flens (utsparing for sveisekransen ikke modellert)
+                   ("+", syl_y(gd.X_SV, za, gd.R_TROMMEL - 3, yt1 - 9.5, yt1 - 3.5)),  # kjerne
+                   ("+", syl_y(gd.X_SV, za, gd.R_TROMMEL, yt1 - 13.0, yt1 - 9.5)),  # ytre flens
+                   ("+", syl_y(gd.X_SV, za, gd.R_NAV, yt0, yt1 - 13.0)),  # klemnav
+                   ("-", syl_y(gd.X_SV, za, R_AKSEL, yt0, yt1))))
 
     # Hjul Ø68 x 8
     for x in (gd.X_BAK, gd.X_FOR):

@@ -14,7 +14,8 @@ Kroppen:
     Hver vegg har tre lagerhull på z = 34: x = 34 (bakaksel), 70 (svinghjul), 106 (foraksel).
   * Bunnplate med åpning for svinghjul og tannhjul. Bunnplata ligger mellom veggene.
   * Frontskott og bakskott med tapper inn i innerveggene og bunnplata.
-  * Holder for Hall-sensoren ved trommelens ytre flens.
+  * Ingen sensorholder: Hall-sensoren brukes bare på teststasjonen, og klemnavet på
+    snortrommelen (Code/snortrommel.py) går ut til y = -23,5 der holderen sto.
 
 Alle tapper går sideveis inn i veggene, så en vegg kan skyves av og på langs akslene.
 Hver vegg holdes av to M3 x 12 inn i T-spor i kanten av bunnplata. Skruene sitter nederst
@@ -65,8 +66,9 @@ P = dict(
     mutter_inn=4.0,  # mutterens senter fra platekanten
     tspor_dybde=7.5,  # skruesporets dybde fra kanten (skruen rekker 6 inn)
     skruehode=5.6,  # Ø skruehode (linsehode M3)
-    # sensorholder
-    y_sensor=-17.0,  # flaten sensoren limes på (trommelens ytre flens er på y = -13,5)
+    # snortrommel med klemnav (Code/snortrommel.py), største i TR-serien
+    y_trommel=(-23.5, -3.0),
+    r_trommel=12.0,
 )
 
 
@@ -203,10 +205,6 @@ def lag_deler(p):
     bak_side = (14.0, 24.0)
     front_bunn = [(-20.0, -8.0), (8.0, 20.0)]
     bak_bunn = [(-22.0, -10.0), (16.0, 24.0)]
-    sensor_x = (60.0, 80.0)
-    sensor_z = 31.0
-    sensor_bunn = [(68.0, 72.0)]  # mellom T-sporene for veggskruene
-    ys = p["y_sensor"] - t / 2  # midt i sensorholderen
 
     deler = []
 
@@ -245,11 +243,9 @@ def lag_deler(p):
         d.kutt.append(spalte_u(xf, a, b, sp))
     for a, b in bak_bunn:
         d.kutt.append(spalte_u(xb, a, b, sp))
-    for a, b in sensor_bunn:
-        d.kutt.append(spalte_v(ys, a, b, sp))
     d.grav += tekst("BUNN (oppside)", 106, 22, 3.0)
     d.grav += pil(113, 6) + tekst("FORAN", 113, 0, 2.8)
-    d.grav += tekst("tannhjul", 52, 18.5, 2.6) + tekst("trommel", 30, -12, 2.6) + tekst("sensor", 70, -14, 2.6)
+    d.grav += tekst("tannhjul", 52, 18.5, 2.6) + tekst("trommel", 30, -12, 2.6)
     deler.append(d)
 
     # Frontskott (sett bakfra: u = y, v = z)
@@ -269,14 +265,6 @@ def lag_deler(p):
     pts += kant_med_tapper((-yi, zbt), (-yi, z_plate), [(zbt - bak_side[1], zbt - bak_side[0])], t, (-1, 0))
     d.kutt.append(pts)
     d.grav += tekst("BAK", -12, 22, 3.2) + tekst("hakk = tannhjul", -6, 16.5, 2.4)
-    deler.append(d)
-
-    # Sensorholder (sideriss: u = x, v = z). Sensoren limes med merket front mot trommelen.
-    d = Del("Sensorholder")
-    d.kutt.append(kontur(sensor_x[0], z_plate, sensor_x[1], sensor_z, r_topp=2, bunn=sensor_bunn, d=t))
-    zm = p["z_aksel"] - 7  # magnetene sitter på radius 7
-    d.grav.append(rekt(70 - 2.05, zm - 1.5, 70 + 2.05, zm + 1.5) + [(70 - 2.05, zm - 1.5)])
-    d.grav += tekst("HALL", 70, 17, 2.6)
     deler.append(d)
 
     return deler
@@ -439,8 +427,9 @@ def kontroll(p):
     ut["tannhjul over hakkbunn i bakskott (z)"] = (z_a - math.sqrt(r_tann**2 - (x_bak - xs) ** 2)) - 15.0
     ut["hakk sideveis mot tannhjul (y)"] = min(5.0 - 2.0, 13.0 - 10.0)
     ut["frontskott bak svinghjul (x)"] = p["x_front"] - (x_sv + r_sv)
-    ut["sensorholder mot ytre trommelflens (y)"] = -13.5 - p["y_sensor"]
-    ut["luft sensorflate–flens med 1,5 mm sensor"] = -13.5 - (p["y_sensor"] + 1.5)
+    ut["trommelnav mot innervegg (y)"] = p["y_inn"] + p["y_trommel"][0]
+    ut["trommelflens over bunnplata (z)"] = (z_a - p["r_trommel"]) - zpl
+    ut["trommelflens under veggtopp (z)"] = p["z_topp"] - (z_a + p["r_trommel"])
     zs = p["z_bunn"] + t / 2
     ut["skruehode mot bakhjul (sideriss)"] = math.hypot(p["x_skruer"][0] - x_bak, zs - z_a) - r_hjul - p["skruehode"] / 2
     ut["skruehode mot forhjul (sideriss)"] = math.hypot(x_for - p["x_skruer"][1], zs - z_a) - r_hjul - p["skruehode"] / 2
@@ -502,11 +491,11 @@ def forhandsvisning(p, plasser, W, H):
     a2.add_patch(Rectangle((62.4, 5), 15.2, 5, fc=blaa, alpha=.6))
     a2.add_patch(Rectangle((27, 10), 14, 6, fc=blaa, alpha=.35))
     a2.add_patch(Rectangle((63, 10), 14, 6, fc=blaa, alpha=.35))
-    a2.add_patch(Rectangle((59, -13.5), 22, 9.5, fc="#ddd", ec="k"))
-    a2.add_patch(Rectangle((60, p["y_sensor"] - t), 20, t, fc="#7a5230"))
+    yt0, yt1 = p["y_trommel"]
+    a2.add_patch(Rectangle((70 - p["r_trommel"], yt0), 2 * p["r_trommel"], yt1 - yt0, fc="#d4952f", ec="k", alpha=.7))
     a2.add_patch(Rectangle((p["x_front"], -p["y_inn"]), t, 2 * p["y_inn"], fc="#7a5230"))
     a2.add_patch(Rectangle((p["x_bak"], -p["y_inn"]), t, 2 * p["y_inn"], fc="#7a5230"))
-    a2.text(72, -22, "sensorholder", fontsize=7, ha="center")
+    a2.text(70, yt0 - 3, "snortrommel", fontsize=7, ha="center")
     a2.text(30, 20, "+y tannhjulsside", fontsize=7); a2.text(14, -26, "-y trommelside", fontsize=7)
     a2.set_xlim(-8, 148); a2.set_ylim(-46, 46); a2.set_aspect("equal")
 

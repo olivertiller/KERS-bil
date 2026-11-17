@@ -1,6 +1,6 @@
-"""Snortromler TR-1 til TR-3 for KERS-bilen, som 3MF-filer (mm) klare for slicing.
+"""Snortromler TR-0 til TR-3 for KERS-bilen, som 3MF-filer (mm) klare for slicing.
 
-    python3 Code/snortrommel.py                   # TR-1 Ø12, TR-2 Ø14, TR-3 Ø18
+    python3 Code/snortrommel.py                   # TR-0 Ø8, TR-1 Ø12, TR-2 Ø14, TR-3 Ø18
     python3 Code/snortrommel.py --kjerner 13 15   # andre kjernediametre
     python3 Code/snortrommel.py --boring 6.3      # hvis boringen blir for trang
 
@@ -29,6 +29,15 @@ Snora festes med en løkke på en krok som stikker ut fra kjernen (som en knaggk
     stilken. Undersiden skrår 45°, så den printes uten support.
 Rotasjonen under opptrekk er mot klokka sett fra navenden (snora går ut fra toppen av
 trommelen og bakover i bilen).
+
+TR-0 (Ø8, se P_TR0) er den minste kjernen boringen tillater, og skiller seg fra TR-1 til TR-3:
+  * Utsparingens 45°-tak er senket (z = 7,9 - r) og kappet flatt innenfor kjernen, ellers ville
+    den skåret gjennom kjernen.
+  * V-spor: 5 mm flat bunn, 45° flanker på begge sider. Indre flanke er parallell med taket i
+    utsparingen (0,7 mm vegg) og ender i en 1 mm rett kant Ø18 mot svinghjulet. Ytre flanke går
+    helt ut til navet, så navet ikke henger utover. Total lengde 20,4 mm.
+  * Kroken er en tapp som lener seg 25° bakover, 1,8 mm høy med runde hjørner, i stedet for
+    finger. Den slipper løkka ved ca. 42° forbi tangentpunktet i stedet for over 100°.
 """
 
 import argparse
@@ -66,6 +75,30 @@ P = dict(
     krok_hoyde=2.3,  # krokens topp over kjerneflaten (flensen er 3,0)
     krok_klaring=1.0,  # aksiell klaring fra indre flens til krokens fot
     krok_bredde=4.0,  # aksiell bredde (de nederste ca. 2,5 mm er skrådd 45°), 1 mm klaring opp
+    krok_type="finger",
+)
+
+# TR-0: kjerne Ø8, så liten som Ø6,2-boringen tillater (0,9 mm vegg). Med reglene over ville
+# 45°-taket i utsparingen skåret gjennom kjernen, og indre flens (Ø14) blitt mindre enn utsparingen
+# (Ø14,5), så delen ville falt i to. Snora legger seg uansett i flere lag (7 vindinger), så sporet
+# er V-formet: 5 mm flat bunn og 45° flanker på begge sider.
+P_TR0 = dict(
+    P,
+    d_kjerne=8.0,
+    rett_utsparing=0.65,  # 45°-taket: z = 7,9 - r, 0,3 mm over sveisen (kvart-ellipse Ø13 x 3)
+    flatt_tak=True,  # taket kappes flatt innenfor kjernen (z = 3,9, 0,9 mm overheng mot boringen)
+    t_indre=4.9,  # sporbunnen starter her; skrå flanke parallell med taket, 0,7 mm vegg (1,0 aksielt)
+    d_indre=18.0,  # egen diameter, større enn utsparingen (1,75 mm vegg som på TR-1)
+    indre_skraa=True,  # indre flens skrår 45° ned fra sporbunnen til en rett kant
+    rand_indre=1.0,  # høyden på den rette kanten mot svinghjulet
+    b_kjerne=5.0,  # flat sporbunn: tapp 3 mm + 1 mm klaring på hver side for løkka
+    t_ytre=0.0,
+    kjegle_til_nav=True,  # ytre flens fortsetter 45° helt ut til navet (ellers 3 mm overheng under navet)
+    krok_type="tapp",
+    krok_bredde=3.0,  # de nederste 1,8 mm er skrådd 45° (print), 1,2 mm rett topp
+    tapp_hoyde=1.8,  # over kjerneflaten; tapp + snor (2,8) under flensene
+    tapp_helning=25.0,  # grader bakover (mot rotasjonen). Løkka slipper ved ca. 25° + atan(0,3) = 42°
+    tapp_runding=0.4,  # radius på toppens hjørner
 )
 
 
@@ -88,10 +121,14 @@ def lengder(p, d_kjerne):
     return rk, rf, (z1, z2, z3, z4, z5)
 
 
-def utsparing(p):
-    """Plass til sveisekransen: sylinder Ø d_utsparing, deretter 45° kjegle inn til boringen."""
+def utsparing(p, rk):
+    """Plass til sveisekransen: sylinder Ø d_utsparing, deretter 45° kjegle inn til boringen.
+    Med flatt_tak kappes kjeglen der den når kjerneflaten, så den ikke skjærer gjennom kjernen."""
     ru, zr, rb = p["d_utsparing"] / 2, p["rett_utsparing"], p["boring"] / 2
-    return syl(ru, -0.01, zr) + syl(ru, zr, zr + ru - rb + 0.3, rb - 0.3)
+    u = syl(ru, -0.01, zr) + syl(ru, zr, zr + ru - rb + 0.3, rb - 0.3)
+    if p.get("flatt_tak"):
+        u = u ^ syl(ru + 1, -1, zr + ru - rk)
+    return u
 
 
 TH_KROK = math.pi  # krokens vinkelposisjon (på -x)
@@ -101,18 +138,39 @@ def krok_profil(p, r0=-1.0):
     """Krokprofilen i lokale koordinater (t, r): t langs rotasjonen under opptrekk, r utover fra
     kjerneflaten. Stilken er sentrert på t = 0, fingeren peker mot -t. r0 er fotens radius."""
     s, L, g, h = p["krok_stilk"] / 2, p["krok_finger"], p["krok_gap"], p["krok_hoyde"]
+    if p["krok_type"] == "tapp":
+        return tapp_profil(p, r0)
     return [(-s, r0), (s, r0), (s, h), (-s - L, h), (-s - L, g), (-s, g)]
+
+
+def tapp_profil(p, r0):
+    """Rett tapp som lener seg tapp_helning bakover (mot -t). Løkka ligger ved foten på -t-siden.
+    Ved tangentielt trekk holder overhenget den nede; når snora etter avviklingen peker mer enn
+    helningen + friksjonsvinkelen bakover, glir den opp langs tappen og av."""
+    s, h = p["krok_stilk"] / 2, p["tapp_hoyde"]
+    k = math.tan(math.radians(p["tapp_helning"]))
+    return [(-s - r0 * k, r0), (s - r0 * k, r0), (s - h * k, h), (-s - h * k, h)]
+
+
+def krok_fot(p, rk):
+    """Fotens radius under kjerneflaten: 1 mm, men minst 0,3 mm fra boringen (TR-0 har 0,9 mm vegg)."""
+    return max(-1.0, -(rk - p["boring"] / 2 - 0.3))
 
 
 def krok(p, rk, z1):
     c, si = math.cos(TH_KROK), math.sin(TH_KROK)
     er, et = (c, si), (-si, c)  # radiell og tangentiell (+theta) enhetsvektor
-    pol = [((rk + r) * er[0] + t * et[0], (rk + r) * er[1] + t * et[1]) for t, r in krok_profil(p)]
+    pol = [((rk + r) * er[0] + t * et[0], (rk + r) * er[1] + t * et[1])
+           for t, r in krok_profil(p, krok_fot(p, rk))]
     if sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(pol, pol[1:] + pol[:1])) < 0:
         pol.reverse()
     zs = z1 + p["krok_klaring"]
     ze = zs + p["krok_bredde"]
-    k = mf.Manifold.extrude(mf.CrossSection([pol]), ze - zs).translate([0, 0, zs])
+    cs = mf.CrossSection([pol])
+    if p["krok_type"] == "tapp":  # runde hjørner på toppen (foten ligger inne i kjernen)
+        rr = p["tapp_runding"]
+        cs = cs.offset(-rr, mf.JoinType.Round, circular_segments=48).offset(rr, mf.JoinType.Round, circular_segments=48)
+    k = mf.Manifold.extrude(cs, ze - zs).translate([0, 0, zs])
     # 45° skrå underside: kroken vokser ut fra kjernen, så ingen del av den henger fritt
     return k ^ syl(rk, zs, ze, rk + (ze - zs))
 
@@ -141,8 +199,23 @@ def trommel(p, d_kjerne):
     rb = p["boring"] / 2
 
     # Rotasjonsdelen: indre flens, kjerne, skrå + rett ytre flens, nav
-    m = syl(rf, 0, z1) + syl(rk, z1, z2) + syl(rk, z2, z3, rf) + syl(rf, z3, z4) + syl(p["d_nav"] / 2, z4, z5)
-    m = m - syl(rb, -1, z5 + 1) - utsparing(p)
+    ri, rn = p.get("d_indre", 2 * rf) / 2, p["d_nav"] / 2
+    if p.get("indre_skraa"):  # rett kant mot svinghjulet, så 45° inn til sporbunnen
+        h = p["rand_indre"]
+        m = syl(ri, 0, h) + syl(rk + z1 - h, h, z1, rk)
+    else:
+        m = syl(ri, 0, z1)
+    m = m + syl(rk, z1, z2)
+    if p.get("kjegle_til_nav"):
+        # 45° fra kjernen helt ut til navets diameter. Navets nederste del blir en kjegle, men
+        # sete og mutterlomme (fra z4 + 0,45) ligger innenfor kjeglen der det betyr noe.
+        m = m + syl(rk, z2, z2 + rn - rk, rn) + syl(rn, z2 + rn - rk, z5)
+    else:
+        m = m + syl(rk, z2, z3, rf)
+        if z4 > z3:
+            m = m + syl(rf, z3, z4)
+        m = m + syl(rn, z4, z5)
+    m = m - syl(rb, -1, z5 + 1) - utsparing(p, rk)
 
     m = m + krok(p, rk, z1)
 
@@ -192,7 +265,7 @@ def nokkeltall(p, d_kjerne, m):
     }
 
 
-def tegn(p, tromler, sti):
+def tegn(tromler, sti):
     import matplotlib
 
     matplotlib.use("Agg")
@@ -200,7 +273,7 @@ def tegn(p, tromler, sti):
     from matplotlib.patches import Polygon
 
     fig, akser = plt.subplots(2, len(tromler), figsize=(4.2 * len(tromler), 8.4))
-    for j, (navn, d, m) in enumerate(tromler):
+    for j, (navn, d, m, p) in enumerate(tromler):
         rk, rf, zs = lengder(p, d)
         # Snitt langs aksen i planet y = 0: går gjennom kroken (-x) og navet mellom skruene
         a = akser[0, j]
@@ -209,7 +282,7 @@ def tegn(p, tromler, sti):
             a.add_patch(Polygon(np.asarray(poly) * [1, -1], fc="#d4952f", ec="k", lw=0.6))
         a.set_title(f"{navn}: snitt langs aksen (y = 0)")
         a.set_xlabel("x [mm] (kroken på -x)"); a.set_ylabel("z [mm] (0 = mot svinghjulet)")
-        a.set_xlim(-12.5, 12.5); a.set_ylim(-1, zs[-1] + 1); a.set_aspect("equal")
+        a.set_xlim(-12.5, 12.5); a.set_ylim(-1, 22); a.set_aspect("equal")
         # Sveisekransen Ø13 x 3 mm, tegnet som en konveks kvart-ellipse (verste tilfelle)
         rr = np.linspace(3.0, 6.5, 40)
         zk = 3.0 * np.sqrt(np.clip(1 - ((rr - 3.0) / 3.5) ** 2, 0, 1))
@@ -223,6 +296,7 @@ def tegn(p, tromler, sti):
             for poly in m.slice(z).to_polygons():
                 a.add_patch(Polygon(np.asarray(poly), fc=farge, ec="k", lw=0.6, alpha=0.85))
         th = np.linspace(math.pi * 0.25, math.pi * 0.75, 30)
+        rf = max(rf, 9.0)  # pila over navet også på TR-0 (flens Ø14)
         a.plot(1.15 * rf * np.cos(th), 1.15 * rf * np.sin(th), color="#b5322a", lw=1)
         a.annotate("", xy=(1.15 * rf * math.cos(th[-1]), 1.15 * rf * math.sin(th[-1])),
                    xytext=(1.15 * rf * math.cos(th[-3]), 1.15 * rf * math.sin(th[-3])),
@@ -295,23 +369,71 @@ def tegn_krok(p, d_kjerne, sti):
     plt.close(fig)
 
 
+def tegn_tapp(p, d_kjerne, sti):
+    """Detalj av TR-0-tappen med løkka på, sett langs aksen (kjerneflaten rettet ut)."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Polygon
+
+    rk, rf, _ = lengder(p, d_kjerne)
+    d_snor, rod, gul = 1.0, "#b5322a", "#d4952f"
+    cs = mf.CrossSection([tapp_profil(p, -0.6)])
+    rr = p["tapp_runding"]
+    cs = cs.offset(-rr, mf.JoinType.Round, circular_segments=48).offset(rr, mf.JoinType.Round, circular_segments=48)
+    fig, a = plt.subplots(figsize=(6.5, 4.2))
+    a.fill_between(np.linspace(-6, 8, 50), -2.5, 0, color="#f0d9a8", ec="k", lw=0.6)
+    for poly in cs.to_polygons():
+        a.add_patch(Polygon(np.asarray(poly), fc=gul, ec="k", lw=0.8))
+    a.axhline(p["hoyde_flens"], color="0.5", ls="--", lw=0.7)
+    a.text(7.8, p["hoyde_flens"] + 0.1, "flenstopp (ytre flens fortsetter til navet)", ha="right", va="bottom",
+           fontsize=8, color="0.4")
+    k = math.tan(math.radians(p["tapp_helning"]))
+    s = p["krok_stilk"] / 2
+    xs = -s - (d_snor / 2) * k  # tappens bakside i høyde med snorsenteret
+    a.add_patch(plt.Circle((xs - d_snor / 2 / math.cos(math.radians(p["tapp_helning"])), d_snor / 2),
+                           d_snor / 2, fc=rod, ec="k", lw=0.5))
+    a.plot([s, 7.5], [d_snor / 2] * 2, color=rod, lw=3, solid_capstyle="butt")
+    a.annotate("", xy=(7.5, 1.3), xytext=(4.5, 1.3), arrowprops=dict(arrowstyle="->", color=rod))
+    a.text(7.8, 1.6, "trekk under opptrekk:\nløkka holdes under overhenget", ha="right", va="bottom", fontsize=8,
+           color=rod)
+    vinkel = p["tapp_helning"] + math.degrees(math.atan(0.3))
+    a.text(-5.8, 3.9, f"helning {p['tapp_helning']:g}° bakover\nløkka glir av når snora peker\n"
+           f"mer enn ca. {vinkel:.0f}° bakover (μ = 0,3)", fontsize=8, va="center")
+    a.text(-5.8, -1.4, f"kjerne Ø{d_kjerne:g}", fontsize=8)
+    a.set_title("TR-0: tapp sett langs aksen (kjerneflaten rettet ut)")
+    a.set_xlabel("langs omkretsen [mm]  (+ = rotasjon under opptrekk)"); a.set_ylabel("radielt [mm]")
+    a.set_xlim(-6, 8); a.set_ylim(-2.5, 5); a.set_aspect("equal")
+    fig.tight_layout()
+    fig.savefig(sti, dpi=160)
+    plt.close(fig)
+
+
+def lag(navn, p, d, tromler):
+    m = trommel(p, d)
+    assert m.status() == mf.Error.NoError and m.genus() >= 0, navn
+    assert len(m.decompose()) == 1, f"{navn} henger ikke sammen"
+    skriv_3mf(m, UT / f"{navn}_kjerne{d:g}.3mf", f"Snortrommel {navn} kjerne Ø{d:g}")
+    tromler.append((navn, d, m, p))
+    print(navn, {k: (round(v, 2) if isinstance(v, float) else v) for k, v in nokkeltall(p, d, m).items()})
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--kjerner", type=float, nargs="+", default=[12.0, 14.0, 18.0], help="kjernediametre [mm]")
     ap.add_argument("--boring", type=float, default=P["boring"])
     a = ap.parse_args()
     p = dict(P, boring=a.boring)
+    p0 = dict(P_TR0, boring=a.boring)
     UT.mkdir(parents=True, exist_ok=True)
     tromler = []
+    lag("TR-0", p0, p0["d_kjerne"], tromler)
     for i, d in enumerate(a.kjerner, 1):
-        navn = f"TR-{i}"
-        m = trommel(p, d)
-        assert m.status() == mf.Error.NoError and m.genus() >= 0, navn
-        skriv_3mf(m, UT / f"{navn}_kjerne{d:g}.3mf", f"Snortrommel {navn} kjerne Ø{d:g}")
-        tromler.append((navn, d, m))
-        print(navn, {k: (round(v, 2) if isinstance(v, float) else v) for k, v in nokkeltall(p, d, m).items()})
-    tegn(p, tromler, UT / "snortrommel_forhandsvisning.png")
-    tegn_krok(p, tromler[0][1], UT / "snortrommel_krok.png")
+        lag(f"TR-{i}", p, d, tromler)
+    tegn(tromler, UT / "snortrommel_forhandsvisning.png")
+    tegn_krok(p, a.kjerner[0], UT / "snortrommel_krok.png")
+    tegn_tapp(p0, p0["d_kjerne"], UT / "snortrommel_tapp_TR-0.png")
     print("Skrevet til", UT)
 
 
