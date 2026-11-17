@@ -1,0 +1,270 @@
+{
+  "revisjon": "C",
+  "enhet": "mm",
+  "modeller": [
+    {
+      "fil": "KERS-RA-1_revC.stl",
+      "kilde": "Bygg/Ramme v1.stl",
+      "sha256": "3690ef5df665d95934edbe825697f60ba359593eb1791ca9b162504aeb4a362d",
+      "utstrekning_mm": [
+        123.65033721923828,
+        65.52400207519531,
+        43.22570037841797
+      ],
+      "volum_mm3": 35798.68314562345
+    },
+    {
+      "fil": "KERS-LL-1_revC.stl",
+      "kilde": "Bygg/Lagerlokk -y.stl",
+      "sha256": "33b8e297d26f0b6dde66659d942a089ec21a3094047a56696b724c0d97b7a676",
+      "utstrekning_mm": [
+        32.0,
+        7.0,
+        7.0
+      ],
+      "volum_mm3": 1200.717655599292
+    },
+    {
+      "fil": "KERS-TR-0_revC.stl",
+      "kilde": "Code/snortrommel.py: P_TR0, kjerne 8",
+      "sha256": "71bfd682956f0d632dacacf7b105e58aac9947e919af5f8448b2d2adcf438db0",
+      "utstrekning_mm": [
+        20.0,
+        19.971912384033203,
+        20.399999618530273
+      ],
+      "volum_mm3": 1831.4613202553498
+    },
+    {
+      "fil": "KERS-TR-1_revC.stl",
+      "kilde": "Code/snortrommel.py: P, kjerne 12",
+      "sha256": "c2fbe6ceb4a9076d24275de0afce6bb7979b0a88f4dc20a7cddfd6fd9c096e57",
+      "utstrekning_mm": [
+        20.0,
+        19.971912384033203,
+        20.5
+      ],
+      "volum_mm3": 2962.3551789109397
+    },
+    {
+      "fil": "KERS-PI-1_revC.stl",
+      "kilde": "Code/pinjong.py: P",
+      "sha256": "e30a316f931827986c065fb5c1db12db54311b76f8703609b00e67aa4c0be67c",
+      "utstrekning_mm": [
+        20.0,
+        19.971912384033203,
+        14.5
+      ],
+      "volum_mm3": 2232.8094152470326
+    },
+    {
+      "fil": "KERS-TA-1_revC.stl",
+      "kilde": "Bygg/Fusion_eksport/Spur_Gear_73_teeth.stl",
+      "sha256": "72f2a857796b4c6a2f397cb648e95a4488bea4fd1283e116ffb190110447d629",
+      "utstrekning_mm": [
+        59.983219146728516,
+        59.99584197998047,
+        11.0
+      ],
+      "volum_mm3": 13892.576315777633
+    },
+    {
+      "fil": "KERS-MH-1_revC.stl",
+      "kilde": "Bygg/Fusion_eksport/Magnetholder.stl; rigid transformasjon",
+      "sha256": "e9708d2428c0f8770b52bc7ba713708d341d85b8bc88a1c06c51cc8e537b82e1",
+      "utstrekning_mm": [
+        29.9932861328125,
+        29.99664306640625,
+        3.0
+      ],
+      "volum_mm3": 1939.343721637303
+    },
+    {
+      "fil": "KERS-AK-1_revC.stl",
+      "kilde": "Bygg/Fusion_eksport/Drivaksling.stl; rigid transformasjon",
+      "sha256": "c6de67421c1299f850e517fa493fbd1c087ac32c9f99b977e267aec7e08c2116",
+      "utstrekning_mm": [
+        6.0,
+        6.0,
+        85.0
+      ],
+      "volum_mm3": 2124.766969566521
+    },
+    {
+      "fil": "KERS-FE-1_revC.stl",
+      "kilde": "Code/hjul.py: P, med dekk",
+      "sha256": "04db1bf31a52938369fc69f2bd89a32f44b52e900f98d8b5f9cb3b489b059e8e",
+      "utstrekning_mm": [
+        66.5999984741211,
+        66.5999984741211,
+        9.0
+      ],
+      "volum_mm3": 5432.798993091896
+    },
+    {
+      "fil": "KERS-DE-1_revC.stl",
+      "kilde": "Code/hjul.py: P, ustrekt dekk",
+      "sha256": "f4f81b672fc77b5a292e88c957ac7c59f705ea87b8373744ce2a8f25e478f6ab",
+      "utstrekning_mm": [
+        67.4000015258789,
+        67.4000015258789,
+        5.800000190734863
+      ],
+      "volum_mm3": 1766.970192117871
+    },
+    {
+      "fil": "KERS-AH-1_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=3",
+      "sha256": "ecb13acbb320cb97b4791131dcff1e1ff9ef2ba34d706c98db0d31e5fcae7380",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        3.0
+      ],
+      "volum_mm3": 149.72261086381727
+    },
+    {
+      "fil": "KERS-AH-1_L1.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=1.0",
+      "sha256": "3ee30790889354555d48d3a9e78becfa2b1972f8c9feb725b9ce49fdfe70f031",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        1.0
+      ],
+      "volum_mm3": 46.530021256789745
+    },
+    {
+      "fil": "KERS-AH-1_L1.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=1.5",
+      "sha256": "0d6bc94b9069db25bd0c6417a055d5220be320ffb7edd7f93709a673afa4fd1a",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        1.5
+      ],
+      "volum_mm3": 69.79503188518461
+    },
+    {
+      "fil": "KERS-AH-1_L2.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=2.0",
+      "sha256": "ad46fe3eb96539996450611e2585dfecf510d8374a9c7211279cead0075d8884",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        2.0
+      ],
+      "volum_mm3": 93.06004251357949
+    },
+    {
+      "fil": "KERS-AH-1_L2.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=2.5",
+      "sha256": "f7af6ad0a941cc57ffcc5eed2fc081c13caba169a1f28324c291f021de57333b",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        2.5
+      ],
+      "volum_mm3": 118.01381099088235
+    },
+    {
+      "fil": "KERS-AH-1_L3.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=3.0",
+      "sha256": "ecb13acbb320cb97b4791131dcff1e1ff9ef2ba34d706c98db0d31e5fcae7380",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        3.0
+      ],
+      "volum_mm3": 149.72261086381727
+    },
+    {
+      "fil": "KERS-AH-1_L3.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=3.5",
+      "sha256": "7236b692443559a0faad5f17a23be77678bb2c1cbb4711b709c39cbab4568b1d",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        3.5
+      ],
+      "volum_mm3": 181.43141073675216
+    },
+    {
+      "fil": "KERS-AH-1_L4.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=4.0",
+      "sha256": "99b1973bfd45c4c8e1893bfbffeff9eccd398eeec3b18085cf0d1099edc3d031",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        4.0
+      ],
+      "volum_mm3": 213.14021060968702
+    },
+    {
+      "fil": "KERS-AH-1_L4.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=4.5",
+      "sha256": "65e6fd5695db474060429926a7d1049f132690b3eaeabe558493b27ff7b7be11",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        4.5
+      ],
+      "volum_mm3": 244.84901048262194
+    },
+    {
+      "fil": "KERS-AH-1_L5.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=5.0",
+      "sha256": "aafffb962a2c85fb81438a9ae23b097c71f2afd5d8ef97762805c2176edac5b3",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        5.0
+      ],
+      "volum_mm3": 276.5578103555568
+    },
+    {
+      "fil": "KERS-AH-1_L5.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=5.5",
+      "sha256": "7edb10bb4f2f2d6f523cddbd9ff4d35f097f338505ae0c0a23b02b9565cc0889",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        5.5
+      ],
+      "volum_mm3": 308.2666102284917
+    },
+    {
+      "fil": "KERS-AH-1_L6.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=6.0",
+      "sha256": "f7b22fb11308c2d89fc4b04f8ce4ebceec2df716db1047e1412b6fa4297981a0",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        6.0
+      ],
+      "volum_mm3": 339.9754101014266
+    },
+    {
+      "fil": "KERS-AH-1_L6.5_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=6.5",
+      "sha256": "3bf63d4a66149c53fe9ce891159c2dcf657452c5349a13fbcee85680dce92eb5",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        6.5
+      ],
+      "volum_mm3": 371.68420997436147
+    },
+    {
+      "fil": "KERS-AH-1_L7.0_revC.stl",
+      "kilde": "Code/avstandshylse.py: P, L=7.0",
+      "sha256": "86151458d5efa4478a2d611ee849bd3fbaa41f57ff5a0901331d8e0135e01bd7",
+      "utstrekning_mm": [
+        10.872810363769531,
+        12.0,
+        7.0
+      ],
+      "volum_mm3": 403.39300984729636
+    }
+  ]
+}

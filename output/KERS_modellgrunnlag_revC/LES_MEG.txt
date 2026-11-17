@@ -1,0 +1,18 @@
+KERS - modellgrunnlag til tegningsrevisjon C
+
+Alle STL-filer er i millimeter. Rev. C gjelder dokumentasjonen; delgeometrien er bevart.
+Modellene skal brukes sammen med PDF-tegningene i mappen Tegninger.
+F1/F2 er printkompenserte CAD-mål. Kontroller passform etter arkenes funksjonskrav.
+Toleranser er krav, ikke målte resultater. Prøvebiter må valideres ved reproduksjon.
+Filer er ikke automatisk orientert på printplaten; følg printretning på tegningen.
+Ramme og lagerlokk har beholdt koordinatsystemet fra Fusion.
+AH-1 uten L-suffiks er samme modell som AH-1_L3.0. Kragen er min(0,8; L/3).
+TA-1: den eksporterte Fusion-modellen definerer tannflanke, rot og tannslakk.
+Ramme, tromler, tannhjul, felg, dekk og klikkhylser er spesielt tilpasset FDM.
+Det følger ingen STEP-fil med; materialvalg og verktøytilkomst må vurderes ved maskinering.
+
+Bekreftede produksjonsdata: 2 vegger; ramme 15 % fyll; hjulaksler 50 % fyll.
+Dekk: Bambu Lab TPU 95A. M3-settskrue: 5 mm.
+Laghøyde og fyll for øvrige deler er ikke registrert.
+Hjulnav: aksial fastholding må kontrolleres; lim/låsing er ikke dokumentert.
+SHA-256 og opprinnelse for hver modell står i manifest.json.

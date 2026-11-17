@@ -398,7 +398,7 @@ class Ark:
 
     # --- tittelfelt og stykkliste ---
     def tittelfelt(self, tittel, nr, materiale, masse, malestokk, type_="Arbeidstegning", dato="2026-11-17",
-                   rev="B"):
+                   rev="C"):
         x0, y0, w = self.B - 10 - 180, 10, 180
         self.tf = (x0, y0 + 32)
         for y in (7, 14, 21):
@@ -408,20 +408,26 @@ class Ark:
         for x in (60, 120):
             self.linje([[x0 + x, y0], [x0 + x, y0 + 21]], lw=0.35)
         self.linje([[x0 + 150, y0], [x0 + 150, y0 + 7]], lw=0.35)
+        self.linje([[x0 + 100, y0], [x0 + 100, y0 + 7]], lw=0.35)
         felter = [
             (0, 0, "Tegnet", "Oliver Kvaløy Tiller"), (60, 0, "Dato", dato), (120, 0, "Ark", "1 av 1"),
-            (150, 0, "Rev.", rev),
-            (0, 7, "Materiale", materiale), (60, 7, "Masse", masse), (120, 7, "Målestokk", malestokk),
-            (0, 14, "Generelle toleranser", "ISO 2768-m"), (60, 14, "Dokumenttype", type_),
+            (100, 0, "Format", "A4"), (150, 0, "Rev.", rev),
+            (0, 7, "Materiale", materiale), (60, 7, "Masse", masse), (120, 7, "Målestokk", malestokk.split(" (")[0]),
+            (0, 14, "Generelle toleranser", "ISO 2768-m; F-mål unntatt"), (60, 14, "Dokumenttype", type_),
             (120, 14, "Tegningsnr.", nr),
         ]
         for x, y, led, verdi in felter:
             self.tekst(x0 + x + 1.5, y0 + y + 4.8, led, ha="left", h=1.8, color="0.35")
             self.tekst(x0 + x + 1.5, y0 + y + 1.4, verdi, ha="left", h=2.5)
-        self.tekst(x0 + 1.5, y0 + 28.6, "NTNU · MAST1101 · Svinghjulsdrevet lekebil · mål i mm", ha="left", h=1.8,
+        self.tekst(x0 + 1.5, y0 + 28.6, "NTNU · MAST1101 · mål i mm · A4: utskrift i 100 % / faktisk størrelse", ha="left", h=1.8,
                    color="0.35")
         self.tekst(x0 + 1.5, y0 + 22.5, tittel, ha="left", h=H_TITTEL, weight="bold")
         self.projeksjonssymbol(x0 + w - 16, y0 + 26.5)
+        if type_ != "Sammenstillingstegning":
+            self.tekst(24, self.H - 18, "Modell: " + nr + "_revC.stl", ha="left", h=2.1)
+            if nr in {"KERS-RA-1", "KERS-TR-0", "KERS-TR-1", "KERS-PI-1",
+                      "KERS-TA-1", "KERS-FE-1", "KERS-DE-1", "KERS-AH-1"}:
+                self.tekst(24, self.H - 22, "Additiv tilvirkning; tegning som tilleggsopplysning.", ha="left", h=2.1)
 
     def stykkliste(self, rader, bredder=(10, 12, 58, 50, 50), h=6.0):
         """Stykkliste rett over tittelfeltet, nederste rad er overskriften (ISO 7573).
@@ -436,8 +442,8 @@ class Ark:
             self.linje([[x0, y + h], [x0 + w, y + h]], lw=0.35 if i else 0.7)
             x = x0
             for j, (b, s) in enumerate(zip(bredder, rad)):
-                self.tekst(x + (b / 2 if j < 2 else 1.5), y + 1.9, str(s), ha="center" if j < 2 else "left",
-                           h=2.2 if i else 2.0, color="k" if i else "0.35")
+                self.tekst(x + (b / 2 if j < 2 else 1.5), y + h / 2, str(s), ha="center" if j < 2 else "left",
+                           va="center", h=2.2 if i else 2.0, color="k" if i else "0.35")
                 x += b
         yt = y0 + len(alle) * h
         x = x0
@@ -470,7 +476,7 @@ class Ark:
                 x += b
 
     def projeksjonssymbol(self, x, y):
-        """Førstevinkelprojeksjon (ISO 128 metode E): kjegle til venstre, endebilde til høyre."""
+        """Førstevinkelprojeksjon (ISO 5456-2): kjegle til venstre, endebilde til høyre."""
         h = 3.0
         self.linje([[x - 10, y - h / 2], [x - 10, y + h / 2], [x - 4, y + h], [x - 4, y - h], [x - 10, y - h / 2]],
                    lw=0.35)

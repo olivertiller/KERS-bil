@@ -114,7 +114,13 @@ Generelle tiltak som ikke knytter seg til én enkelt hendelse:
 \clearpage
 \subsection{Arbeidstegninger og sammenstillingstegninger}
 \label{app:tegninger}
-Tegningene er A4 og står på de neste sidene i full størrelse, så målestokken i tittelfeltet gjelder når rapporten skrives ut i 100~\%. Alle er tegnet i førstevinkelprojeksjon (ISO 128 metode E) fra de samme 3D-modellene som er printet, enten fra Python-skriptene eller eksportert fra Fusion. Tegningsnummeret er det samme som i stykklisten på KERS-SM-1.
+Tegningene har A4-format. Målestokken gjelder ved utskrift i 100~\% / faktisk størrelse, uten «tilpass til side». Måltallene er i millimeter og angir delens størrelse uavhengig av målestokken. Hovedmålestokken står i tittelfeltet; forstørrede detaljer har egen målestokk. Førstevinkelprojeksjon følger ISO~5456-2.
+
+\textbf{Deler for additiv tilvirkning.} Delene merket * i tegningslisten er spesielt tilpasset 3D-printing: den generative rammen, tromlene med integrert snorfeste og klemnav, tannhjulene, felgen, TPU-dekket og klikkhylsen. Arbeidstegningene av disse er vedlagt som illustrasjon og tilleggsopplysning om form, funksjonsmål og montering. De er ikke selvstendige maskineringstegninger. Ved fremstilling brukes den tilhørende 3D-modellen sammen med tegningen. Modellene er samlet i det separate digitale vedlegget \texttt{KERS\_modellgrunnlag\_revC.zip}; filnavn og SHA-256-kontrollsummer står i vedleggets manifest. Rammen er gjengitt med sin generative friform, uten å forenkle den til en maskinerbar konstruksjon.
+
+\textbf{Mål og passform.} Mål merket F1/F2 er printkompenserte CAD-mål som kontrolleres etter funksjonskravene på det enkelte arket, og omfattes ikke av den generelle toleransen. Prøveringer og prøvebiter brukes til å tilpasse passformen til skriver og materiale. Øvrige mål følger ISO~2768-m når ikke annet er angitt; mål i parentes er referansemål. Individuelle toleranser er kontrollkrav, ikke dokumentasjon på utførte målinger. Fjern support og grader på kontaktflater uten å endre funksjonsgeometrien.
+
+\textbf{Produksjonsopplysninger.} Delene er printet med to vegger. Rammen har 15~\% fyll, og hjulakslene 50~\%. Dekkene er Bambu Lab TPU 95A. Laghøyde og fyll i de øvrige delene er ikke registrert her. Ved reproduksjon må disse innstillingene velges og passform kontrolleres med prøvebiter. M3-settskruen i tannhjulnavet er 5~mm lang.
 
 \begin{table}[H]
     \centering
@@ -128,17 +134,17 @@ Tegningene er A4 og står på de neste sidene i full størrelse, så målestokke
         \hline
         KERS-SM-1 & Sammenstilling av bilen med stykkliste & 1:1 & \pageref{tegn:SM-1} \\
         KERS-SM-2 & Svinghjulsaksel, montert enhet & 2:1 & \pageref{tegn:SM-2} \\
-        KERS-RA-1 & Ramme & 1:1 & \pageref{tegn:RA-1} \\
+        KERS-RA-1 & Ramme\textsuperscript{*} & 1:1 & \pageref{tegn:RA-1} \\
         KERS-LL-1 & Lagerlokk & 2:1 & \pageref{tegn:LL-1} \\
-        KERS-TR-0 & Snortrommel TR-0, kjerne Ø8 (i den ferdige bilen) & 2:1 & \pageref{tegn:TR-0} \\
-        KERS-TR-1 & Snortrommel TR-1, kjerne Ø12 & 2:1 & \pageref{tegn:TR-1} \\
-        KERS-PI-1 & Pinjong z17 & 2:1 & \pageref{tegn:PI-1} \\
-        KERS-TA-1 & Tannhjul z73 & 1:1 & \pageref{tegn:TA-1} \\
+        KERS-TR-0 & Snortrommel TR-0, kjerne Ø8 (brukt)\textsuperscript{*} & 2:1 & \pageref{tegn:TR-0} \\
+        KERS-TR-1 & Snortrommel TR-1, kjerne Ø12\textsuperscript{*} & 2:1 & \pageref{tegn:TR-1} \\
+        KERS-PI-1 & Pinjong z17\textsuperscript{*} & 2:1 & \pageref{tegn:PI-1} \\
+        KERS-TA-1 & Tannhjul z73\textsuperscript{*} & 1:1 & \pageref{tegn:TA-1} \\
         KERS-MH-1 & Magnetholder & 2:1 & \pageref{tegn:MH-1} \\
         KERS-AK-1 & Hjulaksel & 2:1 & \pageref{tegn:AK-1} \\
-        KERS-FE-1 & Felg Ø65 for TPU-dekk & 1:1 & \pageref{tegn:FE-1} \\
-        KERS-DE-1 & Dekk & 1:1 & \pageref{tegn:DE-1} \\
-        KERS-AH-1 & Avstandshylse & 5:1 & \pageref{tegn:AH-1} \\
+        KERS-FE-1 & Felg Ø65 for TPU-dekk\textsuperscript{*} & 1:1 & \pageref{tegn:FE-1} \\
+        KERS-DE-1 & Dekk\textsuperscript{*} & 1:1 & \pageref{tegn:DE-1} \\
+        KERS-AH-1 & Avstandshylse\textsuperscript{*} & 5:1 & \pageref{tegn:AH-1} \\
         \hline
     \end{tabular}
 \end{table}

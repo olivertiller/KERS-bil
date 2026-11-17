@@ -11,7 +11,11 @@ rapporten i 100 % (\\includepdf), ellers stemmer ikke målestokken.
 """
 
 import math
+import hashlib
+import json
+import struct
 import sys
+import zipfile
 from pathlib import Path
 
 import manifold3d as mf
@@ -32,7 +36,24 @@ X, Y, Z = np.eye(3)
 
 
 def masse(m, rho=T.RHO_PLA):
-    return f"{tall(round(m.volume() * rho, 1))} g"
+    return f"{tall(round(m.volume() * rho, 1))} g (massiv CAD)"
+
+
+def tannsnitt(ark, punkt, bredde, rot, topp):
+    """ISO 2203: de to motstående tennene i aksialsnittet skraveres ikke.
+
+    punkt(aksialposisjon, radius) gir arkpunktet. Kontur og delelinje beholdes.
+    """
+    for s in (-1, 1):
+        hj = np.array([punkt(0, s * rot), punkt(bredde, s * rot),
+                       punkt(bredde, s * topp), punkt(0, s * topp)])
+        ark.flate([hj], skravur=None, z=4.1)
+        ark.linje(np.vstack([hj, hj[0]]), lw=tv.TYKK, z=4.2)
+
+
+def kontrollnoter(ark, x, y, linjer):
+    """Funksjonskrav for F-merkede, printkompenserte CAD-mål."""
+    ark.merknader(x, y, linjer, h=2.3)
 
 
 # ==========================================================================================
@@ -69,7 +90,7 @@ def tegn_trommel(variant):
     # diametre
     ark.maal_v(a(0, -ri), a(0, ri), a(-9, 0)[0], "Ø" + tall(2 * ri))
     ark.maal_v(a(0, -ru), a(0, ru), a(-4.5, 0)[0], "Ø" + tall(2 * ru))
-    ark.maal_v(a(z5, -rb), a(z5, rb), a(z5 + 3.5, 0)[0], "Ø" + tall(2 * rb))
+    ark.maal_v(a(z5, -rb), a(z5, rb), a(z5 + 3.5, 0)[0], "Ø" + tall(2 * rb) + " F1")
     ark.maal_v(a(z5, -rn), a(z5, rn), a(z5 + 8, 0)[0], "Ø" + tall(2 * rn))
     # utsparingen: rett del og (TR-0) flatt tak
     zr = p["rett_utsparing"]
@@ -98,7 +119,7 @@ def tegn_trommel(variant):
     ark.snittlinje(e0 + [0, k * rn + 2], [1, 0], "A", [0, 1])
     ark.snittlinje(e0 - [0, k * rn + 2], [1, 0], "A", [0, -1])
     ark.henvisning(E_.p(0.25, -(rb + 4.5), z5), e0 + [k * rn + 2, k * rn + 4], f"2 × slisse {tall(p['slisse'])}")
-    ark.maal_dia(e0, k * rb, -40, "Ø" + tall(2 * rb), ute=13)
+    ark.maal_dia(e0, k * rb, -40, "(Ø" + tall(2 * rb) + ")", ute=13)
 
     # --- Riss ovenfra (sett fra +x), under hovedrisset: hodesete og mutterlomme
     O = Riss(ark, m, Z, -Y, (128, 76), k)
@@ -108,7 +129,7 @@ def tegn_trommel(variant):
         ark.senterlinje(o(zm, ys) - [0, 5], o(zm, ys) + [0, 5])
     ark.maal_h(o(zm, -e), o(z5, -rn), o(0, -rn)[1] + 13, tall(z5 - zm))
     ark.maal_v(o(zm, e), o(zm, -e), o(z5 + 6, 0)[0], tall(2 * e))
-    ark.henvisning(O.p(0, e + 2.2, zm + 1.3), o(z5 + 13, e + 5), f"Mutterlomme {tall(p['mutter'])}")
+    ark.henvisning(O.p(0, e + 2.2, zm + 1.3), o(z5 + 13, e + 5), f"Mutter NV {tall(p['mutter'])}")
     ark.henvisning(O.p(0, -e - 1.6, zm + 2.6), o(z5 + 13, -e - 5), f"Hodesete Ø{tall(p['d_hode'])}")
     # snittlinjer B-B og C-C
     zb = 7.5 if not tr0 else ze - 0.6
@@ -170,11 +191,12 @@ def tegn_trommel(variant):
         ark.maal_v(d(-s - L, 0), d(-s - L, g), d(-s - L - 1.3, 0)[0], tall(g))
         ark.henvisning(d(-s - L * 0.5, g * 0.45), cE + [-12, -17], "Løkka", ha="right", prikk=True)
 
-    merk = ["Printes stående med flensen mot svinghjulet ned,", "uten support.",
+    merk = ["Printes med flensen mot svinghjulet ned,", "2 vegger, uten support.",
             "Klemnavet strammes med 2 × M3 × 12 (ISO 7045)", "og mutter M3 (ISO 4032).",
-            "Løkka på snora legges rundt kroken og glir av", "av seg selv når snora er trukket helt ut."]
+            "F1: CAD-boring; skal gli på Ø6 før klemming.",
+            "Etter klemming: ingen sluring på akselen."]
     if not tr0:
-        merk += ["TR-2 og TR-3: som TR-1 med kjerne Ø14 og Ø18,", "flens Ø20 og Ø24."]
+        merk += ["TR-2/TR-3: egne modeller, ikke målsatt her."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     tittel = "Snortrommel TR-0, kjerne Ø8" if tr0 else "Snortrommel TR-1, kjerne Ø12"
     ark.tittelfelt(tittel, f"KERS-{variant}", "PLA", masse(m), "2:1 (E 5:1)")
@@ -239,7 +261,7 @@ def tegn_felg():
     ark.maal_h(d(b - kant, r_sete), d(kant, r_sete), d(0, rs)[1] + 4, tall(b - 2 * kant))
     ark.maal_v(d(0, r_sete), d(0, rs), d(-1.2, 0)[0], tall(p["skulder"]))
     ark.maal_v(d(b, r_inn), d(b, r_sete), d(b + 1.0, 0)[0], tall(p["t_felg"]))
-    ark.henvisning(d(b / 2, r_sete), cD + [26, -16], f"Felgsete Ø{tall(2 * r_sete)}", prikk=True)
+    ark.henvisning(d(b / 2, r_sete), cD + [26, -16], f"Felgsete Ø{tall(2 * r_sete)} F2", prikk=True)
 
     # Detalj F (5:1): navet med krage og rund forsenkning
     cF_m = (0, -4.0, zt / 2 + 0.4)
@@ -261,16 +283,17 @@ def tegn_felg():
     Cd.tegn(klipp=(cC, kc * 3.6))
     ark.overskrift(cC[0], cC[1] + kc * 3.6 + 3, "C (5:1)")
     ark.kryss(cC, kc * s2 + 1)
-    ark.maal_h(Cd.p(-s2, s2, 0), Cd.p(s2, s2, 0), cC[1] - kc * s2 - 6, tall(p["firkant"]))
-    ark.maal_v(Cd.p(s2, -s2, 0), Cd.p(s2, s2, 0), cC[0] + kc * s2 + 6, tall(p["firkant"]))
+    ark.maal_h(Cd.p(-s2, s2, 0), Cd.p(s2, s2, 0), cC[1] - kc * s2 - 6, tall(p["firkant"]) + " F1")
+    ark.maal_v(Cd.p(s2, -s2, 0), Cd.p(s2, s2, 0), cC[0] + kc * s2 + 6, tall(p["firkant"]) + " F1")
     c = s2 - 0.45 * 0.35
     ark.henvisning(Cd.p(c + 0.45 * 0.71, c + 0.45 * 0.71, 0), cC + [22, 18], "4 × R0,45")
 
-    merk = ["Printes liggende med utsiden ned.",
-            "Firkanthullet passer akselenden 4 × 4",
-            "(valgt etter prøvebiten).",
+    merk = ["Printes med utsiden ned, 2 vegger.",
+            "F1: CAD-hull 4,3; akselende 4,04 × 4,04.",
+            "Prøvebit: monterbart, uten merkbar rotasjonsslark.",
+            "Kontroller at hjulnavet sitter aksialt fast.",
             "Kragen ligger an mot innerringen i lageret.",
-            "Dekket KERS-DE-1 strekkes over felgsetet."]
+            "F2: dekket skal sitte fast uten å vandre."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Felg Ø65 for TPU-dekk", "KERS-FE-1", "PLA", masse(m), "1:1 (C, D, F 5:1)")
     ark.lagre(UT / "KERS-FE-1.pdf")
@@ -290,7 +313,7 @@ def tegn_dekk():
     ark.kryss(f0, k * ro)
     ark.snittlinje(f0 + [0, k * ro + 3], [1, 0], "A", [0, 1])
     ark.snittlinje(f0 - [0, k * ro + 3], [1, 0], "A", [0, -1])
-    ark.maal_dia(f0, k * ri, 35, "Ø" + tall(2 * ri))
+    ark.maal_dia(f0, k * ri, 35, "Ø" + tall(2 * ri) + " F1")
     ark.maal_dia(f0, k * ro, -35, "Ø" + tall(2 * ro), ute=10)
     A = Riss(ark, m, -Z, -Y, (160, 125), k, snitt=(0, 0, 0))
     a = lambda z, r: A.p(0, -r, z)
@@ -309,10 +332,12 @@ def tegn_dekk():
     ark.maal_v(d(bd, ri), d(bd, ro), d(bd + 1.4, 0)[0], tall(p["t_dekk"]))
     ark.henvisning(d(bd - f / 2, ro - f / 2), cB + [16, 14], f"2 × {tall(f)} × 45°")
     merk = ["Strekkes over felgsetet Ø65 på KERS-FE-1",
-            f"(strekk {tall(p['strekk'])} mm på diameteren). Ferdig hjul Ø68.",
-            "Printes liggende i TPU, uten support."]
+            f"F1: nominell diametral strekk {tall(p['strekk'])} mm.",
+            "Mål gjelder ustrekt dekk; montert hjul ca. Ø68.",
+            "Skal sitte fast uten å vandre eller slure.",
+            "Bambu Lab TPU 95A, 2 vegger, uten support."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
-    ark.tittelfelt("Dekk for drivhjul", "KERS-DE-1", "TPU", masse(m, H.RHO_TPU), "1:1 (B 5:1)")
+    ark.tittelfelt("Dekk for drivhjul", "KERS-DE-1", "TPU 95A (Bambu Lab)", masse(m, H.RHO_TPU), "1:1 (B 5:1)")
     ark.lagre(UT / "KERS-DE-1.pdf")
 
 
@@ -324,37 +349,46 @@ def tegn_hylse():
     p = AH.P
     L = 3.0
     m = AH.hylse(p, L)
-    lk = p["l_krage"]
     rb, ry, rk = p["boring"] / 2, p["d_ytre"] / 2, p["d_krage"] / 2
     k = 5.0
     ark = Ark()
-    # Riss sett fra kragen (betrakteren på +z), åpningen mot høyre
     E = Riss(ark, m, X, Y, (75, 128), k)
     e0 = E.p(0, 0, 0)
     ark.kryss(e0, k * ry)
-    ark.maal_dia(e0, k * rb, 125, "Ø" + tall(2 * rb), ute=12)
-    ark.maal_dia(e0, k * ry, 215, "Ø" + tall(2 * ry), ute=8)
-    a1, a2 = p["apning"] / 2, p["apning_ytre"] / 2
-    ark.maal_v(E.p(rb, -a1, 0), E.p(rb, a1, 0), e0[0] + k * ry + 6, tall(p["apning"]))
-    ark.maal_v(E.p(ry, -a2, 0), E.p(ry, a2, 0), e0[0] + k * ry + 16, tall(p["apning_ytre"]))
+    ark.maal_dia(e0, k * rb, 125, "Ø6,1 F1", ute=12)
+    ark.maal_dia(e0, k * ry, 215, "Ø12", ute=8)
+    # Mål de faktiske skjæringspunktene i modellen, ikke skjæreverktøyets bredde.
+    def apningskant(radius):
+        pol = np.asarray(AH.c_profil(radius, p).to_polygons()[0])
+        kanter = [(a, b) for a, b in zip(pol, np.roll(pol, -1, axis=0))
+                  if min(a[0], b[0], a[1], b[1]) > 0 and np.linalg.norm(a - b) > 0.8]
+        a, b = max(kanter, key=lambda ab: np.linalg.norm(ab[0] - ab[1]))
+        return sorted((a, b), key=lambda q: np.linalg.norm(q))
+    indre, ytre = apningskant(ry)
+    for q, xdim in ((indre, 111), (ytre, 125)):
+        ark.maal_v(E.p(q[0], -q[1], 0), E.p(q[0], q[1], 0), xdim, tall(round(2*q[1], 2)))
     ark.snittlinje(e0 + [-k * ry - 3, 0], [0, 1], "A", [-1, 0])
     ark.snittlinje(e0 + [k * ry + 3, 0], [0, 1], "A", [1, 0])
-    # Snitt A-A (planet y = 0, gjennom åpningen), sett mot -y, under risset
     A = Riss(ark, m, X, Z, (75, 52), k, snitt=(0, 0, 0))
-    ark.senterlinje(A.p(0, 0, -2) , A.p(0, 0, L + 2))
+    ark.senterlinje(A.p(0, 0, -2), A.p(0, 0, L + 2))
     ark.overskrift(A.p(0, 0, 0)[0], A.p(0, 0, L)[1] + 14, "A–A")
     ark.maal_v(A.p(-ry, 0, 0), A.p(-ry, 0, L), A.p(-ry, 0, 0)[0] - 7, "L")
-    ark.maal_v(A.p(rk, 0, L - lk), A.p(rk, 0, L), A.p(ry, 0, 0)[0] + 7, tall(lk))
-    ark.maal_h(A.p(-rk, 0, L), A.p(rk, 0, L), A.p(0, 0, L)[1] + 6, "Ø" + tall(2 * rk))
-    # tabell over lengder
-    rad = [("L [mm]", "1,0 – 7,0 i trinn på 0,5"), ("Merking", "hylse_L<L>.3mf"),
-           ("Tegnet med", f"L = {tall(L)}")]
-    ark.tabell(175, 150, rad, (30, 60), tittel="Lengder")
-    merk = ["C-formet, klikkes på Ø6-akselen uten å ta den ut av lagrene.",
-            "Kragen ligger an mot innerringen i lageret, Ø12 mot navet.",
-            "L velges så akselen får 0,1–0,3 mm klaring sideveis.",
-            "Printes stående med Ø12-enden ned, uten support."]
-    ark.merknader(160, 110, merk, h=2.3)
+    lk = min(p["l_krage"], L / 3)
+    ark.maal_v(A.p(rk, 0, L-lk), A.p(rk, 0, L), A.p(ry, 0, 0)[0] + 7, "l_k")
+    ark.maal_h(A.p(-rk, 0, L), A.p(rk, 0, L), A.p(0, 0, L)[1] + 6, "Ø7,8")
+    rader = [("L [mm]", "l_k [mm]"), ("1,0; 1,5; 2,0", "L/3"),
+             ("2,5–7,0, trinn 0,5", "0,8"), ("I bilen: 3,0 og 6,0", "0,8"),
+             ("Tegnet variant", "L = 3,0")]
+    ark.tabell(160, 155, rader, (58, 50), tittel="Lengdevarianter")
+    ki, ky = apningskant(rk)
+    merk = ["Åpningsmål i risset gjelder Ø12-delen.",
+            f"Krageåpning: {tall(round(2*ki[1],2))} ved Ø6,1 / {tall(round(2*ky[1],2))} ved Ø7,8.",
+            "F1: CAD-mål; hylsen skal klikkes på Ø6.",
+            "Kragen skal bare berøre lagerets innerring.",
+            "Velg L for 0,1–0,3 mm samlet aksialklaring.",
+            "Printes med Ø12-enden ned, 2 vegger.",
+            "Modellnavn: KERS-AH-1_L<lengde>_revC.stl."]
+    ark.merknader(150, 110, merk, h=2.3)
     ark.tittelfelt("Avstandshylse", "KERS-AH-1", "PLA", masse(m) + " (L = 3)", "5:1")
     ark.lagre(UT / "KERS-AH-1.pdf")
 
@@ -379,11 +413,11 @@ def tegn_lokk():
     for x in (-xs, xs):
         ark.senterlinje(f(x, z0 - 3), f(x, z1 + 3))
     ark.maal_h(f(-xb, z1), f(xb, z1), f(0, z1)[1] + 12, tall(2 * xb))
-    ark.maal_h(f(-xs, z1), f(xs, z1), f(0, z1)[1] + 6, tall(2 * xs))
+    ark.maal_h(f(-xs, z1), f(xs, z1), f(0, z1)[1] + 6, tall(2 * xs) + " ±0,1")
     ark.maal_v(f(xb, z0), f(xb, z1), f(xb, 0)[0] + 6, tall(z1 - z0))
-    ark.maal_v(f(rb + 3, 0), f(xb, z1), f(xb, 0)[0] + 15, tall(z1))
+    ark.maal_v(f(rb + 3, 0), f(xb, z1), f(xb, 0)[0] + 15, tall(z1) + " ±0,1")
     ark.henvisning(f(rb * math.cos(math.radians(120)), rb * math.sin(math.radians(120))),
-                   f(-xb - 6, z0 - 6), f"Ø{tall(2 * rb)}", ha="right")
+                   f(-xb - 6, z0 - 6), f"Ø{tall(2 * rb)} F1", ha="right")
     ark.snittplan(f(0, -4), f(0, z1 + 9), [1, 0], "A")
     # Riss ovenfra, under hovedrisset
     O = Riss(ark, m, X, Y, (115, 80), k, ref=(0, ys, z1))
@@ -399,11 +433,13 @@ def tegn_lokk():
     ark.overskrift(a(-29, z1)[0], a(0, z1)[1] + 10, "A–A")
     ark.maal_h(a(y1, z1), a(y1 - 1, z1), a(0, z1)[1] + 4, "1")
     ark.henvisning(a(y1 - 0.5, rl), a(y1, z0) + [-10, -14], f"Ø{tall(2 * rl)}", ha="right")
-    ark.henvisning(a(y0 + 2, rb * 0.99), a(y0, z0) + [8, -14], f"Ø{tall(2 * rb)}")
+    ark.henvisning(a(y0 + 2, rb * 0.99), a(y0, z0) + [8, -14], f"Ø{tall(2 * rb)} F1")
     ark.senterlinje(a(y0 - 2, 0), a(y1 + 2, 0))
     merk = ["2 stk. Lokket på +y-siden er det samme,", "snudd 180°.",
             "Festes med 2 × M3 × 16 (ISO 7045) rett i PLA.",
-            "Boring og leppe som lagerhuset i rammen", "(KERS-RA-1). Printes med oversiden ned."]
+            "F1: CAD-Ø19,1; prøvetilpasses med rammen.",
+            "Lager skal sitte uten slark og rotere fritt.",
+            "Printes med oversiden ned, 2 vegger."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Lagerlokk", "KERS-LL-1", "PLA", masse(m), "2:1")
     ark.lagre(UT / "KERS-LL-1.pdf")
@@ -424,7 +460,7 @@ def klemnav_riss(ark, m, p, z4, z5, o_ende, o_topp, o_cc, k, snitt_topp=(), etik
     ark.snittlinje(e0 + [0, k * rn + 2], [1, 0], "A", [0, 1])
     ark.snittlinje(e0 - [0, k * rn + 2], [1, 0], "A", [0, -1])
     ark.henvisning(E_.p(0.25, -(rb + 4.5), z5), e0 + [k * rn + 2, k * rn + 4], f"2 × slisse {tall(p['slisse'])}")
-    ark.maal_dia(e0, k * rb, -40, "Ø" + tall(2 * rb), ute=13)
+    ark.maal_dia(e0, k * rb, -40, "(Ø" + tall(2 * rb) + ")", ute=13)
     O = Riss(ark, m, Z, -Y, o_topp, k)
     o = lambda z, y: O.p(0, y, z)
     O.senterlinje((0, 0, -3), (0, 0, z5 + 3))
@@ -433,10 +469,10 @@ def klemnav_riss(ark, m, p, z4, z5, o_ende, o_topp, o_cc, k, snitt_topp=(), etik
     ark.maal_h(o(zm, -e), o(z5, -rn), o(0, -rn)[1] + 13, tall(z5 - zm))
     ark.maal_v(o(zm, e), o(zm, -e), o(z5 + 6, 0)[0], tall(2 * e))
     if etiketter_venstre:
-        ark.henvisning(O.p(0, e + 2.2, zm - 1.3), o(-5, e + 6), f"Mutterlomme {tall(p['mutter'])}", ha="right")
+        ark.henvisning(O.p(0, e + 2.2, zm - 1.3), o(-5, e + 6), f"Mutter NV {tall(p['mutter'])}", ha="right")
         ark.henvisning(O.p(0, -e - 1.6, zm - 2.6), o(-5, -e - 6), f"Hodesete Ø{tall(p['d_hode'])}", ha="right")
     else:
-        ark.henvisning(O.p(0, e + 2.2, zm + 1.3), o(z5 + 13, e + 5), f"Mutterlomme {tall(p['mutter'])}")
+        ark.henvisning(O.p(0, e + 2.2, zm + 1.3), o(z5 + 13, e + 5), f"Mutter NV {tall(p['mutter'])}")
         ark.henvisning(O.p(0, -e - 1.6, zm + 2.6), o(z5 + 13, -e - 5), f"Hodesete Ø{tall(p['d_hode'])}")
     for zz, bokstav in ((zm, "C"),) + tuple(snitt_topp):
         ark.snittplan(o(zz, rn + 1), o(zz, -rn - 1), [-1, 0], bokstav)
@@ -477,6 +513,7 @@ def tegn_pinjong():
     # Snitt A-A (hovedriss)
     A = Riss(ark, m, Z, X, (138, 148), k, snitt=(0, 0, 0))
     a = lambda z, x: A.p(x, 0, z)
+    tannsnitt(ark, a, b, rf, ra)
     A.senterlinje((0, 0, -3), (0, 0, z5 + 3))
     for sg in (1, -1):
         ark.linje([a(-2.5, sg * r), a(b + 2.5, sg * r)], lw=tv.TYNN, ls=tv.STREKPUNKT, z=5)  # delelinje
@@ -485,7 +522,7 @@ def tegn_pinjong():
     ark.maal_h(a(0, ra), a(z5, rn), yb + 5, tall(z5))
     ark.overskrift(a(z5 / 2, 0)[0], yb + 11, "A–A")
     ark.maal_v(a(0, -ra), a(0, ra), a(-5, 0)[0], "Ø" + tall(2 * ra))
-    ark.maal_v(a(z5, -rb), a(z5, rb), a(z5 + 3.5, 0)[0], "Ø" + tall(2 * rb))
+    ark.maal_v(a(z5, -rb), a(z5, rb), a(z5 + 3.5, 0)[0], "Ø" + tall(2 * rb) + " F1")
     ark.maal_v(a(z5, -rn), a(z5, rn), a(z5 + 8, 0)[0], "Ø" + tall(2 * rn))
     ark.henvisning(a(0.2, -rb - 0.2), a(-6, -rn - 3), "2 × 0,4 × 45°", ha="right")
     # klemnavet: riss fra høyre, ovenfra og C-C
@@ -501,12 +538,13 @@ def tegn_pinjong():
            ("Trykkvinkel", "α", f"{tall(p['alfa'])}°"), ("Profilforskyvning", "x", "0"),
            ("Delesirkel", "d", "Ø" + tall(2 * r)), ("Toppsirkel", "dₐ", "Ø" + tall(2 * ra)),
            ("Rotsirkel", "df", "Ø" + tall(2 * rf)), ("Tannbredde", "b", tall(b)),
-           ("Tanntykkelse, slakk", "", f"–{tall(p['slakk'])}"),
+           ("Tanntykkelse, avvik", "Δs", f"−{tall(p['slakk'])} på delesirkel"),
            ("Samvirkende hjul", "", "z = 73, KERS-TA-1"), ("Akseavstand", "a", "36")]
     rad = [(x, y.replace("d_f", "d_f"), z) for x, y, z in rad]
     ark.tabell(212, 120, rad, (35, 8, 32), h=5.0, tittel="Tannhjulsdata")
-    merk = ["Tennene er vist forenklet (ISO 2203).", "Evolventtenner, rotfoten radiell ned til rotsirkelen.",
-            "Printes med navenden ned, tennene opp.",
+    merk = ["Tennene er vist forenklet (ISO 2203).", "Evolvent; radiell rotfot iht. modell rev. C.",
+            "Printes med navenden ned, 2 vegger.",
+            "F1: glir på Ø6; ingen sluring etter klemming.",
             "Klemnavet strammes med 2 × M3 × 12 (ISO 7045)", "og mutter M3 (ISO 4032)."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Pinjong z17, m 0,8", "KERS-PI-1", "PLA", masse(ekte), "2:1")
@@ -534,11 +572,12 @@ def tegn_ramme():
     for x in xa:
         ark.kryss(sp(x, za), k * rb, ut=3)
     yb = sp(0, 47.2)[1] + 4
-    ark.maal_h(sp(xa[0], za + rb + 3), sp(xa[1], za + 6), yb, tall(xa[1] - xa[0]))
-    ark.maal_h(sp(xa[0], za + rb + 3), sp(xa[2], za + rb + 3), yb + 6, tall(xa[2] - xa[0]))
+    ark.maal_h(sp(xa[0], za + rb + 3), sp(xa[1], za + 6), yb, tall(xa[1] - xa[0]) + " ±0,1")
+    ark.maal_h(sp(xa[0], za + rb + 3), sp(xa[2], za + rb + 3), yb + 6, "(" + tall(xa[2] - xa[0]) + ")")
+    ark.maal_h(sp(xa[1], za + 6), sp(xa[2], za + rb + 3), yb, "36 ±0,1")
     ark.maal_v(sp(gd.BJELKE_BAK[0], gd.BJELKE_BAK[2]), sp(xa[0] - rb - 3, za), sp(0, 0)[0] - 2, tall(za - gd.BJELKE_BAK[2]))
-    ark.henvisning(sp(xa[2] + rb * 0.7, za + rb * 0.7), sp(xa[2] + 14, za + 18), f"4 × Ø{tall(2 * rb)}")
-    ark.henvisning(sp(xa[1] - rb * 0.7, za - rb * 0.7), sp(xa[1] - 18, za - 22), f"U-sete Ø{tall(2 * rb)}", ha="right")
+    ark.henvisning(sp(xa[2] + rb * 0.7, za + rb * 0.7), sp(xa[2] + 14, za + 18), f"4 × Ø{tall(2 * rb)} F1")
+    ark.henvisning(sp(xa[1] - rb * 0.7, za - rb * 0.7), (160, 130), f"2 × U-sete Ø{tall(2 * rb)} F1")
     ark.maal_v(sp(gd.U_X[1], za), sp(gd.U_X[1], gd.U_Z[1]), sp(gd.U_X[1], 0)[0] + 4, tall(gd.U_Z[1] - za))
     ark.snittplan(sp(xa[0], 8), sp(xa[0], 50), [-1, 0], "A")
     # Riss ovenfra
@@ -551,25 +590,35 @@ def tegn_ramme():
             ark.kryss(op(xs, ys), k * 1.4, ut=1.5)
     ark.maal_v(op(xa[0], -h1), op(xa[0], h1), op(0, 0)[0] - 4, tall(2 * h1))
     ark.maal_h(op(gd.X_SKRUER[0], gd.Y_SKRUE), op(gd.X_SKRUER[1], gd.Y_SKRUE), op(0, h1)[1] + 4,
-               tall(gd.X_SKRUER[1] - gd.X_SKRUER[0]))
+               "25,5 ±0,1")
+    ark.maal_v(op(gd.X_SKRUER[1], -gd.Y_SKRUE), op(gd.X_SKRUER[1], gd.Y_SKRUE),
+               op(126, 0)[0] + 7, "59 ±0,1")
     ark.henvisning(op(gd.X_SKRUER[1] + 0.9, gd.Y_SKRUE + 0.9), op(gd.X_SKRUER[1] + 24, h1 + 6),
                    f"4 × Ø{tall(gd.M3_KJERNE)}, dybde 10")
     # Snitt A-A gjennom bakakselen (x = 34), sett mot -x, til venstre for sideriss
     A = Riss(ark, m, Y, Z, (60, 126), k, snitt=(xa[0], 0, 0), **kw)
     a = lambda y, z: A.p(xa[0], y, z)
-    ark.overskrift(a(0, 0)[0], sp(0, 47.2)[1] + 12, "A–A")
+    ark.overskrift(a(0, 0)[0], sp(0, 47.2)[1] + 5, "A–A")
     ark.senterlinje(a(-h1 - 3, za), a(h1 + 3, za))
     ark.maal_h(a(-h1, za + rb), a(h1, za + rb), a(0, za + 14)[1], tall(2 * h1))
     ark.maal_h(a(-h0, za), a(h0, za), a(0, za - 18)[1], tall(2 * h0), )
-    ark.maal_v(a(h1, za - rb), a(h1, za + rb), a(h1, 0)[0] + 4, "Ø" + tall(2 * rb))
+    ark.maal_v(a(h1, za - rb), a(h1, za + rb), a(h1, 0)[0] + 4, "(Ø" + tall(2 * rb) + ")")
     ark.henvisning(a(-h0 - 0.5, za - rl), a(-h0 + 10, za - 22), f"Leppe Ø{tall(2 * rl)} × 1")
     merk = ["Fri form fra generativ design (Fusion).",
-            "Formen er gitt av STL-filen «Ramme v1.stl».",
+            "Form: KERS-RA-1_revC.stl i modellvedlegget.",
             "Målsatte flater er bevart geometri.",
-            "Printes liggende på siden, 20 % fyll, support.",
-            "Lagerboringer Ø19,1 etter prøveringene."]
+            "Printes på siden, 15 % fyll, 2 vegger, support.",
+            "F1: CAD-Ø19,1; tilpasses med prøvering.",
+            "Lager skal sitte uten slark og rotere fritt."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
-    ark.tittelfelt("Ramme", "KERS-RA-1", "PLA", "23 g (20 % fyll)", "1:1")
+    kontrollnoter(ark, 24, 88, ["Referanse: bakre lagerakse (snitt A–A).",
+        "Lagerparene skal ha sammenfallende akser.",
+        "De tre akslene skal være parallelle.",
+        "Kontroll med rette Ø6-prøveaksler:",
+        "alle aksler skal gli inn og rotere fritt.",
+        "Skruepar sentrert om midtre lagerakse,",
+        "symmetrisk om rammens midtplan."])
+    ark.tittelfelt("Ramme", "KERS-RA-1", "PLA", "23 g (15 % fyll)", "1:1")
     ark.lagre(UT / "KERS-RA-1.pdf")
 
 
@@ -595,16 +644,17 @@ def tegn_aksel():
     ark.maal_h(f(-zf - lf, s2), f(zf + lf, s2), f(0, 3)[1] + 14, tall(2 * (zf + lf)))
     ark.maal_h(f(-zf, 3), f(zf, 3), f(0, 3)[1] + 7, tall(2 * zf))
     ark.maal_h(f(zf, -s2), f(zf + lf, -s2), f(0, -3)[1] - 7, tall(lf))
-    ark.maal_v(f(0, -3), f(0, 3), f(-12, 0)[0], "Ø" + tall(6))
+    ark.maal_v(f(0, -3), f(0, 3), f(-12, 0)[0], "Ø6 F1")
     E = Riss(ark, m, -Y, X, (40, 135), k)
     e0 = E.p(0, 0, 0)
     ark.kryss(e0, k * 3)
     ark.maal_h(E.p(-s2, s2, 0), E.p(s2, -s2, 0), e0[1] + k * 3 + 6, tall(2 * s2))
     ark.maal_v(E.p(-s2, -s2, 0), E.p(s2, -s2, 0), e0[0] + k * 3 + 6, tall(2 * s2))
     merk = ["2 stk. (bakaksel og foraksel).",
-            "Firkanten passer firkanthullet 4,3 i felgen",
-            "(KERS-FE-1). Ø6 går gjennom innerringen i",
-            "626-lagrene. Modell fra Fusion (Drivaksling)."]
+            "F1: CAD-Ø6; tilpasses 626-lager med prøvebit.",
+            "Skal gli inn uten makt eller merkbar radialslark.",
+            "Rett aksel skal rotere fritt i begge lagre.",
+            "PLA, 2 vegger, 50 % fyll. Avgrad forsiktig."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Hjulaksel", "KERS-AK-1", "PLA", masse(m), "2:1")
     ark.lagre(UT / "KERS-AK-1.pdf")
@@ -637,6 +687,7 @@ def tegn_tannhjul():
     # Snitt A-A gjennom hullet, tannsiden til høyre
     A = Riss(ark, m, -Z, -Y, (128, 120), k, snitt=(0, 0, 0))
     a = lambda zz, rr: A.p(0, -rr, zz)
+    tannsnitt(ark, a, 5, rf, ra)
     A.senterlinje((0, 0, 14), (0, 0, -3))
     for sg in (1, -1):
         ark.linje([a(-2, sg * r), a(7, sg * r)], lw=tv.TYNN, ls=tv.STREKPUNKT, z=5)
@@ -656,18 +707,20 @@ def tegn_tannhjul():
     ark.senterlinje(d(8, 2.2), d(8, 8.0))
     ark.maal_h(d(8, 7.0), d(11, 7.0), d(0, 7.0)[1] + 4, "3")
     ark.henvisning(d(8.9, 6.0), cB + [16, 22], "Ø2,5")
-    ark.henvisning(d(10.6, 3.1), cB + [16, -22], "Ø6,2")
+    ark.henvisning(d(10.6, 3.1), cB + [16, -22], "Ø6,2 F1")
     ark.henvisning(d(10.2, 7.0), cB + [-16, 24], "Ø14", ha="right")
     rad = [("Antall tenner", "z", "73"), ("Modul", "m", "0,8"), ("Trykkvinkel", "α", "20°"),
            ("Profilforskyvning", "x", "0"), ("Delesirkel", "d", "Ø" + tall(2 * r)),
            ("Toppsirkel", "dₐ", "Ø60"), ("Rotsirkel", "df", "Ø" + tall(round(2 * rf, 2))),
-           ("Tannbredde", "b", "5"), ("Samvirkende hjul", "", "z = 17, KERS-PI-1"),
+           ("Tannbredde", "b", "5"), ("Flanke/rot/slakk", "", "Modell rev. C"),
+           ("Samvirkende hjul", "", "z = 17, KERS-PI-1"),
            ("Akseavstand", "a", "36")]
     ark.tabell(212, 112, rad, (35, 8, 32), h=5.0, tittel="Tannhjulsdata")
     merk = ["Tennene er vist forenklet (ISO 2203).",
-            "Modell: Spur Gear 73 teeth i Fusion.",
-            "Ø2,5-hullet er for en M3-settskrue mot akselen,",
-            "skrudd rett i PLA. Printes med tannsiden ned."]
+            "Tannprofil/slakk er definert av modell rev. C.",
+            "Ø2,5: M3 × 5-settskrue, ISO 4027, rett i PLA.",
+            "F1: glir på Ø6; låses med settskruen.",
+            "Printes med tannsiden ned, 2 vegger."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Tannhjul z73, m 0,8", "KERS-TA-1", "PLA", masse(ekte), "1:1 (B 5:1)")
     ark.lagre(UT / "KERS-TA-1.pdf")
@@ -690,7 +743,9 @@ def tegn_magnetholder():
     for sg in (1, -1):
         ark.kryss(F.p(0, sg * cl, 0), k * rl, ut=2)
     pa, pb = F.p(0, -cl, 0), F.p(0, cl, 0)
-    ark.maal_v(pa, pb, f0[0] - k * 15 - 8, tall(2 * cl))
+    ark.sirkel(f0, k * cl, lw=tv.TYNN, ls=tv.STREKPUNKT)
+    ark.maal_dia(f0, k * cl, -65, "Ø18,1", ute=10)
+    ark.tekst(205, 105, "2 lommer, 180° deling om aksen", h=2.5)
     ark.maal_dia(f0, k * 15, -35, "Ø30")
     ark.henvisning(F.p(rl * 0.7, -cl - rl * 0.7, 0), f0 + [26, 42], f"2 × Ø{tall(2 * rl)}, dybde {tall(dl)}")
     ark.snittlinje(f0 + [0, k * 15 + 3], [1, 0], "A", [0, 1])
@@ -701,12 +756,13 @@ def tegn_magnetholder():
     A.senterlinje((0, 0, 6), (0, 0, -3))
     ark.overskrift(a(1.5, 0)[0], a(0, 15)[1] + 13, "A–A")
     ark.maal_h(a(0, 15), a(3, 15), a(0, 15)[1] + 4, "3")
-    ark.maal_v(a(3, -3.1), a(3, 3.1), a(3, 0)[0] - 6, "Ø6,2")
+    ark.maal_v(a(3, -3.1), a(3, 3.1), a(3, 0)[0] - 6, "Ø6,2 F1")
     ark.henvisning(a(1.6, 3.1 + 3 - (9 - 1.4 ** 2) ** 0.5), a(5, 9) + [-6, 8], "R3", ha="right")
     merk = ["Klemmes mellom svinghjulet og pinjongnavet.",
             "R3-siden vender mot svinghjulet (sveisen).",
             "To magneter Ø3 × 2 limes i lommene",
-            "(Hall-sensor). Modell: Magnetholder i Fusion."]
+            "F1: CAD-Ø6,2; glir fritt på svinghjulsakselen.",
+            "Printes med lommesiden ned, 2 vegger."]
     ark.merknader(24, 12 + 4.2 * (len(merk) - 1), merk, h=2.3)
     ark.tittelfelt("Magnetholder", "KERS-MH-1", "PLA", masse(m), "2:1")
     ark.lagre(UT / "KERS-MH-1.pdf")
@@ -775,13 +831,13 @@ STYKKLISTE = [
     (7, 1, "Tannhjul z73", "PLA", "KERS-TA-1"),
     (8, 2, "Hjulaksel", "PLA", "KERS-AK-1"),
     (9, 4, "Felg", "PLA", "KERS-FE-1"),
-    (10, 4, "Dekk", "TPU", "KERS-DE-1"),
+    (10, 4, "Dekk", "TPU 95A", "KERS-DE-1"),
     (11, 2, "Avstandshylse", "PLA", "KERS-AH-1, L = 3,0 og 6,0"),
     (12, 6, "Kulelager 626", "6 × 19 × 6", "Innkjøpt"),
     (13, 4, "Linsehodeskrue M3 × 12", "ISO 7045", "Klemnav, pos. 4 og 5"),
     (14, 4, "Mutter M3", "ISO 4032", "Klemnav, pos. 4 og 5"),
     (15, 4, "Linsehodeskrue M3 × 16", "ISO 7045", "Lagerlokk, pos. 2"),
-    (16, 1, "Settskrue M3", "ISO 4027", "I navet på pos. 7"),
+    (16, 1, "Settskrue M3 × 5", "ISO 4027", "I navet på pos. 7"),
     (17, 2, "Magnet, neodym", "Ø3 × 2", "Limt i pos. 6"),
 ]
 
@@ -804,32 +860,39 @@ def tegn_sm1():
     k = 1.0
     ark = Ark(liggende=False)
     # Sideriss sett fra tannhjulssiden (+y): fronten til venstre
-    S = tv.Sammenstilling(ark, deler, -X, Z, (110, 243), k, ref=(70, 0, za), tol=0.03)
+    S = tv.Sammenstilling(ark, deler, -X, Z, (110, 233), k, ref=(70, 0, za), tol=0.03)
     for x in (gd.X_BAK, gd.X_SV, gd.X_FOR):
         ark.kryss(S.p(x, 50, za), 9, ut=2)
     ark.snittplan(S.p(70, 50, 1), S.p(70, 50, 53), [1, 0], "A")
+    ark.maal_h(S.p(0, 0, 68), S.p(140, 0, 68), 282, "(140)")
+    ark.maal_v(S.p(0, 0, 0), S.p(0, 0, 68), 195, "(68)")
     # Snitt A-A gjennom svinghjulsakselen, sett bakover (-x)
     A = tv.Sammenstilling(ark, deler, Y, Z, (110, 155), k, ref=(70, 0, za), snitt=(70, 0, 0), tol=0.03)
     ark.overskrift(92, 192, "A–A")
+    tannsnitt(ark, lambda z, r: A.p(70, 6 + z, za + r), 7, 5.8, 7.6)
+    ark.maal_h(A.p(70, -42.5, za), A.p(70, 42.5, za), 120, "(85)")
     ark.senterlinje(A.p(70, -46, za), A.p(70, 46, za))
     # posisjonsnumre: (riss, modellpunkt, ballongens sentrum på arket, pos)
     xs1 = gd.X_SKRUER[0]
     for R, q, c, nr in (
-            (S, (124, 0, 44), (34, 280), 1), (S, (70, 32.5, 46.5), (96, 282), 2), (S, (70, 3, 6.5), (140, 207), 3),
-            (S, (34, 43, 35.2), (190, 263), 8), (S, (121, 41.5, 33), (30, 229), 9), (S, (34, 41, 67.6), (176, 282), 10),
-            (A, (70, -16, za + 9.4), (40, 189), 4), (A, (70, 10, za + 7.2), (152, 191), 5),
+            (S, (124, 0, 44), (30, 267), 1), (S, (70, 32.5, 46.5), (111, 273), 2), (S, (70, 3, 6.5), (140, 207), 3),
+            (S, (34, 43, 35.2), (185, 238), 8), (S, (121, 41.5, 33), (30, 229), 9), (S, (34, 41, 67.6), (180, 273), 10),
+            (A, (70, -20, za + 7), (40, 189), 4), (A, (70, 10, za + 7.2), (152, 191), 5),
             (A, (70, 4.5, za - 12.5), (138, 133), 6), (A, (34, 7.5, 9), (162, 125), 7),
             (A, (70, -25, za + 5.5), (40, 173), 11),
-            (A, (70, 29.5, za + 9.0), (188, 167), 12), (A, (70, -20.5, za - 7), (40, 147), 13),
-            (A, (70, -18.5, za - 9.6), (40, 131), 14), (A, (xs1, 29.5, 48.6), (184, 189), 15),
+            (A, (70, 29.5, za + 9.0), (188, 167), 12), (A, (xs1, 29.5, 48.6), (184, 189), 15),
             (A, (70, -29.0, 46.0), (60, 196), 2), (A, (70, 1.5, za + 18), (128, 196), 3)):
         ark.ballong(R.p(q), c, nr)
+    ark.ballong(None, (49, 189), 13)
+    ark.ballong(None, (58, 189), 14)
     ark.ballong(None, (170, 125), 16)  # settskruen i tannhjulsnavet (skjult), gruppert med pos. 7
     ark.ballong(None, (146, 133), 17)  # magnetene i holderen, gruppert med pos. 6
     ark.tittelfelt("KERS-bil, sammenstilling", "KERS-SM-1", "Se stykkliste", "270 g", "1:1",
                    type_="Sammenstillingstegning")
     ark.stykkliste([tuple(map(str, r)) for r in STYKKLISTE], bredder=(10, 10, 52, 34, 74), h=4.2)
-    ark.merknader(158, 154, ["Tannhjulene er vist forenklet", "(ISO 2203), lagrene forenklet", "(ISO 8826-1)."], h=2.2)
+    ark.merknader(158, 155, ["Tannhjul: ISO 2203.", "Lager: ISO 8826-1.",
+                              "Pos. 13/14 i begge", "klemnav; se TR-0/PI-1.",
+                              "Totalmål er nominelle."], h=2.1)
     ark.lagre(UT / "KERS-SM-1.pdf")
 
 
@@ -858,11 +921,18 @@ def tegn_sm2():
     yb = p(0, 30)[1] - 6
     ark.maal_h(p(0, 3), p(6, 7.6), yb, tall(6))
     ark.maal_h(p(0, 3), p(-3, 9), yb, tall(3))
-    for q, c, nr in (((0.0, -22), (70, 262), 1), ((-12, -8.5), (40, 248), 2), ((12, -7.4), (150, 254), 3),
+    for q, c, nr in (((0.0, -22), (70, 262), 1), ((-18, -7), (40, 248), 2), ((12, -7.4), (150, 254), 3),
                      ((4.5, -13), (96, 280), 4), ((5.0, -9.05), (124, 280), 5),
                      ((-25.0, -5.5), (32, 220), 6), ((24.0, -5.5), (188, 222), 7), ((29.5, -7.5), (188, 240), 8),
-                     ((-29.5, -7.5), (32, 236), 8), ((-20, 6.0), (40, 150), 9), ((-20, 7.5), (60, 140), 10)):
+                     ((-29.5, -7.5), (32, 236), 8)):
         ark.ballong(A.p(70 + q[1], q[0], za), c, nr)
+    ark.ballong(None, (49, 248), 9)
+    ark.ballong(None, (58, 248), 10)
+    ark.merknader(24, 146, ["Pos. 9/10: skruer og muttere i begge klemnav.",
+                          "Plassering: snitt C–C på TR-0 og PI-1.",
+                          "Utdelt: skive Ø60 × 6,",
+                          "aksel Ø6 × 65 (nominelt)."], h=2.2)
+    tannsnitt(ark, lambda z, r: A.p(70 + r, 6 + z, za), 7, 5.8, 7.6)
     rader = [(1, 1, "Svinghjul med aksel", "Stål, sveist", "Utdelt (pos. 3 i SM-1)"),
              (2, 1, "Snortrommel TR-0", "PLA", "KERS-TR-0"),
              (3, 1, "Pinjong z17", "PLA", "KERS-PI-1"),
@@ -901,12 +971,79 @@ TEGNINGER = {
 }
 
 
+def modellvedlegg():
+    """Frys modellgrunnlaget som STL i mm, med sporbarhet til tegningsrevisjonen.
+
+    Ingen dimensjoner eller produksjonsgeometri endres av dokumentrettelsene.
+    STL er produksjonsgrunnlag for FDM; dette er ikke en STEP-/maskineringspakke.
+    """
+    ut = ROT / "output" / "KERS_modellgrunnlag_revC"
+    ut.mkdir(parents=True, exist_ok=True)
+    modeller = {
+        "RA-1": (tv.les_stl(ROT / "Bygg/Ramme v1.stl"), "Bygg/Ramme v1.stl"),
+        "LL-1": (tv.les_stl(ROT / "Bygg/Lagerlokk -y.stl"), "Bygg/Lagerlokk -y.stl"),
+        "TR-0": (T.trommel(T.P_TR0, 8), "Code/snortrommel.py: P_TR0, kjerne 8"),
+        "TR-1": (T.trommel(T.P, 12), "Code/snortrommel.py: P, kjerne 12"),
+        "PI-1": (PI.pinjong(PI.P)[0], "Code/pinjong.py: P"),
+        "TA-1": (tv.les_stl(FUSION / "Spur_Gear_73_teeth.stl"), "Bygg/Fusion_eksport/Spur_Gear_73_teeth.stl"),
+        "MH-1": (magnetholder(), "Bygg/Fusion_eksport/Magnetholder.stl; rigid transformasjon"),
+        "AK-1": (hjulaksel(), "Bygg/Fusion_eksport/Drivaksling.stl; rigid transformasjon"),
+        "FE-1": (H.hjul(H.P, True), "Code/hjul.py: P, med dekk"),
+        "DE-1": (H.dekk(H.P), "Code/hjul.py: P, ustrekt dekk"),
+        "AH-1": (AH.hylse(AH.P, 3), "Code/avstandshylse.py: P, L=3"),
+    }
+    for l in np.arange(1, 7.01, .5):
+        modeller[f"AH-1_L{l:.1f}"] = (AH.hylse(AH.P, l), f"Code/avstandshylse.py: P, L={l:.1f}")
+    manifest = {"revisjon": "C", "enhet": "mm", "modeller": []}
+    for nr, (m, kilde) in modeller.items():
+        mesh = m.to_mesh()
+        v = np.asarray(mesh.vert_properties)[:, :3]
+        tri = v[np.asarray(mesh.tri_verts)]
+        n = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+        n /= np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-30)
+        fil = ut / f"KERS-{nr}_revC.stl"
+        with fil.open("wb") as f:
+            f.write(b"KERS rev C; millimetres; FDM model".ljust(80, b" "))
+            f.write(struct.pack("<I", len(tri)))
+            for normal, flate in zip(n, tri):
+                f.write(struct.pack("<12fH", *normal, *flate.ravel(), 0))
+        manifest["modeller"].append({"fil": fil.name, "kilde": kilde,
+            "sha256": hashlib.sha256(fil.read_bytes()).hexdigest(),
+            "utstrekning_mm": np.ptp(v, axis=0).tolist(), "volum_mm3": m.volume()})
+    (ut / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    (ut / "LES_MEG.txt").write_text(
+        "KERS - modellgrunnlag til tegningsrevisjon C\n\n"
+        "Alle STL-filer er i millimeter. Rev. C gjelder dokumentasjonen; delgeometrien er bevart.\n"
+        "Modellene skal brukes sammen med PDF-tegningene i mappen Tegninger.\n"
+        "F1/F2 er printkompenserte CAD-mål. Kontroller passform etter arkenes funksjonskrav.\n"
+        "Toleranser er krav, ikke målte resultater. Prøvebiter må valideres ved reproduksjon.\n"
+        "Filer er ikke automatisk orientert på printplaten; følg printretning på tegningen.\n"
+        "Ramme og lagerlokk har beholdt koordinatsystemet fra Fusion.\n"
+        "AH-1 uten L-suffiks er samme modell som AH-1_L3.0. Kragen er min(0,8; L/3).\n"
+        "TA-1: den eksporterte Fusion-modellen definerer tannflanke, rot og tannslakk.\n"
+        "Ramme, tromler, tannhjul, felg, dekk og klikkhylser er spesielt tilpasset FDM.\n"
+        "Det følger ingen STEP-fil med; materialvalg og verktøytilkomst må vurderes ved maskinering.\n\n"
+        "Bekreftede produksjonsdata: 2 vegger; ramme 15 % fyll; hjulaksler 50 % fyll.\n"
+        "Dekk: Bambu Lab TPU 95A. M3-settskrue: 5 mm.\n"
+        "Laghøyde og fyll for øvrige deler er ikke registrert.\n"
+        "Hjulnav: aksial fastholding må kontrolleres; lim/låsing er ikke dokumentert.\n"
+        "SHA-256 og opprinnelse for hver modell står i manifest.json.\n", encoding="utf-8")
+    with zipfile.ZipFile(ut.with_suffix(".zip"), "w", zipfile.ZIP_DEFLATED) as z:
+        for fil in sorted(ut.iterdir()):
+            if fil.is_file():
+                z.write(fil, fil.name)
+        for fil in sorted(UT.glob("KERS-*.pdf")):
+            z.write(fil, "Tegninger/" + fil.name)
+
+
 def main():
     UT.mkdir(parents=True, exist_ok=True)
     valg = sys.argv[1:] or list(TEGNINGER)
     for nr in valg:
         TEGNINGER[nr]()
         print("Skrevet", UT / f"KERS-{nr}.pdf")
+    if not sys.argv[1:]:
+        modellvedlegg()
 
 
 if __name__ == "__main__":
