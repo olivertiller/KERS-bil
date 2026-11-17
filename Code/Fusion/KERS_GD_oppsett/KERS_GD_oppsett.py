@@ -23,7 +23,8 @@ gd_forhandsvisning.py kan tegne og kontrollere den samme geometrien.
 X_BAK, X_SV, X_FOR = 34.0, 70.0, 106.0
 Z_A = 34.0
 R_HJUL, B_HJUL, Y_HJUL = 34.0, 8.0, 33.5  # hjulradius, bredde, innerflate
-D_LAGER, B_LAGER = 19.0, 6.0  # 626: ytre Ø og bredde (juster boringen etter testprint)
+D_LAGER, B_LAGER = 19.0, 6.0  # 626: ytre Ø og bredde
+D_BORING = 19.1  # boring i lagerhus/U-sete/lokk, valgt etter testringer 2026-11-04 (19,0 var for stramt)
 Y_INN = 26.5  # lagerets innerflate
 R_HUS = 12.5  # ytre radius lagerhus (3 mm vegg)
 LEPPE, D_LEPPE = 1.0, 17.0  # innvendig kant som holder lageret sideveis (treffer bare ytterringen)
@@ -43,12 +44,17 @@ BJELKE_BAK = (3.0, 9.0, 4.0, 10.0)  # under tannhjulet og snorbanen
 Y_LAGER = (Y_INN, Y_INN + B_LAGER)  # 26,5 – 32,5
 Y_HUS = (Y_INN - LEPPE, Y_INN + B_LAGER)  # 25,5 – 32,5
 R_L = D_LAGER / 2
+R_B = D_BORING / 2
 # U-sete for svinghjulslageret
 U_X = (X_SV - 16.0, X_SV + 16.0)  # 54 – 86
 U_Z = (Z_A - R_L - 3.0, Z_A + 6.0)  # 21,5 – 40
 X_SKRUER = (X_SV - 12.75, X_SV + 12.75)  # 57,25 og 82,75
 Y_SKRUE = Y_INN + B_LAGER / 2  # 29,5
 H_LOKK = 7.0
+# Snortrommel med klemnav (Code/snortrommel.py): fra svinghjulet (y = -3) til navenden.
+# R_TROMMEL er største flens i TR-serien (TR-3, kjerne Ø18), R_NAV klemnavet Ø20.
+Y_TROMMEL = (-23.5, -3.0)  # 2026-11-05: indre flens 3,5 (sveisekrans), kjerne 6, nav 7,5 -> 20,5 lang
+R_TROMMEL, R_NAV = 12.0, 10.0
 
 
 # ---------------------------------------------------------------- geometri (ren Python)
@@ -95,15 +101,15 @@ def geometri():
     for x, navn in ((X_BAK, "Lagerhus bak"), (X_FOR, "Lagerhus foran")):
         hus = kropp("Bevar", f"{navn} +y",
                     ("+", syl_y(x, Z_A, R_HUS, h0, h1)),
-                    ("-", syl_y(x, Z_A, R_L, y0, y1)),
+                    ("-", syl_y(x, Z_A, R_B, y0, y1)),
                     ("-", syl_y(x, Z_A, D_LEPPE / 2, h0, y0)))
         k += [hus, speil_kropp(hus, f"{navn} -y")]
 
     # ---- Bevar: U-sete for svinghjulslageret, åpent oppover, med to skruehull for lokket
     u = kropp("Bevar", "U-sete svinghjul +y",
               ("+", boks(*U_X, h0, h1, *U_Z)),
-              ("-", syl_y(X_SV, Z_A, R_L, y0, y1)),
-              ("-", boks(X_SV - R_L, X_SV + R_L, y0, y1, Z_A, U_Z[1])),
+              ("-", syl_y(X_SV, Z_A, R_B, y0, y1)),
+              ("-", boks(X_SV - R_B, X_SV + R_B, y0, y1, Z_A, U_Z[1])),
               ("-", syl_y(X_SV, Z_A, D_LEPPE / 2, h0, y0)),
               ("-", boks(X_SV - D_LEPPE / 2, X_SV + D_LEPPE / 2, h0, y0, Z_A, U_Z[1])),
               *[("-", syl_z(xs, Y_SKRUE, M3_KJERNE / 2, U_Z[1] - 10, U_Z[1])) for xs in X_SKRUER])
@@ -126,10 +132,10 @@ def geometri():
         k += [lag, speil_kropp(lag, f"Lager x{x:.0f} -y")]
     k.append(kropp("Hindring", "Svinghjul", ("+", syl_y(X_SV, Z_A, 30 + 2, -3 - 0.5, 3 + 0.5))))
     k.append(kropp("Hindring", "Tannhjul z73", ("+", syl_y(X_BAK, Z_A, 30 + LUFT, 4.5, 10.5))))
-    k.append(kropp("Hindring", "Pinjong z17", ("+", syl_y(X_SV, Z_A, 7.6 + LUFT, 4.5, 10.5))))
+    k.append(kropp("Hindring", "Pinjong z17", ("+", syl_y(X_SV, Z_A, 7.6 + LUFT, 4.5, 12.5))))  # tannbredde 7
     k.append(kropp("Hindring", "Nav tannhjul", ("+", syl_y(X_BAK, Z_A, 7 + LUFT, 9.5, 16.5))))
-    k.append(kropp("Hindring", "Nav pinjong", ("+", syl_y(X_SV, Z_A, 7 + LUFT, 9.5, 16.5))))
-    k.append(kropp("Hindring", "Snortrommel", ("+", syl_y(X_SV, Z_A, 11 + LUFT, -14, -3.5))))
+    k.append(kropp("Hindring", "Nav pinjong", ("+", syl_y(X_SV, Z_A, 10 + LUFT, 11.5, 20.5))))  # klemnav Ø20 x 7,5 (2026-11-05, var Ø14 x 6)
+    k.append(kropp("Hindring", "Snortrommel", ("+", syl_y(X_SV, Z_A, R_TROMMEL + LUFT, Y_TROMMEL[0] - LUFT, -3.5))))
 
     # ---- Hindring: snorbane bakover fra toppen av trommelen
     k.append(kropp("Hindring", "Snorbane", ("+", boks(-5, X_SV, -14, -3.5, 37, 55))))
@@ -139,7 +145,8 @@ def geometri():
     lb = kropp("Hindring", "Bane lager +y", ("+", boks(X_SV - R_L, X_SV + R_L, y0, y1, Z_A, top)))
     k += [lb, speil_kropp(lb, "Bane lager -y")]
     k.append(kropp("Hindring", "Bane aksel", ("+", boks(X_SV - 3.5, X_SV + 3.5, -y0, y0, Z_A, top))))
-    k.append(kropp("Hindring", "Bane pinjong og trommel", ("+", boks(X_SV - 12, X_SV + 12, -14, 16.5, Z_A, top))))
+    rb = R_TROMMEL + LUFT
+    k.append(kropp("Hindring", "Bane pinjong og trommel", ("+", boks(X_SV - rb, X_SV + rb, Y_TROMMEL[0] - LUFT, 16.5, Z_A, top))))
     k.append(kropp("Hindring", "Bane svinghjul", ("+", boks(X_SV - 30, X_SV + 30, -3.5, 3.5, Z_A, top))))
     k.append(kropp("Hindring", "Bane tannhjul", ("+", boks(X_BAK - 31, X_BAK + 31, 4.5, 10.5, Z_A, top))))
     k.append(kropp("Hindring", "Bane nav", ("+", boks(X_BAK - 8, X_BAK + 8, 9.5, 16.5, Z_A, top))))
@@ -165,7 +172,7 @@ def geometri():
     # ---- Lagerlokk (printes separat)
     lokk = kropp("Lagerlokk", "Lagerlokk +y",
                  ("+", boks(*U_X, h0, h1, U_Z[1], U_Z[1] + H_LOKK)),
-                 ("-", syl_y(X_SV, Z_A, R_L, y0, y1)),
+                 ("-", syl_y(X_SV, Z_A, R_B, y0, y1)),
                  ("-", syl_y(X_SV, Z_A, D_LEPPE / 2, h0, y0)),
                  *[("-", syl_z(xs, Y_SKRUE, M3_KLARING / 2, U_Z[1], U_Z[1] + H_LOKK)) for xs in X_SKRUER])
     k += [lokk, speil_kropp(lokk, "Lagerlokk -y")]

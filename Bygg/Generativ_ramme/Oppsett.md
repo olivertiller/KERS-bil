@@ -94,9 +94,10 @@ Kjør med **Generate**. Studien kjøres i skyen.
 1. **Velg resultat:** sammenlign stivhet, masse og om resultatet er realistisk å printe. Den andre gruppa valgte det mest robuste, ikke det letteste.
 2. **Lag modell:** bruk **Create Design From Outcome**. Bevart geometri beholdes nøyaktig, så boringene blir Ø19,0 mm.
 3. **Testprint boringene først:**
-   - Print en ring med boringer på Ø18,9 / 19,0 / 19,1 / 19,2 i samme retning som rammen.
-   - Endre `D_LAGER` i skriptet etter resultatet og kjør skriptet på nytt.
-   - FDM-hull blir ofte litt for små.
+   - Print testringene fra `Code/lagertestringer.py` (Ø18,9–19,3, merket med 1–5 hakk) i samme retning som rammen.
+   - **Resultat 2026-11-04:** Ø19,0 (2 hakk) gikk inn, men stramt. Ø19,1 (3 hakk) var bittelitt romslig og er valgt, siden selve rammen kan slå seg litt (warp) og gjøre boringene stivere.
+   - `D_BORING = 19.1` står nå i oppsettskriptet (`D_LAGER` er fortsatt lagerets egne 19,0, og drivverkskriptet bruker den).
+   - Den valgte rammen er allerede laget med Ø19,0. Utvid boringene med **Offset Face** på −0,05 mm (radielt) i stedet for å kjøre studien på nytt.
 4. **Lagerlokk:** print lokkene fra *Lagerlokk (printes separat)*.
    - Skruehullene i U-setene er Ø2,8 × 10 dybde for M3 skrudd rett i PLA. Lokket har Ø3,4 klaringshull og er 7 mm tykt, så bruk **M3 × 16**. Det gir 9 mm gjengeinngrep.
    - Godset rundt hullene er bare 1,6–1,9 mm. Skru forsiktig første gang, så skruen former gjengene uten å sprekke PLA-en. Gjengeinnsatser (Ø4) får ikke plass.
